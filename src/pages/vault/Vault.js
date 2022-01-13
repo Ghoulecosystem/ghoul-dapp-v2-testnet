@@ -535,6 +535,7 @@ const Vault = () => {
   ]);
 
   const createWethVault = async (vaultId) => {
+    closeModalTwo();
     let gDaiPrice = await tokenContract.getTokenPriceSource();
     let gDaiPriceFormat = ethers.utils.formatEther(gDaiPrice);
     let ethPrice = await tokenContract.getEthPriceSource();
@@ -569,10 +570,11 @@ const Vault = () => {
       ratio: vaultRatio,
     };
 
-    setUserVaultsWeth((vaults) => [...vaults, ...[vaultObj]]);
+    setUserVaultsWeth((vaults) => [...vaults, vaultObj]);
   };
 
   const createBNBVault = async (vaultId) => {
+    closeModalTwo();
     let gDaiPrice = await tokenContract.getTokenPriceSource();
     let gDaiPriceFormat = ethers.utils.formatEther(gDaiPrice);
     let ethPrice = await tokenContract.getEthPriceSource();
@@ -607,7 +609,7 @@ const Vault = () => {
       ratio: vaultRatio,
     };
 
-    setUserVaultsBNB((vaults) => [...vaults, ...[vaultObj]]);
+    setUserVaultsBNB((vaults) => [...vaults, vaultObj]);
   };
 
   const depositCollateralBNBVault = async (vaultId) => {
@@ -767,37 +769,61 @@ const Vault = () => {
     setIsOpenThree(false);
   }
 
-  const userVaultJSXBNB = userVaultsBNB.map((vault) => (
-    <li key={Math.random(100)}>
-      <VaultEntry
-        isLiq={false}
-        data-id={vault.id}
-        id={vault.id}
-        collateral={vault.collateral}
-        debt={vault.debt}
-        ratio={parseFloat(vault.ratio).toFixed(2)}
-        availableBorrow={vault.availableBorrow}
-        openModal={openModal}
-        isBNB={true}
-      />
-    </li>
-  ));
+  // const userVaultJSXBNB = userVaultsBNB.map((vault) => (
+  //   <li key={Math.random(100)}>
+  //     <VaultEntry
+  //       isLiq={false}
+  //       data-id={vault.id}
+  //       id={vault.id}
+  //       collateral={vault.collateral}
+  //       debt={vault.debt}
+  //       ratio={parseFloat(vault.ratio).toFixed(2)}
+  //       availableBorrow={vault.availableBorrow}
+  //       openModal={openModal}
+  //       isBNB={true}
+  //     />
+  //   </li>
+  // ));
 
-  const userVaultJSXWeth = userVaultsWeth.map((vault) => (
-    <li key={Math.random(100)}>
-      <VaultEntry
-        isLiq={false}
-        data-id={vault.id}
-        id={vault.id}
-        collateral={vault.collateral}
-        debt={vault.debt}
-        ratio={parseFloat(vault.ratio).toFixed(2)}
-        availableBorrow={vault.availableBorrow}
-        openModal={openModal}
-        isBNB={false}
-      />
-    </li>
-  ));
+  const userVaultJSXBNB = userVaultsBNB
+    .filter(
+      (value, index, self) => index === self.findIndex((t) => t.id === value.id)
+    )
+    .map((vault) => (
+      <li key={Math.random(100)}>
+        <VaultEntry
+          isLiq={false}
+          data-id={vault.id}
+          id={vault.id}
+          collateral={vault.collateral}
+          debt={vault.debt}
+          ratio={parseFloat(vault.ratio).toFixed(2)}
+          availableBorrow={vault.availableBorrow}
+          openModal={openModal}
+          isBNB={true}
+        />
+      </li>
+    ));
+
+  const userVaultJSXWeth = userVaultsWeth
+    .filter(
+      (value, index, self) => index === self.findIndex((t) => t.id === value.id)
+    )
+    .map((vault) => (
+      <li key={Math.random(100)}>
+        <VaultEntry
+          isLiq={false}
+          data-id={vault.id}
+          id={vault.id}
+          collateral={vault.collateral}
+          debt={vault.debt}
+          ratio={parseFloat(vault.ratio).toFixed(2)}
+          availableBorrow={vault.availableBorrow}
+          openModal={openModal}
+          isBNB={false}
+        />
+      </li>
+    ));
 
   const userVaultsBNBLiqJsx = liqVaultsBNB.map((vault) => (
     <li key={Math.random(100)}>

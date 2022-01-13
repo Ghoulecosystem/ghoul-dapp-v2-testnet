@@ -48,6 +48,10 @@ const CreateVaultModal = (props) => {
     };
 
     props.tokenContract.on("CreateVault", onNewBNBVault);
+
+    return () => {
+      props.tokenContract.off("CreateVault", onNewBNBVault);
+    };
   }, []);
 
   useEffect(() => {
@@ -60,6 +64,9 @@ const CreateVaultModal = (props) => {
     };
 
     props.wethVaultContract.on("CreateVault", onNewWethVault);
+    return () => {
+      props.wethVaultContract.off("CreateVault", onNewWethVault);
+    };
   }, []);
 
   const renderContent = () => {

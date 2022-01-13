@@ -1,0 +1,187 @@
+.farm-container {
+  position: absolute;
+  left: 390px;
+  height: 100%;
+  width: 72.3625%;
+  background: #090a10;
+  color: white;
+}
+
+.farm-navigation {
+  display: flex;
+  gap: 1.18rem;
+  padding-left: 2.3rem;
+}
+
+.farm-navigation > div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 166px;
+  height: 40px;
+
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 100px;
+}
+
+.farm-line {
+  margin-top: 1.5rem;
+
+  width: 1048px;
+  height: 0px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+#all-farms {
+  margin-top: 2.375rem;
+  margin-left: 2.375rem;
+  margin-bottom: 2.75rem;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 22px;
+  /* identical to box height, or 122% */
+
+  display: flex;
+  align-items: center;
+
+  /* Lightmode/Colour - White */
+
+  color: rgba(255, 255, 255, 0.3);
+}
+
+.accordion-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  align-content: center;
+  gap: 8rem;
+}
+
+.modal-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media screen and (max-width: 688px) {
+  .farm-navigation {
+    margin-top: 3rem;
+    margin-left: 8rem;
+  }
+
+  .farm-container {
+    position: absolute;
+    left: 390px;
+    height: 100%;
+    width: 50%;
+    background: #090a10;
+    color: white;
+  }
+
+  #all-farms {
+    margin-left: 13rem;
+  }
+}
+
+@media screen and (max-width: 414px) {
+  .farm-navigation {
+    margin-top: 3rem;
+    margin-left: 0rem;
+  }
+  .farm-container {
+    position: absolute;
+    left: 390px;
+    height: 100%;
+    width: 29.5%;
+    background: #090a10;
+    color: white;
+  }
+
+  #all-farms {
+    margin-left: 3rem;
+  }
+}
+
+@media screen and (max-width: 393px) {
+  .farm-container {
+    position: absolute;
+    left: 390px;
+    height: 100%;
+    width: 28%;
+    background: #090a10;
+    color: white;
+  }
+}
+
+@media screen and (max-width: 393px) {
+  .farm-container {
+    position: absolute;
+    left: 390px;
+    height: 100%;
+    width: 28.2%;
+    background: #090a10;
+    color: white;
+  }
+
+  .farm-navigation {
+    padding-left: 1.5rem;
+  }
+}
+
+@media screen and (max-width: 360px) {
+  .farm-navigation {
+    display: flex;
+    gap: 1.18rem;
+    padding-left: 0.5rem;
+  }
+
+  .farm-container {
+    position: absolute;
+    left: 390px;
+    height: 100%;
+    width: 26%;
+    background: #090a10;
+    color: white;
+  }
+
+  .accordion-container {
+    margin-top: -1rem;
+  }
+}
+
+@media screen and (max-width: 375px) {
+  .farm-navigation {
+    padding-left: 1.1rem;
+  }
+
+  .farm-container {
+    position: absolute;
+    left: 390px;
+    height: 100%;
+    width: 27%;
+    background: #090a10;
+    color: white;
+  }
+}
+
+@media screen and (max-width: 360px) {
+  .farm-navigation {
+    padding-left: 0.4rem;
+  }
+
+  .farm-container {
+    position: absolute;
+    left: 390px;
+    height: 100%;
+    width: 25.5%;
+    background: #090a10;
+    color: white;
+  }
+
+  #all-farms {
+    margin-left: 1.8rem;
+  }
+}

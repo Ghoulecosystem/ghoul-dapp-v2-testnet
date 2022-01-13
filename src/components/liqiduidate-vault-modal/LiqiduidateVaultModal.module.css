@@ -1,0 +1,168 @@
+.vault-modal-container {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 651px;
+  height: 380px;
+  background: #090a10;
+  border: 1px solid rgba(116, 236, 101, 0.5);
+  box-sizing: border-box;
+  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  color: #ffffff;
+}
+
+.Overlay {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.vault-modal-header {
+  font-size: 20px;
+  line-height: 22px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 1.4375rem;
+  gap: 29rem;
+}
+
+.vault-modal-header > button {
+  border: none;
+  background: none;
+  color: white;
+  cursor: pointer;
+}
+
+.vault-modal-header > button:hover {
+  color: rgba(255, 255, 255, 1);
+  box-shadow: 0 5px 15px rgb(255, 255, 255);
+}
+
+.modal-line {
+  margin-top: 1.43rem;
+  width: 100%;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.vault-modal-content {
+  width: 100%;
+}
+
+.vault-modal-content-item {
+  padding-left: 1.9rem;
+  padding-right: 2.5rem;
+  padding-top: 1.5rem;
+  padding-bottom: 1.5rem;
+}
+
+.col-one {
+  float: left;
+  text-align: left;
+  color: rgba(255, 255, 255, 0.4);
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 22px;
+}
+
+.col-two {
+  color: #ffffff;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 22px;
+  float: right;
+  text-align: right;
+}
+
+.deposit-bnb {
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 0px 16px;
+
+  position: static;
+  width: 560px;
+  height: 56px;
+
+  background: rgba(255, 0, 0, 0.1);
+
+  border-radius: 8px;
+  font-weight: 800;
+  font-size: 16px;
+  line-height: 22px;
+  color: #ff0000;
+  cursor: pointer;
+}
+
+#collat-value {
+  position: absolute;
+  top: 32%;
+  left: 84%;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 22px;
+  /* identical to box height, or 157% */
+
+  color: rgba(255, 255, 255, 0.3);
+}
+
+#debt-value {
+  position: absolute;
+  top: 44%;
+  left: 84%;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 22px;
+  /* identical to box height, or 157% */
+
+  color: rgba(255, 255, 255, 0.3);
+}
+
+@media screen and (max-width: 688px) {
+  .vault-modal-container {
+    width: 300px;
+    height: 390px;
+    font: 0.5rem;
+  }
+
+  .vault-modal-header {
+    padding: 0;
+    padding-top: 0.5rem;
+    justify-content: center;
+    gap: 7rem;
+  }
+
+  #collat-value {
+    position: absolute;
+    top: 31%;
+    left: 67%;
+  }
+
+  #debt-value {
+    position: absolute;
+    top: 43%;
+    left: 64%;
+  }
+
+  .vault-modal-content-item {
+    padding-left: 1.2rem;
+    padding-right: 1.8rem;
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
+  }
+
+  .deposit-bnb {
+    width: 250px;
+  }
+}

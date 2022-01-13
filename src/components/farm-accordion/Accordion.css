@@ -1,0 +1,462 @@
+.accordion {
+  width: 982px;
+  height: 72px;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 8px;
+}
+
+.accordion-visible {
+  background: rgba(255, 255, 255, 0.03);
+  width: 982px;
+  height: 72px;
+  color: #fff;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 7px 15px;
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
+}
+.accordion-visible span {
+  padding: 15px 0;
+  font-size: 20px;
+}
+.accordion-visible img {
+  width: 20px;
+  transform: rotate(180deg);
+  transition: transform 0.2s ease-in-out;
+}
+.accordion-visible img.active {
+  transform: rotate(0deg);
+}
+
+.accordion-visible h2 {
+  font-size: 20px;
+}
+
+.accordion-toggle {
+  height: 0px;
+  font-size: 18px;
+  opacity: 0;
+  transition: opacity 0.1s ease-in-out, height 0.1s 0.1s ease-in-out;
+  color: rgb(231, 0, 0);
+  background: rgba(255, 255, 255, 0.03);
+
+  box-sizing: border-box;
+  border-radius: 8px;
+}
+
+.animated {
+  opacity: 1;
+  transition: height 0.1s ease-in-out, opacity 0.1s 0.1s ease-in-out;
+}
+
+.accordion-toggle p {
+  margin: 0;
+  padding: 22px 15px;
+  pointer-events: none;
+  line-height: 1.3;
+}
+
+.accordion-title-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+#accordion-title {
+  padding-right: 0.1rem;
+}
+
+.accordion-content {
+  display: flex;
+  gap: 7.8rem;
+}
+
+.accordion-top-text {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 22px;
+  color: rgba(255, 255, 255, 0.3);
+}
+
+.accordion-bottom-text {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 22px;
+  color: white;
+  float: left;
+}
+
+.accordion-elem-container {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+  align-items: center;
+  padding-top: 1rem;
+  padding-bottom: 1.5625rem;
+}
+
+.accordion-elem-1 {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 471px;
+  height: 72px;
+  left: 0px;
+  top: 1px;
+
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 8px;
+}
+.accordion-elem-2 {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 471px;
+  height: 72px;
+  left: 0px;
+  top: 1px;
+
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 8px;
+}
+
+.accordion-elem > img {
+  width: 32px;
+  height: 32px;
+}
+
+.accordion-elem-col-1 {
+  display: flex;
+  gap: 0.5rem;
+  padding-left: 1rem;
+}
+
+.harvest {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 134px;
+  height: 40px;
+  border: 2px solid #74ec65;
+  box-sizing: border-box;
+  border-radius: 8px;
+
+  font-style: normal;
+  font-weight: 800;
+  font-size: 16px;
+  line-height: 22px;
+  /* or 137% */
+
+  color: #74ec65;
+  margin-right: 1rem;
+  cursor: pointer;
+}
+
+.add-LP {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 114px;
+  height: 40px;
+  background: #253e2a;
+  box-sizing: border-box;
+  border-radius: 8px;
+
+  font-style: normal;
+  font-weight: 800;
+  font-size: 16px;
+  line-height: 22px;
+  /* or 137% */
+
+  color: #74ec65;
+  margin-right: 1rem;
+  cursor: pointer;
+}
+
+.approve-LP {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 114px;
+  height: 40px;
+
+  background: rgba(255, 0, 0, 0.1);
+  box-sizing: border-box;
+  border-radius: 8px;
+
+  font-style: normal;
+  font-weight: 800;
+  font-size: 16px;
+  line-height: 22px;
+  /* or 137% */
+
+  color: #ff0000;
+  margin-right: 1rem;
+  cursor: pointer;
+}
+
+.withdraw {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 114px;
+  height: 40px;
+  box-sizing: border-box;
+  border-radius: 8px;
+
+  font-style: normal;
+  font-weight: 800;
+  font-size: 16px;
+  line-height: 22px;
+  /* or 137% */
+
+  color: #74ec65;
+  margin-right: 1rem;
+  padding-left: 1rem;
+  cursor: pointer;
+}
+
+#get-more {
+  padding-left: 0.2rem;
+  color: #74ec65;
+  text-decoration: underline;
+}
+
+@media screen and (max-width: 688px) {
+  .accordion {
+    position: relative;
+    width: 360px;
+    height: 220px;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 8px;
+  }
+
+  .accordion-visible {
+    position: relative;
+    background: rgba(255, 255, 255, 0.03);
+    width: 360px;
+    height: 220px;
+    color: #fff;
+    cursor: pointer;
+    padding: 7px 15px;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+  }
+
+  .accordion-title-container {
+    position: absolute;
+    top: 9%;
+  }
+
+  .accordion-title-container > img {
+    padding: 0;
+  }
+
+  #staked {
+    position: absolute;
+    top: 25%;
+  }
+
+  #earned {
+    position: absolute;
+    top: 25%;
+    left: 45%;
+  }
+
+  #deposit-fee {
+    position: absolute;
+    top: 65%;
+    left: 45%;
+  }
+
+  #pool-allocation {
+    position: absolute;
+    top: 65%;
+  }
+
+  .accordion-elem-container {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .accordion-elem-1 {
+    width: 325px;
+    height: 100px;
+    flex-direction: column;
+    align-items: flex-start;
+    padding-left: 0rem;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+  }
+
+  .accordion-elem-2 {
+    width: 325px;
+    height: 176px;
+    flex-direction: column;
+    align-items: flex-start;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+  }
+
+  .withdraw {
+    width: 315px;
+  }
+
+  .harvest {
+    width: 285px;
+  }
+
+  .add-LP {
+    width: 285px;
+  }
+
+  .approve-LP {
+    width: 285px;
+  }
+
+  #ghoul-img {
+    padding: 0;
+  }
+
+  .harvest-container {
+    padding-left: 1rem;
+  }
+
+  .LP-container {
+    padding-left: 1rem;
+  }
+}
+
+@media screen and (max-width: 375px) {
+  .LP-container {
+    padding-left: 1rem;
+  }
+
+  .withdraw {
+    width: 305px;
+  }
+
+  .harvest {
+    width: 275px;
+  }
+
+  .add-LP {
+    width: 275px;
+  }
+
+  .approve-LP {
+    width: 275px;
+  }
+}
+
+@media screen and (max-width: 360px) {
+  .accordion {
+    width: 320px;
+    height: 200px;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 8px;
+  }
+
+  .accordion-visible {
+    background: rgba(255, 255, 255, 0.03);
+    width: 320px;
+    height: 200px;
+    color: #fff;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 7px 15px;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+  }
+
+  .accordion-title-container {
+    position: absolute;
+    top: 10%;
+  }
+
+  .accordion-title-container > img {
+    padding: 0;
+  }
+
+  #staked {
+    position: absolute;
+    top: 25%;
+    left: 5%;
+  }
+
+  #earned {
+    position: absolute;
+    top: 25%;
+    left: 45%;
+  }
+
+  #deposit-fee {
+    position: absolute;
+    top: 60%;
+    left: 45%;
+  }
+
+  #pool-allocation {
+    position: absolute;
+    top: 60%;
+  }
+
+  .accordion-elem-container {
+    flex-direction: column;
+  }
+
+  .accordion-elem-1 {
+    width: 348px;
+    height: 125px;
+  }
+
+  .accordion-elem-2 {
+    width: 348px;
+    height: 176px;
+  }
+}
+
+@media screen and (max-width: 375px) {
+  .vault-navigation {
+    padding-right: 5rem;
+  }
+
+  .accordion {
+    width: 320px;
+    height: 200px;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 8px;
+  }
+
+  .accordion-visible {
+    background: rgba(255, 255, 255, 0.03);
+    width: 320px;
+    height: 200px;
+    color: #fff;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 7px 15px;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+  }
+
+  .accordion-elem-1 {
+    width: 305px;
+    height: 125px;
+  }
+
+  .accordion-elem-2 {
+    width: 305px;
+    height: 176px;
+  }
+}

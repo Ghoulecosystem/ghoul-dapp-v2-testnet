@@ -1,0 +1,324 @@
+.vault-modal-container {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 40.68rem;
+  height: 45.5rem;
+  background: #090a10;
+  border: 1px solid rgba(116, 236, 101, 0.5);
+  box-sizing: border-box;
+  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  color: #ffffff;
+}
+
+.Overlay {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.vault-modal-header {
+  font-size: 20px;
+  line-height: 22px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 1.4375rem;
+  gap: 27rem;
+}
+
+.vault-modal-header > button {
+  border: none;
+  background: none;
+  color: white;
+  cursor: pointer;
+  padding-right: 0.5rem;
+}
+
+.vault-modal-header > button:hover {
+  color: rgba(255, 255, 255, 1);
+  box-shadow: 0 5px 15px rgb(255, 255, 255);
+}
+
+.modal-line {
+  margin-top: 1.43rem;
+  width: 100%;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.modal-line-2 {
+  margin-top: 1.43rem;
+  width: 100%;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.vault-modal-content {
+  width: 100%;
+}
+
+.vault-modal-content-item {
+  padding-left: 1.9rem;
+  padding-right: 2rem;
+  padding-top: 1.5rem;
+  padding-bottom: 1.5rem;
+}
+
+.col-one {
+  float: left;
+  text-align: left;
+  color: rgba(255, 255, 255, 0.4);
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 22px;
+}
+
+.col-two {
+  color: #ffffff;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 22px;
+  float: right;
+  text-align: right;
+  padding-left: -1rem;
+}
+
+#manage {
+  width: 90%;
+  float: left;
+  text-align: left;
+  margin-top: 1.34375rem;
+  margin-bottom: 1.34375rem;
+  font-weight: 800;
+  font-size: 18px;
+  line-height: 22px;
+  font-style: normal;
+}
+
+.manage-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.manage-actions-elem {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 144.75px;
+  height: 40px;
+
+  background: #090a10;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: rgba(255, 255, 255, 0.2);
+  border-radius: 100px;
+  z-index: 2;
+  cursor: pointer;
+}
+
+#balance {
+  color: rgba(255, 255, 255, 0.4);
+}
+
+#deposit {
+  color: white;
+}
+
+.swap-input {
+  position: relative;
+  width: 615px;
+  margin-top: 1.125rem;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+  display: flex;
+  gap: 0.625rem;
+}
+
+.swap-input > input {
+  border-style: solid;
+  padding-left: 1rem;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 22px;
+  color: white;
+  border-color: rgba(255, 255, 255, 0.02);
+  margin-top: 1.125rem;
+  width: 615px;
+  height: 52.5px;
+
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: 8px;
+  border-bottom-color: none;
+}
+
+#max {
+  position: absolute;
+  top: 50%;
+  left: 88%;
+  font-size: 16px;
+  line-height: 22px;
+  /* or 137% */
+
+  color: #74ec65;
+  cursor: pointer;
+}
+
+.riskier-safer-container {
+}
+
+.riskier-safer {
+  font-weight: 500;
+  font-size: 12px;
+  margin-left: -0.6rem;
+  margin-right: -1rem;
+  line-height: 22px;
+  /* identical to box height, or 183% */
+
+  color: rgba(255, 255, 255, 0.3);
+}
+
+.deposit-bnb {
+  margin-top: 3rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 0px 16px;
+
+  position: static;
+  width: 577px;
+  height: 56px;
+
+  background: #253e2a;
+  border-radius: 8px;
+  font-weight: 800;
+  font-size: 16px;
+  line-height: 22px;
+  color: #74ec65;
+  cursor: pointer;
+}
+
+#balance-colour {
+  color: #f3ba2f;
+}
+
+#collateral-value {
+  position: absolute;
+  left: 85%;
+  top: 16.5%;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 22px;
+  /* identical to box height, or 157% */
+
+  color: rgba(255, 255, 255, 0.3);
+}
+
+#debt-value {
+  position: absolute;
+  left: 85%;
+  top: 23%;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 22px;
+  /* identical to box height, or 157% */
+
+  color: rgba(255, 255, 255, 0.3);
+}
+
+@media screen and (max-width: 688px) {
+  .vault-modal-container {
+    position: absolute;
+    width: 300px;
+    height: 600px;
+    font: 0.5rem;
+  }
+
+  .vault-modal-header {
+    position: relative;
+    font-size: 20px;
+    line-height: 22px;
+    gap: none;
+    padding-top: none;
+    display: flex;
+    gap: 7rem;
+    padding-top: 0;
+  }
+
+  #close-btn {
+    padding-bottom: 1rem;
+  }
+
+  .modal-line {
+    margin-top: 0;
+  }
+
+  .vault-modal-content-item {
+    padding-left: 1rem;
+    padding-right: 1rem;
+    padding-top: 1rem;
+    padding-bottom: 1.2rem;
+  }
+
+  .col-one {
+    float: left;
+    text-align: left;
+    color: rgba(255, 255, 255, 0.4);
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 22px;
+  }
+
+  .col-two {
+    color: #ffffff;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 22px;
+    float: right;
+    text-align: right;
+  }
+
+  #collateral-value {
+    left: 75%;
+    top: 16%;
+  }
+
+  #debt-value {
+    left: 75%;
+    top: 22%;
+  }
+
+  #manage {
+    margin-top: 0.7rem;
+    margin-bottom: 0.7rem;
+  }
+
+  .manage-actions-elem {
+    font-size: 14px;
+    width: 60px;
+    height: 40px;
+  }
+
+  .swap-input {
+    width: 280px;
+    margin-top: 0;
+  }
+
+  #max {
+    left: 80%;
+  }
+
+  .deposit-bnb {
+    width: 245px;
+  }
+}

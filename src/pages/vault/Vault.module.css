@@ -1,0 +1,283 @@
+.vault-container {
+  position: absolute;
+  left: 390px;
+  height: 100%;
+  width: 72.3625%;
+  background: #090a10;
+  color: white;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+.vault-container::-webkit-scrollbar {
+  width: 0.25rem;
+}
+
+.vault-container::-webkit-scrollbar-track {
+  background: #090a10;
+}
+.vault-container::-webkit-scrollbar-thumb {
+  background: #253e2a;
+}
+
+.vault-header {
+  display: flex;
+  justify-content: space-between;
+  padding-left: 2.3rem;
+  padding-right: 1.8rem;
+  padding-top: 1.25rem;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 22px;
+  color: rgba(255, 255, 255, 0.95);
+}
+
+#vaults {
+  padding-top: 0.9rem;
+}
+
+.vault-info {
+  display: flex;
+  gap: 0.21rem;
+}
+
+.chain-wallet {
+  display: flex;
+  gap: 0.87rem;
+}
+
+.chain-wallet > div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 161px;
+  height: 48px;
+
+  background: #15161c;
+  border-radius: 8px;
+
+  /* or 137% */
+
+  display: flex;
+  align-items: center;
+  text-align: center;
+}
+
+.vault-navigation {
+  display: flex;
+  gap: 1.18rem;
+  padding-left: 2.3rem;
+}
+
+.vault-navigation > div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 166px;
+  height: 40px;
+
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 100px;
+  cursor: pointer;
+}
+
+.vault-line {
+  margin-top: 1.5rem;
+
+  width: 1048px;
+  height: 0px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.all-vaults {
+  display: flex;
+  justify-content: space-between;
+  padding-left: 2.37rem;
+  padding-right: 1.87rem;
+  padding-top: 2.18rem;
+}
+
+#all-vaults-text {
+  display: flex;
+  gap: 1rem;
+}
+
+#create-vault {
+  width: 146px;
+  height: 48px;
+  cursor: pointer;
+  background: #253e2a;
+  border-radius: 8px;
+  font-style: normal;
+  font-weight: 800;
+  font-size: 16px;
+  line-height: 22px;
+  /* or 137% */
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color: #74ec65;
+}
+
+#create-vault-hidden {
+  width: 146px;
+  height: 48px;
+  cursor: pointer;
+  background: #253e2a;
+  border-radius: 8px;
+  font-style: normal;
+  font-weight: 800;
+  font-size: 16px;
+  line-height: 22px;
+  /* or 137% */
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color: #75ec65;
+  visibility: hidden;
+}
+
+.all-vault-header {
+  padding-top: 1.56rem;
+  padding-right: 14rem;
+  padding-left: 2.37rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 22px;
+  /* identical to box height, or 183% */
+
+  color: rgba(255, 255, 255, 0.3);
+
+  /* Inside Auto Layout */
+}
+
+#vault-line-2 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 982px;
+  height: 0px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  margin-left: 2.34rem;
+  margin-top: 1.12rem;
+}
+
+.vaults {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin-top: 1.68rem;
+  padding-left: 38px;
+  padding-right: 15px;
+  gap: 1.56rem;
+}
+
+#liquidation-text {
+  position: absolute;
+  font-style: normal;
+  padding-bottom: 1rem;
+  font-weight: 500;
+  font-size: 1rem;
+  line-height: 22px;
+  left: 3.5%;
+  top: 22%;
+  /* or 122% */
+
+  /* Lightmode/Colour - White */
+
+  color: rgba(255, 255, 255, 0.3);
+
+  /* Inside Auto Layout */
+}
+
+.all-vaults-mobile {
+  display: none;
+}
+
+@media screen and (max-width: 688px) {
+  .vault-container {
+    width: 100vw;
+    margin: 0;
+    padding-left: 0;
+  }
+
+  .vault-navigation {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 2rem;
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .vault-navigation > div {
+    width: 42vw;
+    height: 40px;
+  }
+
+  .all-vaults {
+    display: none;
+  }
+
+  .all-vault-header {
+    display: none;
+  }
+
+  #vault-line-2 {
+    display: none;
+  }
+
+  .all-vaults-mobile {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 1rem;
+    gap: 2rem;
+    padding-left: 2.2rem;
+  }
+
+  .create-vault-mobile {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 56vw;
+    height: 48px;
+
+    background: #253e2a;
+    border-radius: 8px;
+    font-style: normal;
+    font-weight: 800;
+    font-size: 16px;
+    line-height: 22px;
+    /* or 137% */
+
+    display: flex;
+    align-items: center;
+    text-align: center;
+
+    color: #74ec65;
+  }
+}
+
+@media screen and (max-width: 375px) {
+  .vault-navigation {
+    padding-right: 5rem;
+  }
+}
+
+@media screen and (max-width: 360px) {
+  .vault-navigation {
+    padding-right: 5rem;
+  }
+}

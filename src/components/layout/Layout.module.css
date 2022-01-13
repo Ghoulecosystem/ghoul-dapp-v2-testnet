@@ -1,0 +1,55 @@
+.main {
+  width: 1440px;
+  height: 934px;
+  z-index: -1000;
+  background: #090a10;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  /* bring your own prefixes */
+  transform: translate(-50%, -50%);
+}
+
+@media screen and (max-width: 688px) {
+  .main {
+    left: 50%;
+    overflow-y: hidden;
+    width: none;
+    height: none;
+    position: none;
+  }
+}
+
+@media screen and (max-width: 414px) {
+  .main {
+    left: 79%;
+    top: 51%;
+  }
+}
+
+@media screen and (max-width: 412px) {
+  .main {
+    left: 80%;
+  }
+}
+
+@media screen and (max-width: 393px) {
+  .main {
+    left: 83%;
+    top: 54%;
+  }
+}
+
+@media screen and (max-width: 375px) {
+  .main {
+    left: 87%;
+    top: 70%;
+  }
+}
+
+@media screen and (max-width: 360px) {
+  .main {
+    left: 89.5%;
+    top: 61%;
+  }
+}

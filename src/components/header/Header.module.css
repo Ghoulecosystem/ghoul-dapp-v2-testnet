@@ -1,0 +1,106 @@
+.vault-header {
+  display: flex;
+  justify-content: space-between;
+  padding-left: 2.3rem;
+  padding-right: 1.8rem;
+  padding-top: 1.25rem;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 22px;
+  color: rgba(255, 255, 255, 0.95);
+}
+
+#vaults {
+  padding-top: 0.9rem;
+}
+
+.vault-info {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.chain-wallet {
+  display: flex;
+  gap: 0.87rem;
+}
+
+.chain-wallet > div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 161px;
+  height: 48px;
+
+  background: #15161c;
+  border-radius: 8px;
+
+  /* or 137% */
+
+  display: flex;
+  align-items: center;
+  text-align: center;
+}
+
+#connect {
+  cursor: pointer;
+  color: rgba(255, 255, 255, 0.95);
+}
+
+#chain-connect {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+}
+
+#connected {
+  border: 1px solid #74ec65;
+  box-sizing: border-box;
+  color: #74ec65;
+  background: rgba(0, 0, 0, 0.5);
+}
+
+#hamburger-icon {
+  display: none;
+}
+
+.hamburger-container {
+  display: none;
+}
+
+@media screen and (max-width: 688px) {
+  .hamburger-container {
+    display: inline;
+  }
+  #hamburger-icon {
+    display: inline;
+  }
+
+  .vault-header {
+    position: relative;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: rgba(255, 255, 255, 0.95);
+  }
+
+  .vault-info {
+    font-weight: 900;
+    font-size: 24px;
+    padding-right: 3.9rem;
+  }
+
+  img {
+    padding-top: 1rem;
+  }
+  .chain-wallet {
+    display: none;
+  }
+
+  #hamburger-icon {
+    position: absolute;
+    left: 8%;
+    top: 65%;
+  }
+}

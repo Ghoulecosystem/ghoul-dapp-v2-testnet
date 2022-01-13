@@ -1,0 +1,144 @@
+.vault-item {
+  position: relative;
+  padding-right: 14rem;
+  padding-left: 1rem;
+
+  width: 750px;
+  height: 72px;
+
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 8px;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 22px;
+  /* identical to box height, or 137% */
+
+  cursor: pointer;
+}
+
+.vault-item-text {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#arrow {
+  left: 125%;
+  top: 47%;
+  position: absolute;
+}
+
+#vault-id {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-right: 43rem;
+  padding-top: 1.2rem;
+  gap: 0.5rem;
+}
+
+#one {
+  position: absolute;
+  left: 30%;
+  top: 47%;
+}
+
+#two {
+  position: absolute;
+  left: 64%;
+  top: 47%;
+}
+
+#three {
+  position: absolute;
+  left: 95%;
+  top: 47%;
+}
+
+#three-liq {
+  position: absolute;
+  left: 95%;
+  top: 47%;
+  color: #f3ba2f;
+}
+
+@media screen and (min-width: 689x) {
+  .vault-item-mobile {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 688px) {
+  .vault-item {
+    display: none;
+  }
+
+  .vault-item-mobile {
+    position: relative;
+    padding-right: 14rem;
+    padding-left: 1rem;
+
+    width: 90px;
+    height: 184px;
+
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 8px;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 22px;
+    /* identical to box height, or 137% */
+
+    cursor: pointer;
+  }
+
+  span {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 22px;
+    /* identical to box height, or 183% */
+
+    color: rgba(255, 255, 255, 0.3);
+
+    /* Inside auto layout */
+  }
+
+  #vault-id-mobile {
+    position: absolute;
+    top: 15%;
+    left: 18%;
+  }
+
+  #logo-img {
+    position: absolute;
+    top: 13%;
+    left: 7%;
+  }
+
+  #one-mobile {
+    position: absolute;
+    top: 15%;
+    left: 50%;
+  }
+
+  #two-mobile {
+    position: absolute;
+    top: 60%;
+    left: 8%;
+  }
+
+  #three-mobile {
+    position: absolute;
+    top: 60%;
+    left: 50%;
+  }
+
+  #vault-arrow {
+    position: absolute;
+    top: 40%;
+    left: 90%;
+  }
+}

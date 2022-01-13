@@ -10,6 +10,24 @@
   transform: translate(-50%, -50%);
 }
 
+@media screen and (max-width: 2000px) {
+  .main {
+    zoom: 0.8;
+  }
+}
+
+@media screen and (max-width: 1888px) {
+  .main {
+    zoom: 0.8;
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .main {
+    zoom: 0.6;
+  }
+}
+
 @media screen and (max-width: 688px) {
   .main {
     left: 50%;

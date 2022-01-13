@@ -26,7 +26,7 @@ function App() {
       <Navbar />
       <Switch>
         <Route path="/" exact>
-          <Redirect to="/vaults" />
+          <Redirect to="/swap" />
         </Route>
         <Route path="/vaults">
           <Vault />

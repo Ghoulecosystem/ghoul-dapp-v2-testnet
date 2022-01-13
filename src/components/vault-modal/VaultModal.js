@@ -27,7 +27,6 @@ const CustomSlider = withStyles({
 
 const VaultModal = (props) => {
   let useStyles;
-  console.log(window.isMobile);
   if (window.isMobile) {
     useStyles = makeStyles({
       root: {
@@ -35,7 +34,6 @@ const VaultModal = (props) => {
         marginBottom: -20,
       },
     });
-    console.log("ON MOBILE");
   } else {
     useStyles = makeStyles({
       root: {
@@ -276,7 +274,7 @@ const VaultModal = (props) => {
         </div>
         <div className={classes["vault-modal-content-item"]}>
           <span className={classes["col-one"]}>Collateral to Debt Ratio</span>
-          <span className={classes["col-two"]}>{props.ratio}</span>
+          <span className={classes["col-two"]}>{props.ratio.toFixed(2)}</span>
         </div>
         <div className={classes["vault-modal-content-item"]}>
           <span className={classes["col-one"]}>Available to Borrow</span>
@@ -390,7 +388,6 @@ const VaultModal = (props) => {
                   {props.isBNB
                     ? parseFloat(props.balances.bnbBalance).toFixed(5)
                     : parseFloat(props.balances.wethBalance).toFixed(5)}
-                  {props.isBNB ? " BNB" : " wETH"}
                 </span>
               </span>
             )}

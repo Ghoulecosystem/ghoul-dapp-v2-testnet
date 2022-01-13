@@ -334,10 +334,16 @@ const Vault = () => {
       });
     };
 
+    getBalances();
+    return () => {
+      setBalances({});
+      setAllowances({});
+    };
+  }, []);
+
+  useEffect(() => {
     const getUserVaultDataWeth = async () => {
-      if (userVaultsWeth.length > 0) {
-        return;
-      }
+      while (!web3Ctx.walletAddress) {}
       let address = walletAddress;
       address = address.toLocaleLowerCase();
       setIsLoadingWeth(true);
@@ -411,25 +417,11 @@ const Vault = () => {
     };
 
     getUserVaultDataWeth();
-    getBalances();
-
-    return () => {
-      setBalances({});
-      setAllowances({});
-    };
-  }, [
-    tokenContract,
-    userVaultsWeth.length,
-    walletAddress,
-    wethContract,
-    wethVaultContract,
-  ]);
+  }, [web3Ctx.walletAddres]);
 
   useEffect(() => {
     const getUserVaultDataBNB = async () => {
-      if (userVaultsBNB.length > 0) {
-        return;
-      }
+      while (!web3Ctx.walletAddress) {}
       let address = walletAddress;
       address = address.toLocaleLowerCase();
       setIsLoading(true);
@@ -448,63 +440,69 @@ const Vault = () => {
       };
       // https://api.thegraph.com/subgraphs/name/blockifi/ghoulfinancebscmainnet1 MAINNET
 
-      const res = await axios.post(
-        "https://api.thegraph.com/subgraphs/name/blockifi/ghoulfinancebsc",
-        body
-      );
+      const result = await axios
+        .post(
+          "https://api.thegraph.com/subgraphs/name/blockifi/ghoulfinancebsc",
+          body
+        )
+        .then(async (res) => {
+          if (!res.data.data.users.length) {
+            console.log(`No vaults found for user: ${address}`);
+            setIsLoading(false);
+            return;
+          }
 
-      if (!res.data.data.users.length) {
-        console.log(`No vaults found for user: ${address}`);
-        setIsLoading(false);
-        return;
-      }
+          let gDaiPrice = await tokenContract.getTokenPriceSource();
+          let gDaiPriceFormat = ethers.utils.formatEther(gDaiPrice);
+          let ethPrice = await tokenContract.getEthPriceSource();
+          let ethPriceFormat = ethers.utils.formatEther(ethPrice);
+          const userVaultData = res.data.data.users[0].vaults;
+          let userVaultArray = [];
+          for (let i = 0; i < userVaultData.length; i++) {
+            let vaultId = userVaultData[i].id;
+            let vaultDebt = await tokenContract.vaultDebt(vaultId);
+            let vaultDebtFormat = ethers.utils.formatEther(vaultDebt);
 
-      let gDaiPrice = await tokenContract.getTokenPriceSource();
-      let gDaiPriceFormat = ethers.utils.formatEther(gDaiPrice);
-      let ethPrice = await tokenContract.getEthPriceSource();
-      let ethPriceFormat = ethers.utils.formatEther(ethPrice);
-      const userVaultData = res.data.data.users[0].vaults;
-      let userVaultArray = [];
-      for (let i = 0; i < userVaultData.length; i++) {
-        let vaultId = userVaultData[i].id;
-        let vaultDebt = await tokenContract.vaultDebt(vaultId);
-        let vaultDebtFormat = ethers.utils.formatEther(vaultDebt);
+            let vaultCollateral = await tokenContract.vaultCollateral(vaultId);
+            let vaultCollateralFormat =
+              ethers.utils.formatEther(vaultCollateral);
 
-        let vaultCollateral = await tokenContract.vaultCollateral(vaultId);
-        let vaultCollateralFormat = ethers.utils.formatEther(vaultCollateral);
+            let availableBorrow =
+              ((parseFloat(vaultCollateralFormat) *
+                parseFloat(ethPriceFormat)) /
+                (150 * parseFloat(gDaiPriceFormat))) *
+                100 -
+              parseFloat(vaultDebtFormat);
 
-        let availableBorrow =
-          ((parseFloat(vaultCollateralFormat) * parseFloat(ethPriceFormat)) /
-            (150 * parseFloat(gDaiPriceFormat))) *
-            100 -
-          parseFloat(vaultDebtFormat);
+            let vaultRatio;
+            if (parseInt(vaultDebtFormat) !== 0) {
+              vaultRatio =
+                ((parseFloat(vaultCollateralFormat) *
+                  parseFloat(ethPriceFormat)) /
+                  (parseFloat(vaultDebtFormat) * parseFloat(gDaiPriceFormat))) *
+                100;
+            } else {
+              vaultRatio = 0;
+            }
 
-        let vaultRatio;
-        if (parseInt(vaultDebtFormat) !== 0) {
-          vaultRatio =
-            ((parseFloat(vaultCollateralFormat) * parseFloat(ethPriceFormat)) /
-              (parseFloat(vaultDebtFormat) * parseFloat(gDaiPriceFormat))) *
-            100;
-        } else {
-          vaultRatio = 0;
-        }
+            const vaultObj = {
+              id: vaultId,
+              debt: vaultDebtFormat,
+              collateral: parseFloat(vaultCollateralFormat).toFixed(2),
+              availableBorrow: parseFloat(availableBorrow).toFixed(2),
+              ratio: vaultRatio,
+            };
 
-        const vaultObj = {
-          id: vaultId,
-          debt: vaultDebtFormat,
-          collateral: parseFloat(vaultCollateralFormat).toFixed(2),
-          availableBorrow: parseFloat(availableBorrow).toFixed(2),
-          ratio: vaultRatio,
-        };
+            userVaultArray.push(vaultObj);
+          }
 
-        userVaultArray.push(vaultObj);
-      }
-      setUserVaultsBNB((vaults) => [...vaults, ...userVaultArray]);
-      setIsLoading(false);
+          setUserVaultsBNB((vaults) => [...vaults, ...userVaultArray]);
+          setIsLoading(false);
+        });
     };
 
     getUserVaultDataBNB();
-  }, [tokenContract, userVaultsBNB.length, walletAddress]);
+  }, [web3Ctx.walletAddres]);
 
   useEffect(() => {
     setIsLoadingVaultCreate(true);

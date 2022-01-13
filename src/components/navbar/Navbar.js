@@ -136,14 +136,12 @@ const Navbar = () => {
               <img src={logo} alt="" />
             </span>
             <h3>{gDaiBalance}</h3>
-            <h4>gDai</h4>
           </div>
           <div className={classes["row-elem"]}>
             <span>
               <img src={ghoulTokenLogo} alt="gl" width="24.72" height="16.41" />
             </span>
             <h3>{ghoulBalance}</h3>
-            <h4>GHOUL</h4>
           </div>
         </div>
         <div className={classes["row-nav"]}>
@@ -152,14 +150,12 @@ const Navbar = () => {
               <img src={ghoulXLogo} alt="gxl" width="24.72" height="16.41" />
             </span>
             <h3>2.00</h3>
-            <h4>GhoulX</h4>
           </div>
           <div className={classes["row-elem"]}>
             <span>
               <img src={bnbLogo} alt="" />
             </span>
             <h3>{bnbBlance}</h3>
-            <h4>BNB</h4>
           </div>
         </div>
       </div>
@@ -168,7 +164,7 @@ const Navbar = () => {
         <NavLink activeClassName={classes["feature-elem-active"]} to="/vaults">
           <div className={classes["feature-elem"]}>
             <img
-              clasName={classes["feature-community-img"]}
+              className={classes["feature-community-img"]}
               src={location.pathname === "/vaults" ? vaultActive : vault}
               alt=""
             />
@@ -179,7 +175,7 @@ const Navbar = () => {
         <NavLink activeClassName={classes["feature-elem-active"]} to="/swap">
           <div className={classes["feature-elem"]}>
             <img
-              clasName={classes["feature-community-img"]}
+              className={classes["feature-community-img"]}
               src={location.pathname === "/swap" ? swapLogoActive : swapLogo}
               alt=""
             />
@@ -190,7 +186,7 @@ const Navbar = () => {
         <NavLink activeClassName={classes["feature-elem-active"]} to="/farm">
           <div className={classes["feature-elem"]}>
             <img
-              clasName={classes["feature-community-img"]}
+              className={classes["feature-community-img"]}
               src={location.pathname === "/farm" ? farmLogoActive : farmLogo}
               alt="farm"
             />
@@ -204,7 +200,7 @@ const Navbar = () => {
         >
           <div className={classes["feature-elem"]}>
             <img
-              clasName={classes["feature-community-img"]}
+              className={classes["feature-community-img"]}
               src={exchangeLogo}
               alt=""
             />
@@ -214,7 +210,7 @@ const Navbar = () => {
 
         <div className={classes["feature-elem"]}>
           <img
-            clasName={classes["feature-community-img"]}
+            className={classes["feature-community-img"]}
             src={bondLogo}
             alt=""
           />
@@ -223,7 +219,7 @@ const Navbar = () => {
 
         <div className={classes["feature-elem"]}>
           <img
-            clasName={classes["feature-community-img"]}
+            className={classes["feature-community-img"]}
             src={prifiLogo}
             alt=""
           />
@@ -234,9 +230,9 @@ const Navbar = () => {
       <h1 id={classes["community-h1"]}>COMMUNITY</h1>
       <div className={classes.features}>
         <div className={classes["feature-elem"]}>
-          <a href="https://www.ghoul.finance/#" target="_blank">
+          <a href="https://snapshot.org/#/ghouldao.eth" target="_blank">
             <img
-              clasName={classes["feature-community-img"]}
+              className={classes["feature-community-img"]}
               src={governance}
               alt=""
               width="20"
@@ -249,20 +245,32 @@ const Navbar = () => {
         <div className={classes["feature-elem"]}>
           <a href="https://t.me/poltergeistlabs" target="_blank">
             <img
-              clasName={classes["feature-community-img"]}
+              className={classes["feature-community-img"]}
               src={socials}
               alt=""
               width="20"
               height="20"
             />
-            Socials{" "}
+            Telegram{" "}
+          </a>
+        </div>
+        <div className={classes["feature-elem"]}>
+          <a href="http://twitter.com/poltergeistlabs" target="_blank">
+            <img
+              className={classes["feature-community-img"]}
+              src={socials}
+              alt=""
+              width="20"
+              height="20"
+            />
+            Twitter{" "}
           </a>
         </div>
 
         <div className={classes["feature-elem"]}>
           <a href="https://docs.ghoul.finance/" target="_blank">
             <img
-              clasName={classes["feature-community-img"]}
+              className={classes["feature-community-img"]}
               src={docsSupprt}
               alt=""
               width="20"

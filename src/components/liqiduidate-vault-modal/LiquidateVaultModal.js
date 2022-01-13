@@ -1,10 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import classes from "./LiqiduidateVaultModal.module.css";
 import cancelIcon from "../../assets/cancel.svg";
+import SnackbarUI from "../snackbar/SnackbarUI";
 
 const LiquidateVaultModal = (props) => {
-  const liquidateVaultHandler = () => {
-    props.liquidateVault(props.id, props.isBNB);
+  const liquidateVaultHandler = async () => {
+    try {
+      await props.liquidateVault(props.id, props.isBNB);
+    } catch (error) {}
   };
 
   return (
@@ -28,7 +31,7 @@ const LiquidateVaultModal = (props) => {
         </div>
         <div className={classes["vault-modal-content-item"]}>
           <span className={classes["col-one"]}>Debt</span>
-          <span className={classes["col-two"]}>{props.debt} gDai</span>
+          <span className={classes["col-two"]}>{props.debt} gDAI</span>
           <span id={classes["debt-value"]}>${props.debt}</span>
         </div>
         <div className={classes["vault-modal-content-item"]}>
@@ -38,7 +41,7 @@ const LiquidateVaultModal = (props) => {
         <div className={classes["vault-modal-content-item"]}>
           <span className={classes["col-one"]}>Available to Borrow</span>
           <span className={classes["col-two"]}>
-            {props.availableBorrow} gDai
+            {props.availableBorrow} gDAI
           </span>
         </div>
       </div>

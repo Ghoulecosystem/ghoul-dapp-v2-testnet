@@ -15,11 +15,11 @@ export default function Accordion(props) {
   switch (props.asset) {
     case "gDAI":
       img = ghoulLogo;
-      asset = "gDai";
+      asset = "gDAI";
       break;
     case "DAI":
       img = daiLogo;
-      asset = "Dai";
+      asset = "DAI";
       break;
     default:
       break;

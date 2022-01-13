@@ -99,7 +99,7 @@
 .row-elem > h3 {
   padding-left: 0.5rem;
   font-style: normal;
-  font-weight: 800;
+
   font-size: 14px;
   line-height: 22px;
   /* identical to box height, or 157% */
@@ -108,7 +108,7 @@
 
 .row-elem > h4 {
   font-style: normal;
-  font-weight: 800;
+
   font-size: 14px;
   line-height: 22px;
   /* identical to box height, or 157% */

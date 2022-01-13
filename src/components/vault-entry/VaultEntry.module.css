@@ -64,7 +64,7 @@
   color: #f3ba2f;
 }
 
-@media screen and (min-width: 689x) {
+@media screen and (min-width: 689px) {
   .vault-item-mobile {
     display: none;
   }
@@ -114,7 +114,7 @@
 
   #logo-img {
     position: absolute;
-    top: 13%;
+    top: 19%;
     left: 7%;
   }
 

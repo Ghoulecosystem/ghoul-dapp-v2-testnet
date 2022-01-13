@@ -3,6 +3,7 @@ import Web3Context from "../../store/Web3-context";
 import classes from "./Header.module.css";
 import pin from "../../assets/vault_pin.svg";
 import bscLogo from "../../assets/bsc_logo.png";
+import hamburgerIcon from "../../assets/hamburger_menu.png";
 import NavbarHamburger from "../navbar/NavbarHamburger";
 
 const Header = (props) => {
@@ -42,7 +43,7 @@ const Header = (props) => {
 
       <div className={classes["vault-header"]}>
         <div id={classes["hamburger-icon"]} onClick={showHamburgerHandler}>
-          TEST
+          <img src={hamburgerIcon} alt="hamburger-icon" />
         </div>
         <div className={classes["vault-info"]}>
           <div id={classes.vaults}>{props.title}</div>

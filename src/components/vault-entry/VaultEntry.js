@@ -33,13 +33,12 @@ const VaultEntry = (props) => {
           <span id={classes.arrow}>&gt;</span>
         </div>
       </div>
-      {window.isMobile && (
-        <div
-          onClick={returnVaultData}
-          className={classes["vault-item-mobile"]}
-          data-id="123"
-        >
-          {/* <div className={classes["vault-item-text-mobile"]}>
+      <div
+        onClick={returnVaultData}
+        className={classes["vault-item-mobile"]}
+        data-id="123"
+      >
+        {/* <div className={classes["vault-item-text-mobile"]}>
           <div id={classes["vault-id-mobile"]}>
             <img src={props.isBNB ? bscLogo : wethLogo} alt="" />
             <div>#{props.id}</div>
@@ -50,37 +49,36 @@ const VaultEntry = (props) => {
           <div id={classes["three-mobile"]}>{props.ratio}</div>
           <span id={classes.arrow}>&gt;</span>
         </div> */}
-          <img
-            src={props.isBNB ? bscLogo : wethLogo}
-            alt=""
-            id={classes["logo-img"]}
-          />
-          <div id={classes["vault-id-mobile"]}>
-            <div>
-              <span>VAULT ID</span>
-            </div>
-            <div>#{props.id}</div>
+        <img
+          src={props.isBNB ? bscLogo : wethLogo}
+          alt=""
+          id={classes["logo-img"]}
+        />
+        <div id={classes["vault-id-mobile"]}>
+          <div>
+            <span>VAULT ID</span>
           </div>
-          <div id={classes["one-mobile"]}>
-            <span>COLLATERAL {props.isBNB ? "(BNB)" : "(wETH)"}</span>
-            <div>{props.collateral}</div>
-          </div>
-          <div id={classes["two-mobile"]}>
-            <span>DEBT (gDai)</span>
-            <div>{props.debt}</div>
-          </div>
-          <div id={classes["three-mobile"]}>
-            <span>RATIO </span>
-
-            {props.isLiq ? (
-              <div id={classes["yellow-ratio"]}>{props.ratio}</div>
-            ) : (
-              <div>{props.ratio}</div>
-            )}
-          </div>
-          <img src={vaultArrow} alt="vArrow" id={classes["vault-arrow"]} />
+          <div>#{props.id}</div>
         </div>
-      )}
+        <div id={classes["one-mobile"]}>
+          <span>COLLATERAL {props.isBNB ? "(BNB)" : "(wETH)"}</span>
+          <div>{props.collateral}</div>
+        </div>
+        <div id={classes["two-mobile"]}>
+          <span>DEBT (gDAI)</span>
+          <div>{props.debt}</div>
+        </div>
+        <div id={classes["three-mobile"]}>
+          <span>RATIO </span>
+
+          {props.isLiq ? (
+            <div id={classes["yellow-ratio"]}>{props.ratio}</div>
+          ) : (
+            <div>{props.ratio}</div>
+          )}
+        </div>
+        <img src={vaultArrow} alt="vArrow" id={classes["vault-arrow"]} />
+      </div>
     </>
   );
 };

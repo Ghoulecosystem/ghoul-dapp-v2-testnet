@@ -11,6 +11,8 @@ import LoadingImg from "../../components/loading-img-component/LoadingImg";
 import allVaultArrow from "../../assets/all_vaults_arrow.svg";
 import { ethers } from "ethers";
 import { wethVaultAddress, tokenAddress } from "../../utils/contract_abis";
+import SnackbarUI from "../../components/snackbar/SnackbarUI";
+
 const axios = require("axios");
 
 const BNBPrice = 529.75;
@@ -168,6 +170,10 @@ const Vault = () => {
   const [vaultManager, setVaultManager] = useState(true);
   const [liqVaultsBNB, setLiqVaultsBNB] = useState([]);
   const [liqVaultsWeth, setLiqVaultsWeth] = useState([]);
+  const [snackbarOpen, setSnackbarOpen] = useState({
+    open: false,
+    error: false,
+  });
 
   useEffect(() => {
     const loadBNBVaultsLiquidation = async () => {
@@ -295,6 +301,10 @@ const Vault = () => {
 
   useEffect(() => {
     const getBalances = async () => {
+      const gdaiBalance = await tokenContract.balanceOf(walletAddress);
+      const gdaiBalanceFormat = parseFloat(
+        ethers.utils.formatEther(gdaiBalance)
+      ).toFixed(2);
       const provider = new ethers.providers.Web3Provider(window.ethereum);
 
       const balance = await provider.getBalance(walletAddress);
@@ -331,6 +341,7 @@ const Vault = () => {
       setBalances({
         bnbBalance: balanceFormat,
         wethBalance: balanceWethFormat,
+        gdaiBalance: gdaiBalanceFormat,
       });
     };
 
@@ -417,7 +428,13 @@ const Vault = () => {
     };
 
     getUserVaultDataWeth();
-  }, [web3Ctx.walletAddres]);
+  }, [
+    tokenContract,
+    walletAddress,
+    web3Ctx.walletAddres,
+    web3Ctx.walletAddress,
+    wethVaultContract,
+  ]);
 
   useEffect(() => {
     const getUserVaultDataBNB = async () => {
@@ -502,7 +519,12 @@ const Vault = () => {
     };
 
     getUserVaultDataBNB();
-  }, [web3Ctx.walletAddres]);
+  }, [
+    tokenContract,
+    walletAddress,
+    web3Ctx.walletAddres,
+    web3Ctx.walletAddress,
+  ]);
 
   useEffect(() => {
     setIsLoadingVaultCreate(true);
@@ -712,8 +734,11 @@ const Vault = () => {
         const tx = await wethVaultContract.liquidateVault(id);
         await tx.wait();
       }
+
+      setSnackbarOpen({ open: true, error: false });
     } catch (error) {
       console.log(error);
+      setSnackbarOpen({ open: true, error: true });
     }
   };
 
@@ -768,22 +793,6 @@ const Vault = () => {
   function closeModalThree() {
     setIsOpenThree(false);
   }
-
-  // const userVaultJSXBNB = userVaultsBNB.map((vault) => (
-  //   <li key={Math.random(100)}>
-  //     <VaultEntry
-  //       isLiq={false}
-  //       data-id={vault.id}
-  //       id={vault.id}
-  //       collateral={vault.collateral}
-  //       debt={vault.debt}
-  //       ratio={parseFloat(vault.ratio).toFixed(2)}
-  //       availableBorrow={vault.availableBorrow}
-  //       openModal={openModal}
-  //       isBNB={true}
-  //     />
-  //   </li>
-  // ));
 
   const userVaultJSXBNB = userVaultsBNB
     .filter(
@@ -1030,6 +1039,7 @@ const Vault = () => {
             liquidateVault={liquidateVault}
           />
         </Modal>
+        {snackbarOpen.open && <SnackbarUI error={snackbarOpen.error} />}
       </div>
     </div>
   );

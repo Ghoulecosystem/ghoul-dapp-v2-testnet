@@ -266,113 +266,98 @@ const Swap = () => {
     <div className={classes["swap-container"]}>
       <Header title="Swap"></Header>
       <div id={classes["vault-line"]}></div>
-      {isLoadingReserves ? (
-        <LoadingImg></LoadingImg>
-      ) : (
-        <div className={classes["swap-box"]}>
-          {isLoadingSwap ? (
-            <img src={ghoulLogo}></img>
-          ) : (
-            <>
-              <h1 id={classes["mint-gdai"]}> Mint gDai with Dai</h1>
-              <div className={classes["swap-line"]}></div>
-              <div className={classes["swap-box-header"]}>
-                <span className={classes["col-one"]}>
-                  Deposit{" "}
-                  <span id={classes.dai}>{togDai ? "Dai" : "gDai"}</span>
-                </span>
-                <span className={classes["col-two"]}>
-                  {togDai ? "Dai" : "gDai"}
-                  {" Balance: "}
-                  <span id={classes.balance}>
-                    {togDai ? reserves.daiBalance : reserves.gDaiBalance}
-                  </span>
-                </span>
-              </div>
-              <div className={classes["swap-input"]}>
-                <img src={togDai ? daiLogo : ghoulLogo} alt="" />
-                <input
-                  type="number"
-                  defaultValue={0}
-                  max={togDai ? reserves.daiBalance : reserves.gDaiBalance}
-                  value={inputOneValue}
-                  onChange={(e) => {
-                    inputOneHandler(e.target.value);
-                  }}
-                />
-                <span id={classes.max} onClick={maxHandlerOne}>
-                  MAX
-                </span>
-              </div>
-              <div className={classes["swap-arrow"]}>
-                <img src={swapArrows} alt="" onClick={flipHandler} />
-              </div>
-              <div className={classes["swap-box-header"]}>
-                <span className={classes["col-one"]}>
-                  Recieve{" "}
-                  <span id={classes.dai}>{togDai ? "gDai" : "Dai"}</span>
-                </span>
-                <span className={classes["col-two"]}>
-                  Availble {togDai ? "gDai: " : "Dai: "}
-                  <span id={classes.balance}>
-                    {togDai ? reserves.gDaiReserve : reserves.daiReserve}
-                  </span>
-                </span>
-              </div>
-              <div className={classes["swap-input"]}>
-                <img src={togDai ? ghoulLogo : daiLogo} alt="" />
-                <input
-                  type="number"
-                  defaultValue={0}
-                  max={togDai ? reserves.gDaiBalance : reserves.daiBalance}
-                  value={inputTwoValue}
-                  onChange={(e) => {
-                    inputTwoHandler(e.target.value);
-                  }}
-                />
-              </div>
-              <div id={classes["swap-btn-div"]}>
-                {exceedingBalance && (
-                  <button id={classes["approve-btn"]} onClick={approveHandler}>
-                    Deposit Exceeds Available Reserves
-                  </button>
-                )}
-                {togDai &&
-                  !exceedingBalance &&
-                  (daiApproved ? (
-                    <button id={classes["swap-btn"]} onClick={swapHandler}>
-                      Swap
-                    </button>
-                  ) : (
-                    <button
-                      id={classes["approve-btn"]}
-                      onClick={approveHandler}
-                    >
-                      Approve Dai
-                    </button>
-                  ))}
-                {!togDai &&
-                  !exceedingBalance &&
-                  (gDaiApproved ? (
-                    <button id={classes["swap-btn"]} onClick={swapHandler}>
-                      Swap
-                    </button>
-                  ) : (
-                    <button
-                      id={classes["approve-btn"]}
-                      onClick={approveHandler}
-                    >
-                      Approve gDai
-                    </button>
-                  ))}
-              </div>
-              <div id={classes["footer-text"]}>
-                <p>Static fee of 1%</p>
-              </div>
-            </>
-          )}
-        </div>
-      )}
+
+      <div className={classes["swap-box"]}>
+        <>
+          <h1 id={classes["mint-gdai"]}> Mint gDai with Dai</h1>
+          <div className={classes["swap-line"]}></div>
+          <div className={classes["swap-box-header"]}>
+            <span className={classes["col-one"]}>
+              Deposit <span id={classes.dai}>{togDai ? "Dai" : "gDai"}</span>
+            </span>
+            <span className={classes["col-two"]}>
+              {togDai ? "Dai" : "gDai"}
+              {" Balance: "}
+              <span id={classes.balance}>
+                {togDai ? reserves.daiBalance : reserves.gDaiBalance}
+              </span>
+            </span>
+          </div>
+          <div className={classes["swap-input"]}>
+            <img src={togDai ? daiLogo : ghoulLogo} alt="" />
+            <input
+              type="number"
+              defaultValue={0}
+              max={togDai ? reserves.daiBalance : reserves.gDaiBalance}
+              value={inputOneValue}
+              onChange={(e) => {
+                inputOneHandler(e.target.value);
+              }}
+            />
+            <span id={classes.max} onClick={maxHandlerOne}>
+              MAX
+            </span>
+          </div>
+          <div className={classes["swap-arrow"]}>
+            <img src={swapArrows} alt="" onClick={flipHandler} />
+          </div>
+          <div className={classes["swap-box-header"]}>
+            <span className={classes["col-one"]}>
+              Recieve <span id={classes.dai}>{togDai ? "gDai" : "Dai"}</span>
+            </span>
+            <span className={classes["col-two"]}>
+              Availble {togDai ? "gDai: " : "Dai: "}
+              <span id={classes.balance}>
+                {togDai ? reserves.gDaiReserve : reserves.daiReserve}
+              </span>
+            </span>
+          </div>
+          <div className={classes["swap-input"]}>
+            <img src={togDai ? ghoulLogo : daiLogo} alt="" />
+            <input
+              type="number"
+              defaultValue={0}
+              max={togDai ? reserves.gDaiBalance : reserves.daiBalance}
+              value={inputTwoValue}
+              onChange={(e) => {
+                inputTwoHandler(e.target.value);
+              }}
+            />
+          </div>
+          <div id={classes["swap-btn-div"]}>
+            {exceedingBalance && (
+              <button id={classes["approve-btn"]} onClick={approveHandler}>
+                Deposit Exceeds Available Reserves
+              </button>
+            )}
+            {togDai &&
+              !exceedingBalance &&
+              (daiApproved ? (
+                <button id={classes["swap-btn"]} onClick={swapHandler}>
+                  Swap
+                </button>
+              ) : (
+                <button id={classes["approve-btn"]} onClick={approveHandler}>
+                  Approve Dai
+                </button>
+              ))}
+            {!togDai &&
+              !exceedingBalance &&
+              (gDaiApproved ? (
+                <button id={classes["swap-btn"]} onClick={swapHandler}>
+                  Swap
+                </button>
+              ) : (
+                <button id={classes["approve-btn"]} onClick={approveHandler}>
+                  Approve gDai
+                </button>
+              ))}
+          </div>
+          <div id={classes["footer-text"]}>
+            <p>Static fee of 1%</p>
+          </div>
+        </>
+      </div>
     </div>
   );
 };

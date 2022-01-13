@@ -44,12 +44,14 @@ const VaultModal = (props) => {
   }
 
   const classes_slider = useStyles();
-  const [value, setValue] = useState(
-    props.balances.bnbBalance / props.balances.bnbBalance
+  const [value, setValue] = useState(99);
+  const [collateralValue, setCollateralValue] = useState(
+    props.isBNB
+      ? parseFloat(props.balances.bnbBalance).toFixed(5)
+      : parseFloat(props.balances.wethBalance).toFixed(5)
   );
-
   const [withdrawValue, setWithdrawValue] = useState(props.collateral);
-  const [repayValue, setRepayValue] = useState(props.debt);
+  const [repayValue, setRepayValue] = useState(props.balances.gdaiBalance);
   const [borrowValue, setBorrowValue] = useState(props.availableBorrow);
   const [wethDepositApprove, setWethDepositApprove] = useState(false);
   const [manageState, setManageState] = useState({
@@ -58,6 +60,18 @@ const VaultModal = (props) => {
     showRepay: false,
     showBorrow: false,
   });
+
+  const resetState = () => {
+    setValue(99);
+    setCollateralValue(
+      props.isBNB
+        ? parseFloat(props.balances.bnbBalance).toFixed(5)
+        : parseFloat(props.balances.wethBalance).toFixed(5)
+    );
+    setWithdrawValue(props.collateral);
+    setRepayValue(props.balances.gdaiBalance);
+    setBorrowValue(props.availableBorrow);
+  };
 
   useEffect(() => {
     if (props.allowances.depositAllowance >= 1) {
@@ -73,6 +87,29 @@ const VaultModal = (props) => {
     }
 
     setValue(newValue / 100);
+
+    if (manageState.showCollateral) {
+    } else if (manageState.showWithdraw) {
+    } else if (manageState.showRepay) {
+    } else {
+    }
+  };
+
+  const depositCollateralHandler = (value) => {
+    if (value < 0) {
+      value = Math.abs(value);
+    }
+
+    const collatMax = props.isBNB
+      ? parseFloat(props.balances.bnbBalance).toFixed(5)
+      : parseFloat(props.balances.wethBalance).toFixed(5);
+
+    if (value > collatMax) {
+      value = collatMax;
+    }
+
+    setValue(value / collatMax);
+    setCollateralValue(value);
   };
 
   const withdrawValueHandler = (value) => {
@@ -80,10 +117,11 @@ const VaultModal = (props) => {
       value = Math.abs(value);
     }
 
-    if (value > props.collateral) {
-      value = props.collateral;
+    if (value > parseFloat(props.collateral)) {
+      value = parseFloat(props.collateral);
     }
 
+    setValue(1 - value / parseFloat(props.collateral));
     setWithdrawValue(value);
   };
 
@@ -92,11 +130,24 @@ const VaultModal = (props) => {
       value = Math.abs(value);
     }
 
-    if (value > props.availableBorrow) {
-      value = props.availableBorrow;
+    if (value > parseFloat(props.availableBorrow)) {
+      value = parseFloat(props.availableBorrow);
     }
 
+    setValue(1 - value / parseFloat(props.availableBorrow));
     setBorrowValue(value);
+  };
+
+  const repayValueHandler = (value) => {
+    if (value < 0) {
+      value = Math.abs(value);
+    }
+    if (value > parseFloat(props.balances.gdaiBalance)) {
+      value = parseFloat(props.balances.gdaiBalance);
+    }
+
+    setValue(value / parseFloat(props.balances.gdaiBalance));
+    setRepayValue(value);
   };
 
   const manualInputHandler = (event) => {
@@ -106,9 +157,17 @@ const VaultModal = (props) => {
 
   const setMaxHandler = () => {
     if (manageState.showCollateral) {
-      setValue(props.balances.bnbBalance / props.balances.bnbBalance);
+      setCollateralValue(
+        props.isBNB
+          ? parseFloat(props.balances.bnbBalance).toFixed(5)
+          : parseFloat(props.balances.wethBalance).toFixed(5)
+      );
     } else if (manageState.showWithdraw) {
       setWithdrawValue(props.collateral);
+    } else if (manageState.showRepay) {
+      setRepayValue(props.balances.gdaiBalance);
+    } else {
+      setBorrowValue(props.availableBorrow);
     }
   };
 
@@ -262,14 +321,12 @@ const VaultModal = (props) => {
       <div className={classes["vault-modal-content"]}>
         <div className={classes["vault-modal-content-item"]}>
           <span className={classes["col-one"]}>Collateral</span>
-          <span className={classes["col-two"]}>
-            {props.collateral} {props.isBNB ? "BNB" : "wETH"}
-          </span>
+          <span className={classes["col-two"]}>{props.collateral}</span>
           <span id={classes["collateral-value"]}> $0.00</span>
         </div>
         <div className={classes["vault-modal-content-item"]}>
           <span className={classes["col-one"]}>Debt</span>
-          <span className={classes["col-two"]}>{props.debt} gDai</span>
+          <span className={classes["col-two"]}>{props.debt} gDAI</span>
           <span id={classes["debt-value"]}> $0.00</span>
         </div>
         <div className={classes["vault-modal-content-item"]}>
@@ -279,7 +336,7 @@ const VaultModal = (props) => {
         <div className={classes["vault-modal-content-item"]}>
           <span className={classes["col-one"]}>Available to Borrow</span>
           <span className={classes["col-two"]}>
-            {props.availableBorrow} gDai
+            {props.availableBorrow} gDAI
           </span>
         </div>
       </div>
@@ -295,6 +352,8 @@ const VaultModal = (props) => {
               showRepay: false,
               showBorrow: false,
             });
+
+            resetState();
           }}
           style={{
             color: manageState.showCollateral && "white",
@@ -314,6 +373,8 @@ const VaultModal = (props) => {
               showRepay: false,
               showBorrow: false,
             });
+
+            resetState();
           }}
           style={{
             color: manageState.showWithdraw && "white",
@@ -333,6 +394,8 @@ const VaultModal = (props) => {
               showRepay: true,
               showBorrow: false,
             });
+
+            resetState();
           }}
           style={{
             color: manageState.showRepay && "white",
@@ -352,6 +415,8 @@ const VaultModal = (props) => {
               showRepay: false,
               showBorrow: true,
             });
+
+            resetState();
           }}
           style={{
             color: manageState.showBorrow && "white",
@@ -373,10 +438,10 @@ const VaultModal = (props) => {
               <span id={classes.deposit}>Withdraw Collateral</span>
             )}
             {manageState.showRepay && (
-              <span id={classes.deposit}>Repay gDai Debt</span>
+              <span id={classes.deposit}>Repay gDAI Debt</span>
             )}
             {manageState.showBorrow && (
-              <span id={classes.deposit}>Borrow gDai</span>
+              <span id={classes.deposit}>Borrow gDAI</span>
             )}
           </span>
           <span className={classes["col-two"]}>
@@ -402,14 +467,16 @@ const VaultModal = (props) => {
             {manageState.showRepay && (
               <span id={classes.balance}>
                 Balance:{" "}
-                <span id={classes["balance-colour"]}>{props.debt} gDai</span>
+                <span id={classes["balance-colour"]}>
+                  {props.balances.gdaiBalance} gDAI
+                </span>
               </span>
             )}
             {manageState.showBorrow && (
               <span id={classes.balance}>
                 Available:{" "}
                 <span id={classes["balance-colour"]}>
-                  {props.availableBorrow} gDai
+                  {props.availableBorrow} gDAI
                 </span>
               </span>
             )}
@@ -421,17 +488,15 @@ const VaultModal = (props) => {
           <>
             <input
               type="number"
-              max={props.bnbBlance}
-              value={
+              max={
                 props.isBNB
-                  ? parseFloat(
-                      Math.abs(value * props.balances.bnbBalance)
-                    ).toFixed(5)
-                  : parseFloat(
-                      Math.abs(value * props.balances.wethBalance)
-                    ).toFixed(5) || ""
+                  ? parseFloat(props.balances.bnbBalance).toFixed(5)
+                  : parseFloat(props.balances.wethBalance).toFixed(5)
               }
-              onChange={() => {}}
+              value={collateralValue}
+              onChange={(e) => {
+                depositCollateralHandler(e.target.value);
+              }}
             />
             <span id={classes.max} onClick={setMaxHandler}>
               MAX
@@ -457,10 +522,10 @@ const VaultModal = (props) => {
           <>
             <input
               type="number"
-              max={props.debt}
+              max={props.balances.gdaiBalance}
               value={repayValue}
               onChange={(e) => {
-                withdrawValueHandler(e.target.value);
+                repayValueHandler(e.target.value);
               }}
             />
             <span id={classes.max} onClick={setMaxHandler}>
@@ -484,33 +549,31 @@ const VaultModal = (props) => {
           </>
         )}
       </div>
-      {manageState.showCollateral && (
-        <>
-          <div className={classes_slider.root}>
-            <CustomSlider
-              value={value * 100}
-              onChange={handleChange}
-              aria-labelledby="continuous-slider"
-            />
-          </div>
-          <div className={classes["vault-modal-content"]}>
-            <div className={classes["vault-modal-content-item"]}>
-              <div className={classes["riskier-safer-container"]}>
-                <span className={classes["col-one"]}>
-                  <span id={classes.deposit}>
-                    <span className={classes["riskier-safer"]}>RISKIER</span>
-                  </span>
+
+      <>
+        <div className={classes_slider.root}>
+          <CustomSlider
+            value={value * 100}
+            aria-labelledby="continuous-slider"
+          />
+        </div>
+        <div className={classes["vault-modal-content"]}>
+          <div className={classes["vault-modal-content-item"]}>
+            <div className={classes["riskier-safer-container"]}>
+              <span className={classes["col-one"]}>
+                <span id={classes.deposit}>
+                  <span className={classes["riskier-safer"]}>RISKIER</span>
                 </span>
-                <span className={classes["col-two"]}>
-                  <span id={classes.balance}>
-                    <span className={classes["riskier-safer"]}>SAFER</span>
-                  </span>
+              </span>
+              <span className={classes["col-two"]}>
+                <span id={classes.balance}>
+                  <span className={classes["riskier-safer"]}>SAFER</span>
                 </span>
-              </div>
+              </span>
             </div>
           </div>
-        </>
-      )}
+        </div>
+      </>
       {manageState.showCollateral && (
         <div
           className={classes["deposit-bnb"]}
@@ -549,12 +612,12 @@ const VaultModal = (props) => {
       )}
       {manageState.showRepay && (
         <div className={classes["deposit-bnb"]} onClick={repayHandler}>
-          Repay gDai
+          Repay gDAI
         </div>
       )}
       {manageState.showBorrow && (
         <div className={classes["deposit-bnb"]} onClick={borrowHandler}>
-          Borrow gDai
+          Borrow gDAI
         </div>
       )}
     </div>

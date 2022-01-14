@@ -22,6 +22,12 @@
   }
 }
 
+@media screen and (max-width: 1504px) {
+  .main {
+    zoom: 0.55;
+  }
+}
+
 @media screen and (max-width: 1024px) {
   .main {
     zoom: 0.6;
@@ -32,7 +38,7 @@
   .main {
     zoom: 1;
   }
-  
+
   .main {
     left: 50%;
     overflow-y: hidden;

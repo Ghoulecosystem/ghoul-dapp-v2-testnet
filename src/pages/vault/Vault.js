@@ -12,6 +12,10 @@ import allVaultArrow from "../../assets/all_vaults_arrow.svg";
 import { ethers } from "ethers";
 import { wethVaultAddress, tokenAddress } from "../../utils/contract_abis";
 import SnackbarUI from "../../components/snackbar/SnackbarUI";
+import Button from "@mui/material/Button";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
+import Fade from "@mui/material/Fade";
 
 const axios = require("axios");
 
@@ -174,6 +178,25 @@ const Vault = () => {
     open: false,
     error: false,
   });
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [vaultDisplayType, setVaultDisplayType] = useState("All Vaults");
+
+  const open = Boolean(anchorEl);
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = (event) => {
+    const { myValue } = event.currentTarget.dataset;
+    if (!myValue) {
+      setAnchorEl(null);
+      return;
+    }
+
+    setVaultDisplayType(myValue);
+    setAnchorEl(null);
+  };
 
   useEffect(() => {
     const loadBNBVaultsLiquidation = async () => {
@@ -873,6 +896,7 @@ const Vault = () => {
       <Header title="Vaults"></Header>
       <div className={classes["vault-navigation"]}>
         <div
+          id={classes["vault-navigation-1"]}
           onClick={() => {
             setVaultManager(true);
           }}
@@ -881,6 +905,7 @@ const Vault = () => {
           Vault Manager
         </div>
         <div
+          id={classes["vault-navigation-2"]}
           onClick={() => {
             setVaultManager(false);
           }}
@@ -892,8 +917,54 @@ const Vault = () => {
       <div className={classes["vault-line"]}></div>
       <div className={classes["all-vaults"]}>
         <div id={classes["all-vaults-text"]}>
-          All Vaults{" "}
-          <img src={allVaultArrow} alt="arrow" width={9} height={26} />
+          {vaultDisplayType}{" "}
+          <div className={classes["menu-container"]}>
+            <Button
+              id="fade-button"
+              aria-controls={open ? "fade-menu" : undefined}
+              aria-haspopup="true"
+              aria-expanded={open ? "true" : undefined}
+              onClick={handleClick}
+              style={{
+                color: "#74ec65",
+              }}
+            >
+              <img
+                src={allVaultArrow}
+                alt="arrow"
+                width={15}
+                height={20}
+                id={classes["all-vaults-arrow"]}
+              />
+            </Button>
+            <Menu
+              id="fade-menu"
+              MenuListProps={{
+                "aria-labelledby": "fade-button",
+              }}
+              anchorEl={anchorEl}
+              open={open}
+              onClose={handleClose}
+              TransitionComponent={Fade}
+              PaperProps={{
+                style: {
+                  transform: "translateX(-220px) translateY(-65px)",
+                  backgroundColor: "#090a10ba",
+                  color: "white",
+                },
+              }}
+            >
+              <MenuItem data-my-value={"All Vaults"} onClick={handleClose}>
+                All Vaults
+              </MenuItem>
+              <MenuItem data-my-value={"BNB"} onClick={handleClose}>
+                BNB
+              </MenuItem>
+              <MenuItem data-my-value={"wETH"} onClick={handleClose}>
+                wETH
+              </MenuItem>
+            </Menu>
+          </div>
         </div>
         {!vaultManager && (
           <div id={classes["liquidation-text"]}>
@@ -946,27 +1017,52 @@ const Vault = () => {
       <div className={classes.vaults}>
         {vaultManager && (
           <>
-            {!isLoading ? userVaultJSXBNB : <LoadingImg></LoadingImg>}
-            {!isLoadingWeth ? userVaultJSXWeth : <LoadingImg></LoadingImg>}
+            {!isLoading ? (
+              (vaultDisplayType === "BNB" ||
+                vaultDisplayType === "All Vaults") &&
+              userVaultJSXBNB
+            ) : (
+              <LoadingImg></LoadingImg>
+            )}
+            {!isLoadingWeth ? (
+              (vaultDisplayType === "wETH" ||
+                vaultDisplayType === "All Vaults") &&
+              userVaultJSXWeth
+            ) : (
+              <LoadingImg></LoadingImg>
+            )}
           </>
         )}
         {!vaultManager && (
           <>
             {!isLoadingLiquidatorBNB ? (
+              (vaultDisplayType === "BNB" ||
+                vaultDisplayType === "All Vaults") &&
               userVaultsBNBLiqJsx
             ) : (
               <LoadingImg></LoadingImg>
             )}
             {!isLoadingLiquidatorWeth ? (
+              (vaultDisplayType === "wETH" ||
+                vaultDisplayType === "All Vaults") &&
               userVaultsWethLiqJsx
             ) : (
               <LoadingImg></LoadingImg>
             )}
-
-            {/* {!isLoadingWeth ? (
-              userVaultJSXWeth
+            {/* 
+{!isLoadingLiquidatorBNB ? (
+              (vaultDisplayType === "BNB" ||
+                vaultDisplayType === "All Vaults") &&
+                userVaultsBNBLiqJsx
             ) : (
-              <h1>Loading Weth Vaults...</h1>
+              <LoadingImg></LoadingImg>
+            )}
+            {!isLoadingLiquidatorWeth ? (
+              (vaultDisplayType === "wETH" ||
+                vaultDisplayType === "All Vaults") &&
+                userVaultsWethLiqJsx
+            ) : (
+              <LoadingImg></LoadingImg>
             )} */}
           </>
         )}

@@ -21,7 +21,6 @@ import Fade from "@mui/material/Fade";
 
 const Swap = () => {
   const web3Ctx = useContext(Web3Context);
-  console.log(web3Ctx);
   const [isLoadingReserves, setIsLoadingReserves] = useState(false);
   const [reserves, setReserves] = useState({});
   const [togDai, setTogDai] = useState(true);
@@ -68,15 +67,18 @@ const Swap = () => {
       );
       const gDaiBalanceFormat = ethers.utils.formatEther(gDaiBalance);
 
+      console.log(web3Ctx.daiContract);
       const daiBalance = await web3Ctx.daiContract.balanceOf(
         web3Ctx.walletAddress
       );
       const daiBalanceFormat = ethers.utils.formatEther(daiBalance);
 
+      console.log(web3Ctx.busdSwapContract);
       const busdBalance = await web3Ctx.busdSwapContract.balanceOf(
         web3Ctx.walletAddress
       );
       const busdBalanceFormat = ethers.utils.formatEther(busdBalance);
+
       const usdcBalance = await web3Ctx.usdcSwapContract.balanceOf(
         web3Ctx.walletAddress
       );
@@ -453,52 +455,8 @@ const Swap = () => {
             <div className={classes["swap-box-header"]}>
               <span className={classes["col-one"]}>
                 Deposit <span id={classes.dai}>{togDai ? coin : "gDAI"}</span>
-                <div id={classes["dai-2"]}>
-                  <Button
-                    id="fade-button"
-                    aria-controls={open ? "fade-menu" : undefined}
-                    aria-haspopup="true"
-                    aria-expanded={open ? "true" : undefined}
-                    onClick={handleClick}
-                    style={{
-                      color: "#74ec65",
-                    }}
-                  >
-                    Select Coin
-                  </Button>
-                  <Menu
-                    id="fade-menu"
-                    MenuListProps={{
-                      "aria-labelledby": "fade-button",
-                    }}
-                    anchorEl={anchorEl}
-                    open={open}
-                    onClose={handleClose}
-                    TransitionComponent={Fade}
-                    PaperProps={{
-                      style: {
-                        transform: "translateX(-280px) translateY(-79px)",
-                        backgroundColor: "#090a10ba",
-                        color: "white",
-                      },
-                    }}
-                  >
-                    <MenuItem data-my-value={"DAI"} onClick={handleClose}>
-                      DAI
-                    </MenuItem>
-                    <MenuItem data-my-value={"BUSD"} onClick={handleClose}>
-                      BUSD
-                    </MenuItem>
-                    <MenuItem data-my-value={"USDC"} onClick={handleClose}>
-                      USDC
-                    </MenuItem>
-                    <MenuItem data-my-value={"USDT"} onClick={handleClose}>
-                      USDT
-                    </MenuItem>
-                  </Menu>
-                </div>
+                <div id={classes["dai-2"]}></div>
               </span>
-
               <span className={classes["col-two"]}>
                 {togDai ? coin : "gDAI"}
                 {" Balance: "}
@@ -508,7 +466,55 @@ const Swap = () => {
               </span>
             </div>
             <div className={classes["swap-input"]}>
-              <img src={togDai ? daiLogo : ghoulLogo} alt="" />
+              <Button
+                id="fade-button"
+                aria-controls={open ? "fade-menu" : undefined}
+                aria-haspopup="true"
+                aria-expanded={open ? "true" : undefined}
+                onClick={handleClick}
+                style={{
+                  color: "#74ec65",
+                  padding: "0",
+                  minWidth: 0,
+                }}
+              >
+                <img
+                  src={togDai ? daiLogo : ghoulLogo}
+                  alt=""
+                  id={classes["swap-menu-icon"]}
+                />
+              </Button>
+              <Menu
+                id="fade-menu"
+                MenuListProps={{
+                  "aria-labelledby": "fade-button",
+                }}
+                anchorEl={anchorEl}
+                open={open}
+                onClose={handleClose}
+                TransitionComponent={Fade}
+                PaperProps={{
+                  style: {
+                    transform: "translateX(-190px) translateY(-120px)",
+                    backgroundColor: "#090a10ba",
+                    color: "white",
+                  },
+                }}
+              >
+                <MenuItem data-my-value={"DAI"} onClick={handleClose}>
+                  DAI
+                </MenuItem>
+                <MenuItem data-my-value={"BUSD"} onClick={handleClose}>
+                  BUSD
+                </MenuItem>
+                <MenuItem data-my-value={"USDC"} onClick={handleClose}>
+                  USDC
+                </MenuItem>
+                <MenuItem data-my-value={"USDT"} onClick={handleClose}>
+                  USDT
+                </MenuItem>
+              </Menu>
+
               <input
                 type="number"
                 defaultValue={0}

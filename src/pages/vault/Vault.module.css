@@ -82,7 +82,11 @@
 }
 
 .vault-navigation > div:hover {
-  border-color: rgb(255, 255, 255);
+  box-shadow: 3px 3px 3px #233c27;
+}
+
+#vault-navigation-2:hover {
+  box-shadow: 3px 3px 3px #233c27;
 }
 
 .vault-line {
@@ -106,6 +110,12 @@
   gap: 1rem;
 }
 
+.menu-container {
+  position: absolute;
+  top: 17.5%;
+  left: 11%;
+}
+
 #create-vault {
   width: 146px;
   height: 48px;
@@ -123,6 +133,10 @@
   justify-content: center;
 
   color: #74ec65;
+}
+
+#create-vault:hover {
+  box-shadow: 3px 3px 3px #233c27;
 }
 
 #create-vault-hidden {
@@ -172,6 +186,10 @@
   border: 1px solid rgba(255, 255, 255, 0.05);
   margin-left: 2.34rem;
   margin-top: 1.12rem;
+}
+
+.button {
+  min-width: 0;
 }
 
 .vaults {

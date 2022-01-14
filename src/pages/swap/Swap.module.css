@@ -4,6 +4,8 @@
   height: 100%;
   width: 72.3625%;
   background: #090a10;
+  background: #090a10ba;
+
   color: white;
 }
 
@@ -14,6 +16,10 @@
   width: 1048px;
   height: 0px;
   border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+#swap-menu-icon {
+  padding-top: 1rem;
 }
 
 .swap-box {

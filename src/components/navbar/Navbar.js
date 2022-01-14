@@ -161,7 +161,11 @@ const Navbar = () => {
       </div>
       <h1 id={classes["features-h1"]}>FEATURES</h1>
       <div className={classes.features}>
-        <NavLink activeClassName={classes["feature-elem-active"]} to="/vaults">
+        <NavLink
+          activeClassName={classes["feature-elem-active"]}
+          to="/vaults"
+          style={{ textDecoration: "none" }}
+        >
           <div className={classes["feature-elem"]}>
             <img
               className={classes["feature-community-img"]}
@@ -172,7 +176,11 @@ const Navbar = () => {
           </div>
         </NavLink>
 
-        <NavLink activeClassName={classes["feature-elem-active"]} to="/swap">
+        <NavLink
+          activeClassName={classes["feature-elem-active"]}
+          to="/swap"
+          style={{ textDecoration: "none" }}
+        >
           <div className={classes["feature-elem"]}>
             <img
               className={classes["feature-community-img"]}
@@ -183,7 +191,11 @@ const Navbar = () => {
           </div>
         </NavLink>
 
-        <NavLink activeClassName={classes["feature-elem-active"]} to="/farm">
+        <NavLink
+          activeClassName={classes["feature-elem-active"]}
+          to="/farm"
+          style={{ textDecoration: "none" }}
+        >
           <div className={classes["feature-elem"]}>
             <img
               className={classes["feature-community-img"]}
@@ -197,6 +209,7 @@ const Navbar = () => {
         <NavLink
           activeClassName={classes["feature-elem-active"]}
           to="/exchange"
+          style={{ textDecoration: "none" }}
         >
           <div className={classes["feature-elem"]}>
             <img
@@ -230,7 +243,12 @@ const Navbar = () => {
       <h1 id={classes["community-h1"]}>COMMUNITY</h1>
       <div className={classes.features}>
         <div className={classes["feature-elem"]}>
-          <a href="https://snapshot.org/#/ghouldao.eth" target="_blank">
+          <a
+            href="https://snapshot.org/#/ghouldao.eth"
+            target="_blank"
+            style={{ textDecoration: "none" }}
+            style={{ textDecoration: "none", color: "#5B5D64" }}
+          >
             <img
               className={classes["feature-community-img"]}
               src={governance}
@@ -243,7 +261,11 @@ const Navbar = () => {
         </div>
 
         <div className={classes["feature-elem"]}>
-          <a href="https://t.me/poltergeistlabs" target="_blank">
+          <a
+            href="https://t.me/poltergeistlabs"
+            target="_blank"
+            style={{ textDecoration: "none", color: "#5B5D64" }}
+          >
             <img
               className={classes["feature-community-img"]}
               src={socials}
@@ -255,7 +277,12 @@ const Navbar = () => {
           </a>
         </div>
         <div className={classes["feature-elem"]}>
-          <a href="http://twitter.com/poltergeistlabs" target="_blank">
+          <a
+            href="http://twitter.com/poltergeistlabs"
+            target="_blank"
+            style={{ textDecoration: "none" }}
+            style={{ textDecoration: "none", color: "#5B5D64" }}
+          >
             <img
               className={classes["feature-community-img"]}
               src={socials}
@@ -268,7 +295,11 @@ const Navbar = () => {
         </div>
 
         <div className={classes["feature-elem"]}>
-          <a href="https://docs.ghoul.finance/" target="_blank">
+          <a
+            href="https://docs.ghoul.finance/"
+            target="_blank"
+            style={{ textDecoration: "none", color: "#5B5D64" }}
+          >
             <img
               className={classes["feature-community-img"]}
               src={docsSupprt}

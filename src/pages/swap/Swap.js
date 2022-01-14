@@ -4,20 +4,32 @@ import Header from "../../components/header/Header";
 import ghoulLogo from "../../assets/ghoul_logo.svg";
 import daiLogo from "../../assets/dai_logo.svg";
 import swapArrows from "../../assets/swap-arrows.svg";
-import { swapAddress } from "../../utils/contract_test_abis_repo";
+import {
+  swapAddress,
+  busdSwapAddress,
+  usdcSwapAddress,
+  usdtSwapAddress,
+} from "../../utils/contract_test_abis_repo";
 import Web3Context from "../../store/Web3-context";
 import LoadingImg from "../../components/loading-img-component/LoadingImg";
 import { ethers } from "ethers";
 import SnackbarUI from "../../components/snackbar/SnackbarUI";
+import Button from "@mui/material/Button";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
+import Fade from "@mui/material/Fade";
 
 const Swap = () => {
   const web3Ctx = useContext(Web3Context);
-
+  console.log(web3Ctx);
   const [isLoadingReserves, setIsLoadingReserves] = useState(false);
   const [reserves, setReserves] = useState({});
   const [togDai, setTogDai] = useState(true);
   const [daiApproved, setDaiApproved] = useState(false);
   const [gDaiApproved, setgDaiApproved] = useState(false);
+  const [busdApproved, setBusdApproved] = useState(false);
+  const [usdcApproved, setUsdcApproved] = useState(false);
+  const [usdtApproved, setUsdtApproved] = useState(false);
   const [isLoadingSwap, setIsLoadingSwap] = useState(false);
   const [exceedingBalance, setExceedingBalance] = useState(false);
   const [exceedingBalanceWallet, setExceedingBalanceWallet] = useState(false);
@@ -27,18 +39,54 @@ const Swap = () => {
     open: false,
     error: false,
   });
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [coin, setCoin] = useState("DAI");
+  const [coinBalance, setCoinBalance] = useState(0);
+
+  const open = Boolean(anchorEl);
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = (event) => {
+    const { myValue } = event.currentTarget.dataset;
+    if (!myValue) {
+      setAnchorEl(null);
+      return;
+    }
+    setCoin(myValue);
+    setAnchorEl(null);
+  };
 
   const loadReserves = useCallback(async () => {
     try {
       setIsLoadingReserves(true);
+      // BALANCES
       const gDaiBalance = await web3Ctx.tokenContract.balanceOf(
         web3Ctx.walletAddress
       );
       const gDaiBalanceFormat = ethers.utils.formatEther(gDaiBalance);
+
       const daiBalance = await web3Ctx.daiContract.balanceOf(
         web3Ctx.walletAddress
       );
       const daiBalanceFormat = ethers.utils.formatEther(daiBalance);
+
+      const busdBalance = await web3Ctx.busdSwapContract.balanceOf(
+        web3Ctx.walletAddress
+      );
+      const busdBalanceFormat = ethers.utils.formatEther(busdBalance);
+      const usdcBalance = await web3Ctx.usdcSwapContract.balanceOf(
+        web3Ctx.walletAddress
+      );
+      const usdcBalanceFormat = ethers.utils.formatEther(usdcBalance);
+      const usdtBalance = await web3Ctx.usdtSwapContract.balanceOf(
+        web3Ctx.walletAddress
+      );
+      const usdtBalanceFormat = ethers.utils.formatEther(usdtBalance);
+
+      // ALLOWANCES
       const gDaiAllowance = await web3Ctx.tokenContract.allowance(
         web3Ctx.walletAddress,
         swapAddress
@@ -49,11 +97,49 @@ const Swap = () => {
         web3Ctx.walletAddress,
         swapAddress
       );
-
       const daiAllowanceFormat = ethers.utils.formatEther(
         daiAllowance.toString()
       );
 
+      const busdAllowance = await web3Ctx.busdSwapContract.allowance(
+        web3Ctx.walletAddress,
+        busdSwapAddress
+      );
+      const busdAllowanceFormat = ethers.utils.formatEther(busdAllowance);
+
+      const usdcAllowance = await web3Ctx.usdcSwapContract.allowance(
+        web3Ctx.walletAddress,
+        usdcSwapAddress
+      );
+      const usdcAllowanceFormat = ethers.utils.formatEther(usdcAllowance);
+
+      const usdtAllowance = await web3Ctx.usdtSwapContract.allowance(
+        web3Ctx.walletAddress,
+        usdtSwapAddress
+      );
+      const usdtAllowanceFormat = ethers.utils.formatEther(usdtAllowance);
+
+      if (parseInt(gDaiAllowanceFormat) !== 0) {
+        setgDaiApproved(true);
+      }
+
+      if (daiAllowanceFormat !== 0) {
+        setDaiApproved(true);
+      }
+
+      if (busdAllowanceFormat !== 0) {
+        setBusdApproved(true);
+      }
+
+      if (usdcAllowanceFormat !== 0) {
+        setUsdcApproved(true);
+      }
+
+      if (usdtAllowanceFormat !== 0) {
+        setUsdtApproved(true);
+      }
+
+      // RESERVES
       const reserve = await web3Ctx.swapContract.getReserves();
       const daiRate = await web3Ctx.swapContract.daiRate();
       const daiRateFormat = parseInt(daiRate._hex, 16);
@@ -67,13 +153,44 @@ const Swap = () => {
         ethers.utils.formatEther(reserve[1].toString())
       ).toFixed(2);
 
-      if (parseInt(gDaiAllowanceFormat) !== 0) {
-        setgDaiApproved(true);
-      }
+      const busdReserves = await web3Ctx.busdSwapContract.getReserves();
+      const busdRate = await web3Ctx.busdSwapContract.busdRate();
+      const busdRateFormat = parseInt(busdRate._hex, 16);
+      const gDaiRateBusd = await web3Ctx.busdSwapContract.ghostdaiRate();
+      const gDaiRateBusdFormat = parseInt(gDaiRateBusd._hex, 16);
 
-      if (daiAllowanceFormat !== 0) {
-        setDaiApproved(true);
-      }
+      const gdaiReserveFormatBusd = parseFloat(
+        ethers.utils.formatEther(busdReserves[0].toString())
+      ).toFixed(2);
+      const busdReserveFormat = parseFloat(
+        ethers.utils.formatEther(busdReserves[1].toString())
+      ).toFixed(2);
+
+      const usdcReserves = await web3Ctx.usdcSwapContract.getReserves();
+      const usdcRate = await web3Ctx.usdcSwapContract.usdcRate();
+      const usdcRateFormat = parseInt(usdcRate._hex, 16);
+      const gDaiRateUsdc = await web3Ctx.usdcSwapContract.ghostdaiRate();
+      const gDaiRateUsdcFormat = parseInt(gDaiRateUsdc._hex, 16);
+
+      const gdaiReserveFormatUsdc = parseFloat(
+        ethers.utils.formatEther(usdcReserves[0].toString())
+      ).toFixed(2);
+      const usdcReserveFormat = parseFloat(
+        ethers.utils.formatEther(usdcReserves[1].toString())
+      ).toFixed(2);
+
+      const usdtReserves = await web3Ctx.usdtSwapContract.getReserves();
+      const usdtRate = await web3Ctx.usdtSwapContract.usdtRate();
+      const usdtRateFormat = parseInt(usdtRate._hex, 16);
+      const gDaiRateUsdt = await web3Ctx.usdtSwapContract.ghostdaiRate();
+      const gDaiRateUsdtFormat = parseInt(gDaiRateUsdt._hex, 16);
+
+      const gdaiReserveFormatUsdt = parseFloat(
+        ethers.utils.formatEther(usdtReserves[0].toString())
+      ).toFixed(2);
+      const usdtReserveFormat = parseFloat(
+        ethers.utils.formatEther(usdtReserves[1].toString())
+      ).toFixed(2);
 
       setReserves({
         gDaiBalance: gDaiBalanceFormat,
@@ -91,9 +208,12 @@ const Swap = () => {
       console.log(error);
     }
   }, [
+    web3Ctx.busdSwapContract,
     web3Ctx.daiContract,
     web3Ctx.swapContract,
     web3Ctx.tokenContract,
+    web3Ctx.usdcSwapContract,
+    web3Ctx.usdtSwapContract,
     web3Ctx.walletAddress,
   ]);
 
@@ -248,25 +368,53 @@ const Swap = () => {
     let recieveValue;
 
     if (togDai) {
-      recieveValue = (
-        (parseFloat(value) * parseFloat(reserves.daiRate)) /
-        100
-      ).toFixed(2);
+      // LOGIC HERE TO HANDLE 3 OTHER COINS
 
-      recieveValue = recieveValue - recieveValue * (1 / 100);
+      switch (coin) {
+        case "DAI":
+          recieveValue = (
+            (parseFloat(value) * parseFloat(reserves.daiRate)) /
+            100
+          ).toFixed(2);
 
-      if (recieveValue > parseFloat(reserves.gDaiReserve)) {
-        setExceedingBalance(true);
-      } else {
-        setExceedingBalance(false);
-      }
+          recieveValue = recieveValue - recieveValue * (1 / 100);
 
-      if (value > reserves.daiBalance) {
-        setExceedingBalanceWallet(true);
-      } else {
-        setExceedingBalanceWallet(false);
+          if (recieveValue > parseFloat(reserves.gDaiReserve)) {
+            setExceedingBalance(true);
+          } else {
+            setExceedingBalance(false);
+          }
+
+          if (value > reserves.daiBalance) {
+            setExceedingBalanceWallet(true);
+          } else {
+            setExceedingBalanceWallet(false);
+          }
+          break;
+        case "BUSD":
+          break;
+        case "USDC":
+          break;
+        case "USDT":
+          break;
+
+        default:
+          break;
       }
     } else {
+      switch (coin) {
+        case "DAI":
+          break;
+        case "BUSD":
+          break;
+        case "USDC":
+          break;
+        case "USDT":
+          break;
+
+        default:
+          break;
+      }
       recieveValue = (
         (parseFloat(value) * parseFloat(reserves.gDaiRate)) /
         100
@@ -304,10 +452,55 @@ const Swap = () => {
             <div className={classes["swap-line"]}></div>
             <div className={classes["swap-box-header"]}>
               <span className={classes["col-one"]}>
-                Deposit <span id={classes.dai}>{togDai ? "DAI" : "gDAI"}</span>
+                Deposit <span id={classes.dai}>{togDai ? coin : "gDAI"}</span>
+                <div id={classes["dai-2"]}>
+                  <Button
+                    id="fade-button"
+                    aria-controls={open ? "fade-menu" : undefined}
+                    aria-haspopup="true"
+                    aria-expanded={open ? "true" : undefined}
+                    onClick={handleClick}
+                    style={{
+                      color: "#74ec65",
+                    }}
+                  >
+                    Select Coin
+                  </Button>
+                  <Menu
+                    id="fade-menu"
+                    MenuListProps={{
+                      "aria-labelledby": "fade-button",
+                    }}
+                    anchorEl={anchorEl}
+                    open={open}
+                    onClose={handleClose}
+                    TransitionComponent={Fade}
+                    PaperProps={{
+                      style: {
+                        transform: "translateX(-280px) translateY(-79px)",
+                        backgroundColor: "#090a10ba",
+                        color: "white",
+                      },
+                    }}
+                  >
+                    <MenuItem data-my-value={"DAI"} onClick={handleClose}>
+                      DAI
+                    </MenuItem>
+                    <MenuItem data-my-value={"BUSD"} onClick={handleClose}>
+                      BUSD
+                    </MenuItem>
+                    <MenuItem data-my-value={"USDC"} onClick={handleClose}>
+                      USDC
+                    </MenuItem>
+                    <MenuItem data-my-value={"USDT"} onClick={handleClose}>
+                      USDT
+                    </MenuItem>
+                  </Menu>
+                </div>
               </span>
+
               <span className={classes["col-two"]}>
-                {togDai ? "DAI" : "gDAI"}
+                {togDai ? coin : "gDAI"}
                 {" Balance: "}
                 <span id={classes.balance}>
                   {togDai ? reserves.daiBalance : reserves.gDaiBalance}
@@ -334,10 +527,10 @@ const Swap = () => {
             </div>
             <div className={classes["swap-box-header"]}>
               <span className={classes["col-one"]}>
-                Recieve <span id={classes.dai}>{togDai ? "gDAI" : "DAI"}</span>
+                Recieve <span id={classes.dai}>{togDai ? "gDAI" : coin}</span>
               </span>
               <span className={classes["col-two"]}>
-                Availble {togDai ? "gDAI: " : "DAI: "}
+                Availble {togDai ? "gDAI: " : `${coin}:`}
                 <span id={classes.balance}>
                   {togDai ? reserves.gDaiReserve : reserves.daiReserve}
                 </span>

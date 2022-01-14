@@ -46,6 +46,9 @@ const defaultWeb3State = {
   wethContract: "",
   goulXContract: "",
   liquidatorContract: "",
+  busdSwapContract: "",
+  usdcSwapContract: "",
+  usdtSwapContract: "",
 };
 
 const web3Reducer = (state, action) => {
@@ -70,6 +73,9 @@ const web3Reducer = (state, action) => {
       wethContract: ethersContracts.wethContract,
       goulXContract: "", ///"ethersContracts.goulXContract",
       liquidatorContract: ethersContracts.liquidatorContract,
+      busdSwapContract: ethersContracts.busdSwapContract,
+      usdcSwapContract: ethersContracts.usdcSwapContract,
+      usdtSwapContract: ethersContracts.usdtSwapContract,
     };
   }
 
@@ -145,6 +151,21 @@ const Web3Provider = (props) => {
       contracts.liquidatorAbi,
       signer
     );
+    const busdSwap = new ethers.Contract(
+      contracts.busdSwapAddress,
+      contracts.busdAbi,
+      signer
+    );
+    const usdcSwap = new ethers.Contract(
+      contracts.usdcSwapAddress,
+      contracts.usdcAbi,
+      signer
+    );
+    const usdtSwap = new ethers.Contract(
+      contracts.usdtSwapAddress,
+      contracts.usdtAbi,
+      signer
+    );
 
     return {
       daiContract: daiContract,
@@ -156,6 +177,9 @@ const Web3Provider = (props) => {
       wethContract: wethContract,
       goulXContract: goulXContract,
       liquidatorContract: liquidator,
+      busdSwapContract: busdSwap,
+      usdcSwapContract: usdcSwap,
+      usdtSwapContract: usdtSwap,
     };
   };
 
@@ -284,6 +308,9 @@ const Web3Provider = (props) => {
     wethContract: web3State.wethContract,
     goulXContract: web3State.goulXContract,
     liquidatorContract: web3State.liquidatorContract,
+    busdSwapContract: web3State.busdSwapContract,
+    usdcSwapContract: web3State.usdcSwapContract,
+    usdtSwapContract: web3State.usdtSwapContract,
     connectWallet: connectWalletHandler,
     checkIfWalletConnected: checkIfWalletIsConnectedHandler,
     manualConnect: manualConnectHandler,

@@ -76,6 +76,13 @@
   color: rgba(255, 255, 255, 0.4);
 }
 
+#dai-2 {
+  color: rgba(255, 255, 255, 0.4);
+  position: absolute;
+  left: 81%;
+  top: 4%;
+}
+
 #balance {
   color: rgba(255, 184, 8);
 }

@@ -8,6 +8,7 @@ import { swapAddress } from "../../utils/contract_test_abis_repo";
 import Web3Context from "../../store/Web3-context";
 import LoadingImg from "../../components/loading-img-component/LoadingImg";
 import { ethers } from "ethers";
+import SnackbarUI from "../../components/snackbar/SnackbarUI";
 
 const Swap = () => {
   const web3Ctx = useContext(Web3Context);
@@ -19,8 +20,13 @@ const Swap = () => {
   const [gDaiApproved, setgDaiApproved] = useState(false);
   const [isLoadingSwap, setIsLoadingSwap] = useState(false);
   const [exceedingBalance, setExceedingBalance] = useState(false);
+  const [exceedingBalanceWallet, setExceedingBalanceWallet] = useState(false);
   const [inputOneValue, setInputOneValue] = useState(0);
   const [inputTwoValue, setInputTwoValue] = useState(0);
+  const [snackbarOpen, setSnackbarOpen] = useState({
+    open: false,
+    error: false,
+  });
 
   const loadReserves = useCallback(async () => {
     try {
@@ -121,6 +127,7 @@ const Swap = () => {
           ethers.utils.parseEther("1000000000000000")
         );
 
+        setSnackbarOpen({ open: true, error: false });
         await tx.wait();
       } else {
         const tx = await web3Ctx.tokenContract.approve(
@@ -128,11 +135,13 @@ const Swap = () => {
           ethers.utils.parseEther("1000000000000000")
         );
 
+        setSnackbarOpen({ open: true, error: false });
         await tx.wait();
       }
 
       loadReserves();
     } catch (error) {
+      setSnackbarOpen({ open: true, error: true });
       console.log(error);
     }
 
@@ -140,6 +149,11 @@ const Swap = () => {
   };
 
   const swapHandler = async () => {
+    if (inputOneValue <= 0) {
+      setSnackbarOpen({ open: true, error: true });
+      return;
+    }
+
     try {
       setIsLoadingSwap(true);
       if (togDai) {
@@ -148,6 +162,7 @@ const Swap = () => {
         const tx = await web3Ctx.swapContract.swapFrom(
           ethers.utils.parseEther(inputOneValue.toString())
         );
+        setSnackbarOpen({ open: true, error: false });
         await tx.wait();
         loadReserves();
         setInputOneValue(0);
@@ -159,6 +174,7 @@ const Swap = () => {
         const tx = await web3Ctx.swapContract.swapTo(
           ethers.utils.parseEther(inputOneValue.toString())
         );
+        setSnackbarOpen({ open: true, error: false });
         await tx.wait();
         setInputOneValue(0);
         setInputTwoValue(0);
@@ -168,6 +184,7 @@ const Swap = () => {
       }
     } catch (error) {
       console.log(error);
+      setSnackbarOpen({ open: true, error: true });
       setIsLoadingSwap(false);
     }
   };
@@ -220,13 +237,13 @@ const Swap = () => {
       setgDaiApproved(false);
     }
 
-    if (togDai && value > parseFloat(reserves.daiBalance)) {
-      value = reserves.daiBalance;
-    }
+    // if (togDai && value > parseFloat(reserves.daiBalance)) {
+    //   value = reserves.daiBalance;
+    // }
 
-    if (!togDai && value > parseFloat(reserves.gDaiBalance)) {
-      value = reserves.gDaiBalance;
-    }
+    // if (!togDai && value > parseFloat(reserves.gDaiBalance)) {
+    //   value = reserves.gDaiBalance;
+    // }
 
     let recieveValue;
 
@@ -243,6 +260,12 @@ const Swap = () => {
       } else {
         setExceedingBalance(false);
       }
+
+      if (value > reserves.daiBalance) {
+        setExceedingBalanceWallet(true);
+      } else {
+        setExceedingBalanceWallet(false);
+      }
     } else {
       recieveValue = (
         (parseFloat(value) * parseFloat(reserves.gDaiRate)) /
@@ -253,6 +276,12 @@ const Swap = () => {
         setExceedingBalance(true);
       } else {
         setExceedingBalance(false);
+      }
+
+      if (value > reserves.gDaiBalance) {
+        setExceedingBalanceWallet(true);
+      } else {
+        setExceedingBalanceWallet(false);
       }
     }
 
@@ -266,98 +295,102 @@ const Swap = () => {
     <div className={classes["swap-container"]}>
       <Header title="Swap"></Header>
       <div id={classes["vault-line"]}></div>
-
-      <div className={classes["swap-box"]}>
-        <>
-          <h1 id={classes["mint-gdai"]}> Mint gDai with Dai</h1>
-          <div className={classes["swap-line"]}></div>
-          <div className={classes["swap-box-header"]}>
-            <span className={classes["col-one"]}>
-              Deposit <span id={classes.dai}>{togDai ? "Dai" : "gDai"}</span>
-            </span>
-            <span className={classes["col-two"]}>
-              {togDai ? "Dai" : "gDai"}
-              {" Balance: "}
-              <span id={classes.balance}>
-                {togDai ? reserves.daiBalance : reserves.gDaiBalance}
+      {isLoadingReserves ? (
+        <LoadingImg />
+      ) : (
+        <div className={classes["swap-box"]}>
+          <>
+            <h1 id={classes["mint-gdai"]}> Mint gDAI with Stablecoins</h1>
+            <div className={classes["swap-line"]}></div>
+            <div className={classes["swap-box-header"]}>
+              <span className={classes["col-one"]}>
+                Deposit <span id={classes.dai}>{togDai ? "DAI" : "gDAI"}</span>
               </span>
-            </span>
-          </div>
-          <div className={classes["swap-input"]}>
-            <img src={togDai ? daiLogo : ghoulLogo} alt="" />
-            <input
-              type="number"
-              defaultValue={0}
-              max={togDai ? reserves.daiBalance : reserves.gDaiBalance}
-              value={inputOneValue}
-              onChange={(e) => {
-                inputOneHandler(e.target.value);
-              }}
-            />
-            <span id={classes.max} onClick={maxHandlerOne}>
-              MAX
-            </span>
-          </div>
-          <div className={classes["swap-arrow"]}>
-            <img src={swapArrows} alt="" onClick={flipHandler} />
-          </div>
-          <div className={classes["swap-box-header"]}>
-            <span className={classes["col-one"]}>
-              Recieve <span id={classes.dai}>{togDai ? "gDai" : "Dai"}</span>
-            </span>
-            <span className={classes["col-two"]}>
-              Availble {togDai ? "gDai: " : "Dai: "}
-              <span id={classes.balance}>
-                {togDai ? reserves.gDaiReserve : reserves.daiReserve}
+              <span className={classes["col-two"]}>
+                {togDai ? "DAI" : "gDAI"}
+                {" Balance: "}
+                <span id={classes.balance}>
+                  {togDai ? reserves.daiBalance : reserves.gDaiBalance}
+                </span>
               </span>
-            </span>
-          </div>
-          <div className={classes["swap-input"]}>
-            <img src={togDai ? ghoulLogo : daiLogo} alt="" />
-            <input
-              type="number"
-              defaultValue={0}
-              max={togDai ? reserves.gDaiBalance : reserves.daiBalance}
-              value={inputTwoValue}
-              onChange={(e) => {
-                inputTwoHandler(e.target.value);
-              }}
-            />
-          </div>
-          <div id={classes["swap-btn-div"]}>
-            {exceedingBalance && (
-              <button id={classes["approve-btn"]} onClick={approveHandler}>
-                Deposit Exceeds Available Reserves
-              </button>
-            )}
-            {togDai &&
-              !exceedingBalance &&
-              (daiApproved ? (
-                <button id={classes["swap-btn"]} onClick={swapHandler}>
-                  Swap
+            </div>
+            <div className={classes["swap-input"]}>
+              <img src={togDai ? daiLogo : ghoulLogo} alt="" />
+              <input
+                type="number"
+                defaultValue={0}
+                max={togDai ? reserves.daiBalance : reserves.gDaiBalance}
+                value={inputOneValue}
+                onChange={(e) => {
+                  inputOneHandler(e.target.value);
+                }}
+              />
+              <span id={classes.max} onClick={maxHandlerOne}>
+                MAX
+              </span>
+            </div>
+            <div className={classes["swap-arrow"]}>
+              <img src={swapArrows} alt="" onClick={flipHandler} />
+            </div>
+            <div className={classes["swap-box-header"]}>
+              <span className={classes["col-one"]}>
+                Recieve <span id={classes.dai}>{togDai ? "gDAI" : "DAI"}</span>
+              </span>
+              <span className={classes["col-two"]}>
+                Availble {togDai ? "gDAI: " : "DAI: "}
+                <span id={classes.balance}>
+                  {togDai ? reserves.gDaiReserve : reserves.daiReserve}
+                </span>
+              </span>
+            </div>
+            <div className={classes["swap-input"]}>
+              <img src={togDai ? ghoulLogo : daiLogo} alt="" />
+              <input
+                type="number"
+                defaultValue={0}
+                max={togDai ? reserves.gDaiBalance : reserves.daiBalance}
+                value={inputTwoValue}
+                onChange={(e) => {
+                  inputTwoHandler(e.target.value);
+                }}
+              />
+            </div>
+            <div id={classes["swap-btn-div"]}>
+              {exceedingBalance && (
+                <button id={classes["approve-btn"]}>
+                  Deposit Exceeds Available Reserves or User Balance
                 </button>
-              ) : (
-                <button id={classes["approve-btn"]} onClick={approveHandler}>
-                  Approve Dai
-                </button>
-              ))}
-            {!togDai &&
-              !exceedingBalance &&
-              (gDaiApproved ? (
-                <button id={classes["swap-btn"]} onClick={swapHandler}>
-                  Swap
-                </button>
-              ) : (
-                <button id={classes["approve-btn"]} onClick={approveHandler}>
-                  Approve gDai
-                </button>
-              ))}
-          </div>
-          <div id={classes["footer-text"]}>
-            <p>Static fee of 1%</p>
-          </div>
-        </>
-      </div>
+              )}
+              {togDai &&
+                !exceedingBalance &&
+                (daiApproved ? (
+                  <button id={classes["swap-btn"]} onClick={swapHandler}>
+                    Swap
+                  </button>
+                ) : (
+                  <button id={classes["approve-btn"]} onClick={approveHandler}>
+                    Approve DAI
+                  </button>
+                ))}
+              {!togDai &&
+                !exceedingBalance &&
+                (gDaiApproved ? (
+                  <button id={classes["swap-btn"]} onClick={swapHandler}>
+                    Swap
+                  </button>
+                ) : (
+                  <button id={classes["approve-btn"]} onClick={approveHandler}>
+                    Approve gDAI
+                  </button>
+                ))}
+            </div>
+            <div id={classes["footer-text"]}>
+              <p>Static fee of 1%</p>
+            </div>
+          </>
+          {snackbarOpen.open && <SnackbarUI error={snackbarOpen.error} />}
+        </div>
+      )}
     </div>
   );
 };

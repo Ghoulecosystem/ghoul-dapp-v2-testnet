@@ -81,6 +81,10 @@
   cursor: pointer;
 }
 
+.vault-navigation > div:hover {
+  border-color: rgb(255, 255, 255);
+}
+
 .vault-line {
   margin-top: 1.5rem;
 

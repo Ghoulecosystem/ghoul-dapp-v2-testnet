@@ -9,6 +9,7 @@ import { ethers } from "ethers";
 import { lpAbi, farmAddress } from "../../utils/contract_test_abis_repo";
 import { parseEther } from "ethers/lib/utils";
 import LoadingImg from "../../components/loading-img-component/LoadingImg";
+import SnackbarUI from "../../components/snackbar/SnackbarUI";
 
 const modalStyle = {
   overlay: {
@@ -62,6 +63,10 @@ const Farm = () => {
   const [modalIsOpen, setIsOpen] = useState(false);
   const [isLoadingPools, setIsLoadingPools] = useState(false);
   const [modalData, setModalData] = useState({});
+  const [snackbarOpen, setSnackbarOpen] = useState({
+    open: false,
+    error: false,
+  });
 
   const modalStyleLP = window.isMobile ? modalStyleMobile : modalStyle;
 
@@ -150,10 +155,12 @@ const Farm = () => {
         parseEther("1000000000000000")
       );
       setIsLoadingPools(true);
+      setSnackbarOpen({ open: true, error: false });
       await tx.wait();
       loadPools();
       setIsLoadingPools(false);
     } catch (error) {
+      setSnackbarOpen({ open: true, error: true });
       console.log(error);
       setIsLoadingPools(false);
     }
@@ -166,11 +173,12 @@ const Farm = () => {
         id,
         ethers.utils.parseEther(amount.toString())
       );
-
+      setSnackbarOpen({ open: true, error: false });
       await tx.wait();
       loadPools();
       setIsLoadingPools(false);
     } catch (error) {
+      setSnackbarOpen({ open: true, error: true });
       console.log(error);
       setIsLoadingPools(false);
     }
@@ -180,10 +188,12 @@ const Farm = () => {
     try {
       const tx = await web3Ctx.farmContract.withdraw(id, 0);
       setIsLoadingPools(true);
+      setSnackbarOpen({ open: true, error: false });
       await tx.wait();
       loadPools();
       setIsLoadingPools(false);
     } catch (error) {
+      setSnackbarOpen({ open: true, error: true });
       console.log(error);
       setIsLoadingPools(false);
     }
@@ -197,10 +207,12 @@ const Farm = () => {
         ethers.utils.formatEther(amount.toString())
       );
       setIsLoadingPools(true);
+      setSnackbarOpen({ open: true, error: false });
       await tx.wait();
       loadPools();
       setIsLoadingPools(false);
     } catch (error) {
+      setSnackbarOpen({ open: true, error: true });
       console.log(error);
       setIsLoadingPools(false);
     }
@@ -285,6 +297,9 @@ const Farm = () => {
             withdrawHandler={withdraw}
           />
         </Modal>
+      </div>
+      <div>
+        {snackbarOpen.open && <SnackbarUI error={snackbarOpen.error} />}
       </div>
     </div>
   );

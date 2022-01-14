@@ -40,6 +40,7 @@ function App() {
         <Route path="/farm">
           <Farm />
         </Route>
+        <Redirect from="*" to="/" />
       </Switch>
     </Layout>
   );

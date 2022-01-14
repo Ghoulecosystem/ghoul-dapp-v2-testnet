@@ -229,6 +229,12 @@
   color: rgba(255, 255, 255, 0.3);
 }
 
+.snackbar-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 @media screen and (max-width: 688px) {
   .vault-modal-container {
     position: absolute;

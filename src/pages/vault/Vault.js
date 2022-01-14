@@ -299,52 +299,52 @@ const Vault = () => {
     };
   }, [wethVaultContract]);
 
+  const getBalances = useCallback(async () => {
+    const gdaiBalance = await tokenContract.balanceOf(walletAddress);
+    const gdaiBalanceFormat = parseFloat(
+      ethers.utils.formatEther(gdaiBalance)
+    ).toFixed(2);
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+
+    const balance = await provider.getBalance(walletAddress);
+    const balanceWeth = await wethContract.balanceOf(walletAddress);
+
+    const balanceFormat = ethers.utils.formatEther(balance);
+    const balanceWethFormat = ethers.utils.formatEther(balanceWeth);
+
+    const allowanceBNB = await tokenContract.allowance(
+      walletAddress,
+      tokenAddress
+    );
+
+    const allowanceWeth = await tokenContract.allowance(
+      walletAddress,
+      wethVaultAddress
+    );
+
+    const depositAllowance = await wethContract.allowance(
+      walletAddress,
+      wethVaultAddress
+    );
+
+    const allowanceBNBFormat = ethers.utils.formatEther(allowanceBNB);
+    const allowanceWethFormat = ethers.utils.formatEther(allowanceWeth);
+    const depositAllowanceFormat = ethers.utils.formatEther(depositAllowance);
+
+    setAllowances({
+      allowanceBNB: allowanceBNBFormat,
+      allowanceWeth: allowanceWethFormat,
+      depositAllowance: depositAllowanceFormat,
+    });
+
+    setBalances({
+      bnbBalance: balanceFormat,
+      wethBalance: balanceWethFormat,
+      gdaiBalance: gdaiBalanceFormat,
+    });
+  }, []);
+
   useEffect(() => {
-    const getBalances = async () => {
-      const gdaiBalance = await tokenContract.balanceOf(walletAddress);
-      const gdaiBalanceFormat = parseFloat(
-        ethers.utils.formatEther(gdaiBalance)
-      ).toFixed(2);
-      const provider = new ethers.providers.Web3Provider(window.ethereum);
-
-      const balance = await provider.getBalance(walletAddress);
-      const balanceWeth = await wethContract.balanceOf(walletAddress);
-
-      const balanceFormat = ethers.utils.formatEther(balance);
-      const balanceWethFormat = ethers.utils.formatEther(balanceWeth);
-
-      const allowanceBNB = await tokenContract.allowance(
-        walletAddress,
-        tokenAddress
-      );
-
-      const allowanceWeth = await tokenContract.allowance(
-        walletAddress,
-        wethVaultAddress
-      );
-
-      const depositAllowance = await wethContract.allowance(
-        walletAddress,
-        wethVaultAddress
-      );
-
-      const allowanceBNBFormat = ethers.utils.formatEther(allowanceBNB);
-      const allowanceWethFormat = ethers.utils.formatEther(allowanceWeth);
-      const depositAllowanceFormat = ethers.utils.formatEther(depositAllowance);
-
-      setAllowances({
-        allowanceBNB: allowanceBNBFormat,
-        allowanceWeth: allowanceWethFormat,
-        depositAllowance: depositAllowanceFormat,
-      });
-
-      setBalances({
-        bnbBalance: balanceFormat,
-        wethBalance: balanceWethFormat,
-        gdaiBalance: gdaiBalanceFormat,
-      });
-    };
-
     getBalances();
     return () => {
       setBalances({});
@@ -677,6 +677,7 @@ const Vault = () => {
     newArray[existingVaultIndex] = vaultObj;
 
     setUserVaultsBNB(newArray);
+    getBalances();
   };
 
   const depositCollateralWethVault = async (vaultId) => {
@@ -722,6 +723,7 @@ const Vault = () => {
     newArray[existingVaultIndex] = vaultObj;
 
     setUserVaultsWeth(newArray);
+    getBalances();
   };
 
   const liquidateVault = async (id, isBNB) => {
@@ -926,7 +928,7 @@ const Vault = () => {
         {vaultManager && !window.isMobile && (
           <>
             <div>VAULT ID</div>
-            <div>COLLATERAL (BNB)</div>
+            <div>COLLATERAL</div>
             <div>DEBT (gDAI)</div>
             <div>RATIO (%)</div>
           </>

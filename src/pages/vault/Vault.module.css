@@ -267,6 +267,7 @@
     margin-top: 1rem;
     gap: 2rem;
     padding-left: 2.2rem;
+    white-space: nowrap;
   }
 
   .create-vault-mobile {
@@ -292,14 +293,250 @@
   }
 }
 
+@media screen and (max-width: 414px) {
+  .vaults {
+    margin-bottom: 5rem;
+  }
+  .all-vaults-mobile {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 1rem;
+    gap: 3rem;
+    padding-left: 2rem;
+  }
+
+  .create-vault-mobile {
+    width: 235px;
+  }
+
+  .all-vaults-mobile-container {
+    position: absolute;
+    left: 23%;
+    top: 20%;
+  }
+
+  .menu-container {
+    position: absolute;
+    top: 0%;
+    left: 50%;
+  }
+  .vault-navigation {
+    padding-right: 2rem;
+  }
+
+  #vault-navigation-1 {
+    width: 40vw;
+  }
+
+  #vault-navigation-2 {
+    width: 42vw;
+  }
+
+  #close-to-liq-mobile {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 22px;
+    /* or 122% */
+
+    display: flex;
+    align-items: center;
+
+    /* Lightmode/Colour - White */
+
+    color: rgba(255, 255, 255, 0.2);
+
+    white-space: nowrap;
+    background: none;
+  }
+}
+
+@media screen and (max-width: 414px) {
+  .all-vaults-mobile-container {
+    position: absolute;
+    left: 23%;
+    top: 19.5%;
+  }
+
+  .vault-navigation {
+    display: flex;
+    gap: 1.7rem;
+    padding-right: 0;
+    padding-left: 0.7rem;
+  }
+
+  #vault-navigation-1 {
+    width: 39vw;
+  }
+
+  #vault-navigation-2 {
+    width: 39vw;
+  }
+}
+
+@media screen and (max-width: 393px) {
+  .all-vaults-mobile-container {
+    position: absolute;
+    left: 24%;
+    top: 21%;
+  }
+
+  .vault-navigation {
+    display: flex;
+    gap: 1.7rem;
+    padding-right: 0;
+    padding-left: 0.7rem;
+  }
+
+  #vault-navigation-1 {
+    width: 39vw;
+  }
+
+  #vault-navigation-2 {
+    width: 39vw;
+  }
+
+  .all-vaults-mobile {
+    gap: 1.8rem;
+    padding-left: 2rem;
+  }
+}
+
+@media screen and (max-width: 390px) {
+  .all-vaults-mobile-container {
+    position: absolute;
+    left: 23.5%;
+    top: 21.5%;
+  }
+
+  .all-vaults-mobile {
+    margin-top: 1rem;
+    gap: 2rem;
+    padding-left: 2rem;
+  }
+
+  .vault-navigation {
+    display: flex;
+    gap: 1.1rem;
+    padding-right: 0;
+    padding-left: 0.7rem;
+  }
+
+  #vault-navigation-1 {
+    width: 40vw;
+  }
+
+  #vault-navigation-2 {
+    width: 41vw;
+  }
+}
+
+@media screen and (max-width: 384px) {
+  .all-vaults-mobile-container {
+    position: absolute;
+    left: 23.5%;
+    top: 21%;
+  }
+  .all-vaults-mobile {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 1rem;
+    gap: 2rem;
+    padding-left: 2rem;
+  }
+
+  .vault-navigation {
+    display: flex;
+    gap: 1.7rem;
+    padding-right: 0;
+    padding-left: 0.7rem;
+  }
+
+  #vault-navigation-1 {
+    width: 40vw;
+  }
+
+  #vault-navigation-2 {
+    width: 41vw;
+  }
+}
+
 @media screen and (max-width: 375px) {
   .vault-navigation {
     padding-right: 5rem;
   }
+
+  .vault-container {
+    overflow-y: scroll;
+    height: 100%;
+  }
+
+  .create-vault-mobile {
+    width: 220px;
+  }
+
+  #close-to-liq-mobile {
+    font-size: 13px;
+  }
+
+  .all-vaults-mobile-container {
+    position: absolute;
+    left: 25%;
+    top: 27%;
+  }
+
+  .vault-navigation {
+    display: flex;
+    gap: 1.7rem;
+    padding-right: 0;
+    padding-left: 0.1rem;
+  }
+
+  .vault-navigation {
+    display: flex;
+    gap: 1.7rem;
+    padding-right: 0;
+    padding-left: 0.7rem;
+  }
+
+  #vault-navigation-1 {
+    width: 39vw;
+  }
+
+  #vault-navigation-2 {
+    width: 39vw;
+  }
 }
 
 @media screen and (max-width: 360px) {
+  .all-vaults-mobile {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 1rem;
+    gap: 1.9rem;
+    padding-left: 1.8rem;
+  }
+
+  .all-vaults-mobile-container {
+    position: absolute;
+    left: 23%;
+    top: 24.5%;
+  }
+
   .vault-navigation {
-    padding-right: 5rem;
+    display: flex;
+    gap: 1.9rem;
+    padding-left: 0.9rem;
+  }
+
+  #vault-navigation-1 {
+    width: 40vw;
+  }
+
+  #vault-navigation-2 {
+    width: 38vw;
   }
 }

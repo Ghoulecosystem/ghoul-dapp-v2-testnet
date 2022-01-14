@@ -322,4 +322,61 @@
   .deposit-bnb {
     width: 245px;
   }
+
+  #cancel-icon {
+    position: absolute;
+    top: 1%;
+    left: 92%;
+  }
+
+  .vault-modal-header {
+    padding-right: 2rem;
+  }
+}
+
+@media screen and (max-width: 414px) {
+  .vault-modal-container {
+    position: absolute;
+    width: 300px;
+    height: 600px;
+    font: 0.5rem;
+  }
+
+  #collateral-value {
+    left: 78%;
+    top: 12%;
+  }
+
+  #debt-value {
+    left: 78%;
+    top: 18%;
+  }
+
+  #cancel-icon {
+    position: absolute;
+    top: 20%;
+    left: 92%;
+  }
+}
+
+@media screen and (max-width: 375px) {
+  .vault-modal-container {
+    top: 0%;
+  }
+
+  #collateral-value {
+    left: 78%;
+    top: 12%;
+  }
+
+  #debt-value {
+    left: 78%;
+    top: 18%;
+  }
+
+  #cancel-icon {
+    position: absolute;
+    top: 20%;
+    left: 92%;
+  }
 }

@@ -3144,6 +3144,8 @@ const busdSwapAddress = "0xEb76D095d8A75e9Cc2c54475796bd8664FB0001c";
 const usdcSwapAddress = "0x50762947078232f1Cc601A9E74F3650b2c0d0667";
 const usdtSwapAddress = "0xEfACa4c99233a577D5abc570959506B3c7Cb1Dd4";
 
+// BUSD https://testnet.bscscan.com/token/0x8301f2213c0eed49a7e28ae4c3e91722919b8b47#readContract
+// USDC 0x64544969ed7ebf5f083679233325356ebe738930
 export {
   tokenAbi,
   tokenAddress,

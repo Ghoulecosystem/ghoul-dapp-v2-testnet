@@ -27,8 +27,9 @@ const CustomSlider = withStyles({
 })(Slider);
 
 const VaultModal = (props) => {
+  const { innerWidth: width, innerHeight: height } = window;
   let useStyles;
-  if (window.isMobile) {
+  if (width <= 420) {
     useStyles = makeStyles({
       root: {
         width: 270,
@@ -341,7 +342,7 @@ const VaultModal = (props) => {
         </div>
         <div id={classes["close-btn"]}>
           <button onClick={props.closeHandler}>
-            <img src={cancelIcon} alt="" />
+            <img src={cancelIcon} alt="" id={classes["cancel-icon"]} />
           </button>
         </div>
       </div>

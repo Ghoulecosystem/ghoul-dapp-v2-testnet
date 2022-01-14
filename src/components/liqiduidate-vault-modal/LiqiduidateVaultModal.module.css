@@ -161,3 +161,17 @@
     width: 250px;
   }
 }
+
+@media screen and (max-width: 414px) {
+  #collat-value {
+    position: absolute;
+    top: 27%;
+    left: 64%;
+  }
+
+  #debt-value {
+    position: absolute;
+    top: 40%;
+    left: 64%;
+  }
+}

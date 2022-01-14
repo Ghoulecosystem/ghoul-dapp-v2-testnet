@@ -119,13 +119,7 @@ const Navbar = () => {
   };
 
   return (
-    <div
-      className={classes["navbar-container"]}
-      backgroundColor={
-        localStorage.getItem("darkMode") === "false" &&
-        "linear-gradient(170.43deg, #FFFFFF 0%, rgba(234, 234, 234, 0) 99.52%);"
-      }
-    >
+    <div className={classes["navbar-container"]}>
       <div className={classes["logo-container"]}>
         <img src={logo} alt="" />
       </div>

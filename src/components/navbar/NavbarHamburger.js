@@ -139,7 +139,11 @@ const NavbarHamburger = (props) => {
       </div>
       <h1 id={classes["features-h1"]}>FEATURES</h1>
       <div className={classes.features}>
-        <NavLink activeClassName={classes["feature-elem-active"]} to="/vaults">
+        <NavLink
+          activeClassName={classes["feature-elem-active"]}
+          to="/vaults"
+          style={{ textDecoration: "none" }}
+        >
           <div className={classes["feature-elem"]}>
             <img
               className={classes["feature-community-img"]}
@@ -150,7 +154,11 @@ const NavbarHamburger = (props) => {
           </div>
         </NavLink>
 
-        <NavLink activeClassName={classes["feature-elem-active"]} to="/swap">
+        <NavLink
+          activeClassName={classes["feature-elem-active"]}
+          to="/swap"
+          style={{ textDecoration: "none" }}
+        >
           <div className={classes["feature-elem"]}>
             <img
               className={classes["feature-community-img"]}
@@ -161,7 +169,11 @@ const NavbarHamburger = (props) => {
           </div>
         </NavLink>
 
-        <NavLink activeClassName={classes["feature-elem-active"]} to="/farm">
+        <NavLink
+          activeClassName={classes["feature-elem-active"]}
+          to="/farm"
+          style={{ textDecoration: "none" }}
+        >
           <div className={classes["feature-elem"]}>
             <img
               className={classes["feature-community-img"]}
@@ -175,6 +187,7 @@ const NavbarHamburger = (props) => {
         <NavLink
           activeClassName={classes["feature-elem-active"]}
           to="/exchange"
+          style={{ textDecoration: "none" }}
         >
           <div className={classes["feature-elem"]}>
             <img
@@ -208,7 +221,11 @@ const NavbarHamburger = (props) => {
       <h1 id={classes["community-h1"]}>COMMUNITY</h1>
       <div className={classes.features}>
         <div className={classes["feature-elem"]}>
-          <a href="https://www.ghoul.finance/#" target="_blank">
+          <a
+            href="https://www.ghoul.finance/#"
+            target="_blank"
+            style={{ textDecoration: "none", color: "#5B5D64" }}
+          >
             <img
               className={classes["feature-community-img"]}
               src={governance}
@@ -221,7 +238,27 @@ const NavbarHamburger = (props) => {
         </div>
 
         <div className={classes["feature-elem"]}>
-          <a href="https://t.me/poltergeistlabs" target="_blank">
+          <a
+            href="https://t.me/poltergeistlabs"
+            target="_blank"
+            style={{ textDecoration: "none", color: "#5B5D64" }}
+          >
+            <img
+              className={classes["feature-community-img"]}
+              src={socials}
+              alt=""
+              width="20"
+              height="20"
+            />
+            Socials{" "}
+          </a>
+        </div>
+        <div className={classes["feature-elem"]}>
+          <a
+            href="https://t.me/poltergeistlabs"
+            target="_blank"
+            style={{ textDecoration: "none", color: "#5B5D64" }}
+          >
             <img
               className={classes["feature-community-img"]}
               src={socials}
@@ -234,7 +271,11 @@ const NavbarHamburger = (props) => {
         </div>
 
         <div className={classes["feature-elem"]}>
-          <a href="https://docs.ghoul.finance/" target="_blank">
+          <a
+            href="https://docs.ghoul.finance/"
+            target="_blank"
+            style={{ textDecoration: "none", color: "#5B5D64" }}
+          >
             <img
               className={classes["feature-community-img"]}
               src={docsSupprt}
@@ -244,6 +285,19 @@ const NavbarHamburger = (props) => {
             />
             Docs &#38; Support
           </a>
+        </div>
+
+        <div className={classes["feature-elem"]}>
+          <div className={classes["dark-mode"]}>Dark Mode</div>
+          <div className={classes["ios-switch"]}>
+            {" "}
+            {/* <FormControlLabel
+              checked={darkMode}
+              onChange={darkModeHandler}
+              control={<IOSSwitch sx={{ m: 1 }} defaultChecked />}
+              label=""
+            /> */}
+          </div>
         </div>
       </div>
     </div>

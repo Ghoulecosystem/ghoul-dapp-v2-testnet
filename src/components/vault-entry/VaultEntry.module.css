@@ -142,3 +142,62 @@
     left: 90%;
   }
 }
+
+@media screen and (max-width: 414px) {
+  .vault-item-mobile {
+    position: relative;
+    padding-right: 0rem;
+    padding-left: 0rem;
+
+    width: 360px;
+    height: 184px;
+
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 8px;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 22px;
+    /* identical to box height, or 137% */
+
+    cursor: pointer;
+  }
+}
+
+@media screen and (max-width: 393px) {
+  .vault-item-mobile {
+    width: 340px;
+  }
+}
+
+@media screen and (max-width: 390px) {
+  .vault-item-mobile {
+    position: relative;
+    padding-right: 0rem;
+    padding-left: 0rem;
+
+    width: 340px;
+    height: 184px;
+  }
+}
+
+@media screen and (max-width: 375px) {
+  .vault-item-mobile {
+    position: relative;
+    padding-right: 0rem;
+    padding-left: 0rem;
+
+    width: 320px;
+    height: 184px;
+
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 8px;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 22px;
+    /* identical to box height, or 137% */
+
+    cursor: pointer;
+  }
+}

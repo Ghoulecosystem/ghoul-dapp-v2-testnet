@@ -50,34 +50,47 @@
 
 @media screen and (max-width: 414px) {
   .main {
-    left: 79%;
-    top: 51%;
+    left: 77.8%;
+    top: 50%;
+    height: 100%;
   }
 }
 
 @media screen and (max-width: 412px) {
   .main {
-    left: 80%;
+    left: 78.5%;
+    height: 100%;
   }
 }
 
 @media screen and (max-width: 393px) {
   .main {
-    left: 83%;
-    top: 54%;
+    left: 82.3%;
+    top: 50%;
+    height: 100%;
+  }
+}
+
+@media screen and (max-width: 384px) {
+  .main {
+    left: 84%;
+    top: 50%;
+    height: 100%;
   }
 }
 
 @media screen and (max-width: 375px) {
   .main {
-    left: 87%;
-    top: 70%;
+    left: 86%;
+    top: 50%;
+    height: 100%;
   }
 }
 
 @media screen and (max-width: 360px) {
   .main {
     left: 89.5%;
-    top: 61%;
+    top: 50%;
+    height: 100%;
   }
 }

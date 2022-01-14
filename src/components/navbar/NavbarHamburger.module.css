@@ -136,6 +136,7 @@ span > img {
   flex-direction: column;
   justify-content: flex-start;
   gap: 0.25rem;
+  /* Default 0.25Rem */
 }
 
 .feature-elem > img {
@@ -239,23 +240,66 @@ a > img {
   cursor: pointer;
 }
 
+@media screen and (max-width: 414px) {
+  .navbar-container {
+    zoom: 0.9;
+    -moz-transform: scale(0.9);
+    left: -1%;
+    top: 1%;
+  }
+
+  #community-h1 {
+    margin-top: 0.5rem;
+  }
+}
+
+@media screen and (max-width: 412px) {
+  .navbar-container {
+    zoom: 0.9;
+    -moz-transform: scale(0.95);
+    left: -2%;
+    top: 1.5%;
+  }
+
+  #community-h1 {
+    margin-top: 0.5rem;
+  }
+}
+
+/* 
 @media screen and (max-width: 400px) {
   .navbar-container {
     zoom: 0.99;
-    -moz-transform: scale(0.9);
+    -moz-transform: scale(0.99);
+  }
+} */
+
+@media screen and (max-width: 393px) {
+  .navbar-container {
+    zoom: 0.88;
+    -moz-transform: scale(0.95);
+    left: 0%;
+    top: 0%;
+  }
+
+  #community-h1 {
+    margin-top: 0.5rem;
   }
 }
 
 @media screen and (max-width: 375px) {
   .navbar-container {
-    zoom: 0.75;
-    -moz-transform: scale(0.9);
+    zoom: 0.68;
+    -moz-transform: scale(0.68);
+    left: 0%;
+    top: 0%;
   }
 }
 
 @media screen and (max-width: 360px) {
   .navbar-container {
-    zoom: 0.8;
-    -moz-transform: scale(0.9);
+    zoom: 0.75;
+    -moz-transform: scale(0.8);
+    top: 1%;
   }
 }

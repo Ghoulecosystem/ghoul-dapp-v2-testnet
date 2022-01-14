@@ -339,6 +339,11 @@
     background: #090a10;
     color: white;
   }
+
+  .swap-box {
+    top: 43%;
+    left: 50%;
+  }
 }
 
 @media screen and (max-width: 393px) {

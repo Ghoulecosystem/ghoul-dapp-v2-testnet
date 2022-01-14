@@ -138,6 +138,19 @@ const modalStyleTwoMobile = {
 };
 
 const Vault = () => {
+  // const { innerWidth: width, innerHeight: height } = window;
+  // let modalStyleCreate;
+  // let modalStyleVault;
+  // let modalStyleLiquidate;
+  // if (width <= 450) {
+  //   modalStyleCreate = modalStyleTwoMobile;
+  //   modalStyleVault = modalStyleMobile;
+  //   modalStyleLiquidate = modalStyleTwoMobile;
+  // } else {
+  //   modalStyleCreate = modalStyleTwo;
+  //   modalStyleVault = modalStyle;
+  //   modalStyleLiquidate = modalStyleLiq;
+  // }
   const modalStyleCreate = window.isMobile
     ? modalStyleTwoMobile
     : modalStyleTwo;
@@ -145,6 +158,7 @@ const Vault = () => {
   const modalStyleLiquidate = window.isMobile
     ? modalStyleTwoMobile
     : modalStyleLiq;
+
   const web3Ctx = useContext(Web3Context);
   const walletAddress = web3Ctx.walletAddress;
   const tokenContract = web3Ctx.tokenContract;
@@ -377,7 +391,6 @@ const Vault = () => {
 
   useEffect(() => {
     const getUserVaultDataWeth = async () => {
-      while (!web3Ctx.walletAddress) {}
       let address = walletAddress;
       address = address.toLocaleLowerCase();
       setIsLoadingWeth(true);
@@ -461,7 +474,6 @@ const Vault = () => {
 
   useEffect(() => {
     const getUserVaultDataBNB = async () => {
-      while (!web3Ctx.walletAddress) {}
       let address = walletAddress;
       address = address.toLocaleLowerCase();
       setIsLoading(true);
@@ -984,14 +996,70 @@ const Vault = () => {
       </div>
       <div className={classes["all-vaults-mobile"]}>
         <div>
-          {vaultManager ? "All Vaults" : "Showing Vaults Close to Liquidation"}
+          {vaultDisplayType}{" "}
+          <div className={classes["all-vaults-mobile-container"]}>
+            <Button
+              id="fade-button"
+              aria-controls={open ? "fade-menu" : undefined}
+              aria-haspopup="true"
+              aria-expanded={open ? "true" : undefined}
+              onClick={handleClick}
+              style={{
+                color: "#74ec65",
+              }}
+            >
+              <img
+                src={allVaultArrow}
+                alt="arrow"
+                width={15}
+                height={20}
+                id={classes["all-vaults-arrow-mobile"]}
+              />
+            </Button>
+            <Menu
+              id="fade-menu"
+              MenuListProps={{
+                "aria-labelledby": "fade-button",
+              }}
+              anchorEl={anchorEl}
+              open={open}
+              onClose={handleClose}
+              TransitionComponent={Fade}
+              PaperProps={{
+                style: {
+                  transform: "translateX(-0px) translateY(-0px)",
+                  backgroundColor: "#090a10ba",
+                  color: "white",
+                },
+              }}
+            >
+              <MenuItem data-my-value={"All Vaults"} onClick={handleClose}>
+                All Vaults
+              </MenuItem>
+              <MenuItem data-my-value={"BNB"} onClick={handleClose}>
+                BNB
+              </MenuItem>
+              <MenuItem data-my-value={"wETH"} onClick={handleClose}>
+                wETH
+              </MenuItem>
+            </Menu>
+          </div>
         </div>
-        {vaultManager && (
+
+        {vaultManager ? (
           <div
             className={classes["create-vault-mobile"]}
             onClick={openModalTwo}
           >
             Create Vault
+          </div>
+        ) : (
+          <div
+            className={classes["create-vault-mobile"]}
+            onClick={openModalTwo}
+            id={classes["close-to-liq-mobile"]}
+          >
+            Showing Vaults Close to Liquidation
           </div>
         )}
       </div>

@@ -31,6 +31,10 @@
   /* Inside Auto Layout */
 }
 
+#chain-text {
+  color: rgba(255, 255, 255, 0.95);
+}
+
 .logo-container {
   display: flex;
   flex-direction: column;
@@ -242,10 +246,10 @@ a > img {
 
 @media screen and (max-width: 414px) {
   .navbar-container {
-    zoom: 0.9;
+    zoom: 0.89;
     -moz-transform: scale(0.9);
-    left: -1%;
-    top: 1%;
+    left: 1%;
+    top: -1%;
   }
 
   #community-h1 {
@@ -257,8 +261,8 @@ a > img {
   .navbar-container {
     zoom: 0.9;
     -moz-transform: scale(0.95);
-    left: -2%;
-    top: 1.5%;
+    left: -1%;
+    top: 0%;
   }
 
   #community-h1 {
@@ -291,8 +295,8 @@ a > img {
   .navbar-container {
     zoom: 0.68;
     -moz-transform: scale(0.68);
-    left: 0%;
-    top: 0%;
+    left: 1%;
+    top: -0.4%;
   }
 }
 
@@ -300,6 +304,7 @@ a > img {
   .navbar-container {
     zoom: 0.75;
     -moz-transform: scale(0.8);
-    top: 1%;
+    top: 0%;
+    left: 1.5%;
   }
 }

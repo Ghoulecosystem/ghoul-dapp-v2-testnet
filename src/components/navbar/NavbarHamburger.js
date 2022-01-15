@@ -103,7 +103,7 @@ const NavbarHamburger = (props) => {
             ) : (
               <>
                 <img src={bscLogo} alt="" />
-                <span>BSC Network</span>
+                <span id={classes["chain-text"]}>BSC Network</span>
               </>
             )}
           </div>

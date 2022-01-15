@@ -44,7 +44,7 @@ const modalStyleMobile = {
   },
   content: {
     width: "300px",
-    height: "366.5px",
+    height: "380.5px",
     position: "fixed",
     top: "50%",
     left: "50%",

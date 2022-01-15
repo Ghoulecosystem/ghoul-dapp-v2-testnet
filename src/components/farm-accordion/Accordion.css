@@ -201,6 +201,10 @@
   cursor: pointer;
 }
 
+.add-LP:hover {
+  box-shadow: 3px 3px 3px #233c27;
+}
+
 .withdraw {
   display: flex;
   align-items: center;
@@ -220,6 +224,14 @@
   margin-right: 1rem;
   padding-left: 1rem;
   cursor: pointer;
+}
+
+.withdraw:hover {
+  box-shadow: 3px 3px 3px #233c27;
+}
+
+.harvest:hover {
+  box-shadow: 3px 3px 3px #233c27;
 }
 
 #get-more {

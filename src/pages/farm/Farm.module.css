@@ -184,15 +184,15 @@
 @media screen and (max-width: 360px) {
   .farm-navigation {
     display: flex;
-    gap: 2rem;
+    gap: 1.5rem;
     padding-left: 1.8rem;
   }
 
   .farm-container {
     position: absolute;
-    left: 390px;
+    left: 392px;
     height: 100%;
-    width: 25.7%;
+    width: 26%;
     background: #090a10;
     color: white;
   }

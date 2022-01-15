@@ -929,7 +929,7 @@ const Vault = () => {
       <div className={classes["vault-line"]}></div>
       <div className={classes["all-vaults"]}>
         <div id={classes["all-vaults-text"]}>
-          {vaultDisplayType}{" "}
+          {vaultDisplayType}
           <div className={classes["menu-container"]}>
             <Button
               id="fade-button"
@@ -996,7 +996,9 @@ const Vault = () => {
       </div>
       <div className={classes["all-vaults-mobile"]}>
         <div>
-          {vaultDisplayType}{" "}
+          <div className={classes["all-vaults-text-display"]}>
+            {vaultDisplayType}{" "}
+          </div>
           <div className={classes["all-vaults-mobile-container"]}>
             <Button
               id="fade-button"

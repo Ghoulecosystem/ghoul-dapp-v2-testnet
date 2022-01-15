@@ -294,6 +294,11 @@
 }
 
 @media screen and (max-width: 414px) {
+  .all-vaults-text-display {
+    width: 64.5px;
+    max-width: 64.5;
+    min-width: 64.5px;
+  }
   .vaults {
     margin-bottom: 5rem;
   }

@@ -264,8 +264,8 @@ const Farm = () => {
     <div className={classes["farm-container"]}>
       <Header title="Farms"></Header>
       <div className={classes["farm-navigation"]}>
-        <div>All Farms</div>
-        <div>My LPs</div>
+        <div id={classes["farm-navigation-1"]}>All Farms</div>
+        <div id={classes["farm-navigation-2"]}>My LPs</div>
       </div>
       <div className={classes["farm-line"]}></div>
       <h1 id={classes["all-farms"]}> All Farms Require a 0.5% deposit fee </h1>

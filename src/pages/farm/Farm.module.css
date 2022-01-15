@@ -24,6 +24,14 @@
   border-radius: 100px;
 }
 
+.farm-navigation > div:hover {
+  box-shadow: 3px 3px 3px #233c27;
+}
+
+.farm-navigation-2:hover {
+  box-shadow: 3px 3px 3px #233c27;
+}
+
 .farm-line {
   margin-top: 1.5rem;
 
@@ -101,13 +109,25 @@
     position: absolute;
     left: 390px;
     height: 100%;
-    width: 29.5%;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    width: 30%;
     background: #090a10;
     color: white;
   }
 
   #all-farms {
-    margin-left: 3rem;
+    margin-left: 4rem;
+  }
+
+  .accordion-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    align-content: center;
+    gap: 8rem;
   }
 }
 
@@ -135,32 +155,16 @@
   .farm-navigation {
     padding-left: 1.5rem;
   }
-}
 
-@media screen and (max-width: 360px) {
-  .farm-navigation {
-    display: flex;
-    gap: 1.18rem;
-    padding-left: 0.5rem;
-  }
-
-  .farm-container {
-    position: absolute;
-    left: 390px;
-    height: 100%;
-    width: 26%;
-    background: #090a10;
-    color: white;
-  }
-
-  .accordion-container {
-    margin-top: -1rem;
+  #all-farms {
+    margin-left: 3rem;
   }
 }
 
 @media screen and (max-width: 375px) {
   .farm-navigation {
-    padding-left: 1.1rem;
+    padding-left: 1.5rem;
+    gap: 0.5rem;
   }
 
   .farm-container {
@@ -171,23 +175,37 @@
     background: #090a10;
     color: white;
   }
+
+  #all-farms {
+    margin-left: 2.5rem;
+  }
 }
 
 @media screen and (max-width: 360px) {
   .farm-navigation {
-    padding-left: 0.4rem;
+    display: flex;
+    gap: 2rem;
+    padding-left: 1.8rem;
   }
 
   .farm-container {
     position: absolute;
     left: 390px;
     height: 100%;
-    width: 25.5%;
+    width: 25.7%;
     background: #090a10;
     color: white;
   }
 
-  #all-farms {
-    margin-left: 1.8rem;
+  .accordion-container {
+    margin-top: -1rem;
+  }
+
+  #farm-navigation-1 {
+    width: 140px;
+  }
+
+  #farm-navigation-2 {
+    width: 140px;
   }
 }

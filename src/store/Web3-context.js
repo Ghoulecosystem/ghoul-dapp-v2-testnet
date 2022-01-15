@@ -16,6 +16,8 @@ const Web3Context = React.createContext({
   busdSwapContract: "",
   usdcSwapContract: "",
   usdtSwapContract: "",
+  busdTokenContract: "",
+  usdtTokenContract: "",
   connectWallet: () => {},
   checkIfWalletConnected: () => {},
   manualConnect: () => {},

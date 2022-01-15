@@ -333,6 +333,28 @@
   }
 }
 
+@media screen and (max-width: 414px) {
+  .LP-container {
+    padding-left: 1rem;
+  }
+
+  .withdraw {
+    width: 305px;
+  }
+
+  .harvest {
+    width: 275px;
+  }
+
+  .add-LP {
+    width: 275px;
+  }
+
+  .approve-LP {
+    width: 275px;
+  }
+}
+
 @media screen and (max-width: 375px) {
   .LP-container {
     padding-left: 1rem;

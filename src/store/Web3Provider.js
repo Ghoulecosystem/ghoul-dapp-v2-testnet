@@ -49,6 +49,8 @@ const defaultWeb3State = {
   busdSwapContract: "",
   usdcSwapContract: "",
   usdtSwapContract: "",
+  busdTokenContract: "",
+  usdtTokenContract: "",
 };
 
 const web3Reducer = (state, action) => {
@@ -76,6 +78,8 @@ const web3Reducer = (state, action) => {
       busdSwapContract: ethersContracts.busdSwapContract,
       usdcSwapContract: ethersContracts.usdcSwapContract,
       usdtSwapContract: ethersContracts.usdtSwapContract,
+      busdTokenContract: ethersContracts.busdTokenContract,
+      usdtTokenContract: ethersContracts.usdtTokenContract,
     };
   }
 
@@ -166,6 +170,16 @@ const Web3Provider = (props) => {
       contracts.usdtAbi,
       signer
     );
+    const busdTokenContract = new ethers.Contract(
+      contracts.busdTokenAddress,
+      contracts.busdTokenAbi,
+      signer
+    );
+    const usdtTokenContract = new ethers.Contract(
+      contracts.usdtTokenAddress,
+      contracts.usdtTokenAbi,
+      signer
+    );
 
     return {
       daiContract: daiContract,
@@ -180,6 +194,8 @@ const Web3Provider = (props) => {
       busdSwapContract: busdSwap,
       usdcSwapContract: usdcSwap,
       usdtSwapContract: usdtSwap,
+      busdTokenContract: busdTokenContract,
+      usdtTokenContract: usdtTokenContract,
     };
   };
 
@@ -311,6 +327,8 @@ const Web3Provider = (props) => {
     busdSwapContract: web3State.busdSwapContract,
     usdcSwapContract: web3State.usdcSwapContract,
     usdtSwapContract: web3State.usdtSwapContract,
+    busdTokenContract: web3State.busdTokenContract,
+    usdtTokenContract: web3State.usdtTokenContract,
     connectWallet: connectWalletHandler,
     checkIfWalletConnected: checkIfWalletIsConnectedHandler,
     manualConnect: manualConnectHandler,

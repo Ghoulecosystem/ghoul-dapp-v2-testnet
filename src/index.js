@@ -4,6 +4,7 @@ import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter } from "react-router-dom";
+import { HashRouter } from "react-router-dom";
 import Web3Provider from "./store/Web3Provider";
 
 window.isMobile =
@@ -12,11 +13,11 @@ window.isMobile =
   );
 
 ReactDOM.render(
-  <BrowserRouter>
+  <HashRouter>
     <Web3Provider>
       <App />
     </Web3Provider>
-  </BrowserRouter>,
+  </HashRouter>,
   document.getElementById("root")
 );
 

@@ -193,12 +193,18 @@ const Vault = () => {
     error: false,
   });
   const [anchorEl, setAnchorEl] = useState(null);
+  const [anchorElMobile, setAnchorElMobile] = useState(null);
   const [vaultDisplayType, setVaultDisplayType] = useState("All Vaults");
 
   const open = Boolean(anchorEl);
+  const openMobile = Boolean(anchorElMobile);
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
+  };
+
+  const handleClickMobile = (event) => {
+    setAnchorElMobile(event.currentTarget);
   };
 
   const handleClose = (event) => {
@@ -1002,10 +1008,10 @@ const Vault = () => {
           <div className={classes["all-vaults-mobile-container"]}>
             <Button
               id="fade-button"
-              aria-controls={open ? "fade-menu" : undefined}
+              aria-controls={openMobile ? "fade-menu" : undefined}
               aria-haspopup="true"
-              aria-expanded={open ? "true" : undefined}
-              onClick={handleClick}
+              aria-expanded={openMobile ? "true" : undefined}
+              onClick={handleClickMobile}
               style={{
                 color: "#74ec65",
               }}
@@ -1023,8 +1029,8 @@ const Vault = () => {
               MenuListProps={{
                 "aria-labelledby": "fade-button",
               }}
-              anchorEl={anchorEl}
-              open={open}
+              anchorEl={anchorElMobile}
+              open={openMobile}
               onClose={handleClose}
               TransitionComponent={Fade}
               PaperProps={{

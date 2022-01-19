@@ -208,10 +208,6 @@ a {
   line-height: 22px;
 }
 
-.feature-elem-active img {
-  content: url("../../assets/farm-active.png");
-}
-
 .feature-elem > img {
   padding-right: 0.5rem;
   padding-left: 0.5rem;

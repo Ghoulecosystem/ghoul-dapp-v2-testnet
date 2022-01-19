@@ -531,6 +531,14 @@
   }
 }
 
+@media screen and (max-height: 740px) {
+  .all-vaults-mobile-container {
+    position: absolute;
+    left: 23%;
+    top: 26%;
+  }
+}
+
 @media screen and (max-width: 360px) {
   .all-vaults-mobile {
     display: flex;
@@ -559,5 +567,13 @@
 
   #vault-navigation-2 {
     width: 38vw;
+  }
+}
+
+@media screen and (max-height: 800px) {
+  .all-vaults-mobile-container {
+    position: absolute;
+    left: 23%;
+    top: 22.5%;
   }
 }

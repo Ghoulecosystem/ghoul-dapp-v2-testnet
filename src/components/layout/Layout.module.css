@@ -48,7 +48,7 @@
   }
 }
 
-@media screen and (max-width: 414px) {
+@media screen and (max-width: 500px) {
   .main {
     left: 77.8%;
     top: 50%;

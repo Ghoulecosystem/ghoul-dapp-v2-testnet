@@ -298,7 +298,7 @@ const Vault = () => {
       const vaultCountHex = await wethVaultContract.vaultCount();
       const vaultCount = parseInt(vaultCountHex._hex, 16);
       let ethPrice = await wethVaultContract.getEthPriceSource();
-      let ethPriceFormat = ethers.utils.formatEther(ethPrice);
+      let ethPriceFormat = ethers.utils.formatUnits(ethPrice, "gwei") * 10;
       let liqVaults = [];
       for (let i = 0; i < vaultCount; i++) {
         let vaultCollateral = await wethVaultContract.vaultCollateral(i);
@@ -458,7 +458,7 @@ const Vault = () => {
       let gDaiPrice = await tokenContract.getTokenPriceSource();
       let gDaiPriceFormat = ethers.utils.formatEther(gDaiPrice);
       let ethPrice = await tokenContract.getEthPriceSource();
-      let ethPriceFormat = ethers.utils.formatEther(ethPrice);
+      let ethPriceFormat = ethers.utils.formatUnits(ethPrice, "gwei") * 10;
 
       const userVaultData = res.data.data.users[0].vaults;
       let userVaultArray = [];
@@ -895,6 +895,9 @@ const Vault = () => {
     if (isBNB) {
       setIsBNBModal(isBNB);
       setVaultModalDataLiq(liqVaultsBNB.find((vault) => vault.id === id));
+    } else {
+      setIsBNBModal(isBNB);
+      setVaultModalDataLiq(liqVaultsWeth.find((vault) => vault.id === id));
     }
 
     setIsOpenThree(true);
@@ -984,7 +987,7 @@ const Vault = () => {
         debt={parseFloat(vault.debt).toFixed(2)}
         ratio={parseFloat(vault.ratio).toFixed(2)}
         availableBorrow={parseFloat(vault.availableBorrow).toFixed(2)}
-        openModal={openModalTwo}
+        openModal={openModalThree}
         isBNB={false}
       />
     </li>

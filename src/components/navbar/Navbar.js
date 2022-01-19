@@ -22,6 +22,13 @@ import prifiLogo from "../../assets/prifi.png";
 import ghoulXLogo from "../../assets/GhoulX logo.png";
 import ghoulTokenLogo from "../../assets/ghoul_logo_final.png";
 import twitterLogo from "../../assets/twitterlogo.png";
+import vaultLogoLm from "../../assets/vault-lm.png";
+import swapLogoLm from "../../assets/swap-lm.png";
+import farmLogoLm from "../../assets/farm-lm.png";
+import exchangeLogoLm from "../../assets/exchange-lm.png";
+import bondsLogoLm from "../../assets/bonds-lm.png";
+import prifiLogoLm from "../../assets/prifi-lm.png";
+import governanceLogoLm from "../../assets/governance-lm.svg";
 
 const Navbar = () => {
   const web3Ctx = useContext(Web3Context);
@@ -42,6 +49,13 @@ const Navbar = () => {
   let elemColor;
   let txtColor;
   let txtColor2;
+  let vaultIm = vault;
+  let swapIm = swapLogo;
+  let farmIm = farmLogo;
+  let exchangeIm = exchangeLogo;
+  let bondsIm = bondLogo;
+  let prifiIm = prifiLogo;
+  let governanceIm = governance;
   if (!themeCtx.darkMode) {
     bgColor =
       "linear-gradient(170.43deg, #FFFFFF 0%, rgba(234, 234, 234, 0) 99.52%)";
@@ -49,6 +63,13 @@ const Navbar = () => {
     elemColor = "rgba(0, 0, 0, 0.05)";
     txtColor = "#000000";
     txtColor2 = "rgba(0, 0, 0, 0.3)";
+    vaultIm = vaultLogoLm;
+    farmIm = farmLogoLm;
+    swapIm = swapLogoLm;
+    exchangeIm = exchangeLogoLm;
+    bondsIm = bondsLogoLm;
+    prifiIm = prifiLogoLm;
+    governanceIm = governanceLogoLm;
   }
 
   const darkModeHandler = () => {
@@ -183,7 +204,7 @@ const Navbar = () => {
           <div className={classes["feature-elem"]}>
             <img
               className={classes["feature-community-img"]}
-              src={location.pathname === "/vaults" ? vaultActive : vault}
+              src={location.pathname === "/vaults" ? vaultActive : vaultIm}
               alt=""
             />
             <h4>Vaults</h4>
@@ -198,7 +219,7 @@ const Navbar = () => {
           <div className={classes["feature-elem"]}>
             <img
               className={classes["feature-community-img"]}
-              src={location.pathname === "/swap" ? swapLogoActive : swapLogo}
+              src={location.pathname === "/swap" ? swapLogoActive : swapIm}
               alt=""
             />
             <h4>Swap</h4>
@@ -213,7 +234,7 @@ const Navbar = () => {
           <div className={classes["feature-elem"]}>
             <img
               className={classes["feature-community-img"]}
-              src={location.pathname === "/farm" ? farmLogoActive : farmLogo}
+              src={location.pathname === "/farm" ? farmLogoActive : farmIm}
               alt="farm"
             />
             <h4>Farm</h4>
@@ -228,7 +249,7 @@ const Navbar = () => {
           <div className={classes["feature-elem"]}>
             <img
               className={classes["feature-community-img"]}
-              src={exchangeLogo}
+              src={exchangeIm}
               alt=""
             />
             <h4>Exchange</h4>
@@ -238,7 +259,7 @@ const Navbar = () => {
         <div className={classes["feature-elem"]}>
           <img
             className={classes["feature-community-img"]}
-            src={bondLogo}
+            src={bondsIm}
             alt=""
           />
           Bonds (soon)
@@ -247,7 +268,7 @@ const Navbar = () => {
         <div className={classes["feature-elem"]}>
           <img
             className={classes["feature-community-img"]}
-            src={prifiLogo}
+            src={prifiIm}
             alt=""
           />
           PRIFI (soon)
@@ -272,7 +293,7 @@ const Navbar = () => {
           >
             <img
               className={classes["feature-community-img"]}
-              src={governance}
+              src={governanceIm}
               alt=""
               width="20"
               height="20"

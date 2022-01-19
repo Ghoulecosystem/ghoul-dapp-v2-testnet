@@ -1,13 +1,52 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import classes from "./LiqiduidateVaultModal.module.css";
 import cancelIcon from "../../assets/cancel.svg";
 import SnackbarUI from "../snackbar/SnackbarUI";
+import Web3Context from "../../store/Web3-context";
+import { liquidatorAddress } from "../../utils/contract_abis";
 
 const LiquidateVaultModal = (props) => {
+  const [gDaiApproved, setgDaiApproved] = useState(false);
+  const web3Ctx = useContext(Web3Context);
+
   const liquidateVaultHandler = async () => {
     try {
       await props.liquidateVault(props.id, props.isBNB);
     } catch (error) {}
+  };
+
+  const approvegDaiHandler = async () => {
+    props.approvegDaiLiquidator(props.isBNB);
+  };
+
+  if (props.isBNB) {
+    if (parseInt(props.allowanceLiquidator) !== 0) {
+      if (!gDaiApproved) {
+        setgDaiApproved(true);
+      }
+    }
+  } else {
+    if (parseInt(props.allowanceLiquidatorWeth) !== 0) {
+      if (!gDaiApproved) {
+        setgDaiApproved(true);
+      }
+    }
+  }
+
+  const renderButtons = () => {
+    if (!gDaiApproved) {
+      return (
+        <div className={classes["deposit-bnb"]} onClick={approvegDaiHandler}>
+          Approve gDAI
+        </div>
+      );
+    } else {
+      return (
+        <div className={classes["deposit-bnb"]} onClick={liquidateVaultHandler}>
+          Liquidate Vault
+        </div>
+      );
+    }
   };
 
   return (
@@ -45,9 +84,7 @@ const LiquidateVaultModal = (props) => {
           </span>
         </div>
       </div>
-      <div className={classes["deposit-bnb"]} onClick={liquidateVaultHandler}>
-        Liquidate Vault
-      </div>
+      {renderButtons()}
     </div>
   );
 };

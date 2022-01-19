@@ -9,6 +9,13 @@
   overflow-x: hidden;
 }
 
+.snackbar-container-vaults {
+  width: 20%;
+  position: absolute;
+  top: 90%;
+  left: 50%;
+}
+
 .vault-container::-webkit-scrollbar {
   width: 0.25rem;
 }
@@ -290,6 +297,15 @@
     text-align: center;
 
     color: #74ec65;
+  }
+}
+
+@media screen and (max-width: 450px) {
+  .snackbar-container-vaults {
+    width: 20%;
+    position: absolute;
+    top: 92%;
+    left: 30%;
   }
 }
 

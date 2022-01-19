@@ -20,8 +20,9 @@ import cancelIcon from "../../assets/cancel.svg";
 import swapLogoActive from "../../assets/swap-active.png";
 import farmLogoActive from "../../assets/farm-active.png";
 import vaultActive from "../../assets/vaults-active.png";
-import ghoulXLogo from "../../assets/ghoulX-logo-final.png";
+import ghoulXLogo from "../../assets/GhoulX logo.png";
 import ghoulLogoFinal from "../../assets/ghoul_logo_final.png";
+import twitterLogo from "../../assets/twitterlogo.png";
 
 const NavbarHamburger = (props) => {
   const web3Ctx = useContext(Web3Context);
@@ -261,12 +262,12 @@ const NavbarHamburger = (props) => {
           >
             <img
               className={classes["feature-community-img"]}
-              src={socials}
+              src={twitterLogo}
               alt=""
               width="20"
               height="20"
             />
-            Socials{" "}
+            Twitter{" "}
           </a>
         </div>
 

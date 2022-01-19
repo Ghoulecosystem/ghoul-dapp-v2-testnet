@@ -10,7 +10,11 @@ import Web3Context from "../../store/Web3-context";
 import LoadingImg from "../../components/loading-img-component/LoadingImg";
 import allVaultArrow from "../../assets/all_vaults_arrow.svg";
 import { ethers } from "ethers";
-import { wethVaultAddress, tokenAddress } from "../../utils/contract_abis";
+import {
+  wethVaultAddress,
+  tokenAddress,
+  liquidatorAddress,
+} from "../../utils/contract_abis";
 import SnackbarUI from "../../components/snackbar/SnackbarUI";
 import Button from "@mui/material/Button";
 import Menu from "@mui/material/Menu";
@@ -138,19 +142,6 @@ const modalStyleTwoMobile = {
 };
 
 const Vault = () => {
-  // const { innerWidth: width, innerHeight: height } = window;
-  // let modalStyleCreate;
-  // let modalStyleVault;
-  // let modalStyleLiquidate;
-  // if (width <= 450) {
-  //   modalStyleCreate = modalStyleTwoMobile;
-  //   modalStyleVault = modalStyleMobile;
-  //   modalStyleLiquidate = modalStyleTwoMobile;
-  // } else {
-  //   modalStyleCreate = modalStyleTwo;
-  //   modalStyleVault = modalStyle;
-  //   modalStyleLiquidate = modalStyleLiq;
-  // }
   const modalStyleCreate = window.isMobile
     ? modalStyleTwoMobile
     : modalStyleTwo;
@@ -343,6 +334,7 @@ const Vault = () => {
   }, [wethVaultContract]);
 
   const getBalances = useCallback(async () => {
+    console.log("getting balances");
     const gdaiBalance = await tokenContract.balanceOf(walletAddress);
     const gdaiBalanceFormat = parseFloat(
       ethers.utils.formatEther(gdaiBalance)
@@ -370,14 +362,31 @@ const Vault = () => {
       wethVaultAddress
     );
 
+    const allowanceLiquidator = await tokenContract.allowance(
+      walletAddress,
+      liquidatorAddress
+    );
+
+    const allowanceLiquidatorWeth = await tokenContract.allowance(
+      walletAddress,
+      wethVaultAddress
+    );
+
     const allowanceBNBFormat = ethers.utils.formatEther(allowanceBNB);
     const allowanceWethFormat = ethers.utils.formatEther(allowanceWeth);
     const depositAllowanceFormat = ethers.utils.formatEther(depositAllowance);
+    const allowanceLiquidatorFormat =
+      ethers.utils.formatEther(allowanceLiquidator);
+    const allowanceLiquidatorWethFormat = ethers.utils.formatEther(
+      allowanceLiquidatorWeth
+    );
 
     setAllowances({
       allowanceBNB: allowanceBNBFormat,
       allowanceWeth: allowanceWethFormat,
       depositAllowance: depositAllowanceFormat,
+      allowanceLiquidator: allowanceLiquidatorFormat,
+      allowanceLiquidatorWeth: allowanceLiquidatorWethFormat,
     });
 
     setBalances({
@@ -385,7 +394,7 @@ const Vault = () => {
       wethBalance: balanceWethFormat,
       gdaiBalance: gdaiBalanceFormat,
     });
-  }, []);
+  }, [tokenContract, walletAddress, wethContract]);
 
   useEffect(() => {
     getBalances();
@@ -597,6 +606,23 @@ const Vault = () => {
     totalGdaiAvailableWeth,
   ]);
 
+  const approveWeth = async () => {
+    try {
+      closeModal();
+      const tx = await web3Ctx.wethContract.approve(
+        wethVaultAddress,
+        ethers.utils.parseEther("100000000000")
+      );
+
+      await tx.wait();
+      setSnackbarOpen({ open: true, error: false });
+      getBalances();
+    } catch (error) {
+      setSnackbarOpen({ open: true, error: true });
+      console.log(error);
+    }
+  };
+
   const createWethVault = async (vaultId) => {
     closeModalTwo();
     let gDaiPrice = await tokenContract.getTokenPriceSource();
@@ -633,6 +659,7 @@ const Vault = () => {
       ratio: vaultRatio,
     };
 
+    setSnackbarOpen({ open: true, error: false });
     setUserVaultsWeth((vaults) => [...vaults, vaultObj]);
   };
 
@@ -672,6 +699,7 @@ const Vault = () => {
       ratio: vaultRatio,
     };
 
+    setSnackbarOpen({ open: true, error: false });
     setUserVaultsBNB((vaults) => [...vaults, vaultObj]);
   };
 
@@ -773,14 +801,46 @@ const Vault = () => {
       if (isBNB) {
         const tx = await liquidatorContract.liquidateVault(id);
         await tx.wait();
+        const txPaid = await liquidatorContract.getPaid();
+        await txPaid.wait();
+
+        setLiqVaultsBNB(liqVaultsBNB.filter((vault) => vault.id !== id));
       } else {
         const tx = await wethVaultContract.liquidateVault(id);
         await tx.wait();
+        const txPaid = await wethVaultContract.getPaid();
+        await txPaid.wait();
       }
 
       setSnackbarOpen({ open: true, error: false });
     } catch (error) {
       console.log(error);
+      setSnackbarOpen({ open: true, error: true });
+    }
+  };
+
+  const approvegDaiLiquidator = async (isBNB) => {
+    try {
+      setIsOpenThree(false);
+      if (isBNB) {
+        const tx = await web3Ctx.tokenContract.approve(
+          liquidatorAddress,
+          ethers.utils.parseEther("1000000000000000")
+        );
+
+        await tx.wait();
+      } else {
+        const tx = await web3Ctx.tokenContract.approve(
+          wethVaultAddress,
+          ethers.utils.parseEther("1000000000000000")
+        );
+
+        await tx.wait();
+      }
+
+      setSnackbarOpen({ open: true, error: false });
+      getBalances();
+    } catch (e) {
       setSnackbarOpen({ open: true, error: true });
     }
   };
@@ -904,228 +964,229 @@ const Vault = () => {
         ratio={parseFloat(vault.ratio).toFixed(2)}
         availableBorrow={parseFloat(vault.availableBorrow).toFixed(2)}
         openModal={openModalTwo}
-        isBNB={true}
+        isBNB={false}
       />
     </li>
   ));
 
   return (
-    <div className={classes["vault-container"]}>
-      <Header title="Vaults"></Header>
-      <div className={classes["vault-navigation"]}>
-        <div
-          id={classes["vault-navigation-1"]}
-          onClick={() => {
-            setVaultManager(true);
-          }}
-          style={{ backgroundColor: !vaultManager && "#090a10" }}
-        >
-          Vault Manager
-        </div>
-        <div
-          id={classes["vault-navigation-2"]}
-          onClick={() => {
-            setVaultManager(false);
-          }}
-          style={{ backgroundColor: vaultManager && "#090a10" }}
-        >
-          Vault Monitor
-        </div>
-      </div>
-      <div className={classes["vault-line"]}></div>
-      <div className={classes["all-vaults"]}>
-        <div id={classes["all-vaults-text"]}>
-          {vaultDisplayType}
-          <div className={classes["menu-container"]}>
-            <Button
-              id="fade-button"
-              aria-controls={open ? "fade-menu" : undefined}
-              aria-haspopup="true"
-              aria-expanded={open ? "true" : undefined}
-              onClick={handleClick}
-              style={{
-                color: "#74ec65",
-              }}
-            >
-              <img
-                src={allVaultArrow}
-                alt="arrow"
-                width={15}
-                height={20}
-                id={classes["all-vaults-arrow"]}
-              />
-            </Button>
-            <Menu
-              id="fade-menu"
-              MenuListProps={{
-                "aria-labelledby": "fade-button",
-              }}
-              anchorEl={anchorEl}
-              open={open}
-              onClose={handleClose}
-              TransitionComponent={Fade}
-              PaperProps={{
-                style: {
-                  transform: "translateX(-220px) translateY(-65px)",
-                  backgroundColor: "#090a10ba",
-                  color: "white",
-                },
-              }}
-            >
-              <MenuItem data-my-value={"All Vaults"} onClick={handleClose}>
-                All Vaults
-              </MenuItem>
-              <MenuItem data-my-value={"BNB"} onClick={handleClose}>
-                BNB
-              </MenuItem>
-              <MenuItem data-my-value={"wETH"} onClick={handleClose}>
-                wETH
-              </MenuItem>
-            </Menu>
-          </div>
-        </div>
-        {!vaultManager && (
-          <div id={classes["liquidation-text"]}>
-            Showing vaults close to liquidation
-          </div>
-        )}
-        <div
-          id={
-            vaultManager
-              ? classes["create-vault"]
-              : classes["create-vault-hidden"]
-          }
-          onClick={openModalTwo}
-        >
-          Create Vault
-        </div>
-      </div>
-      <div className={classes["all-vaults-mobile"]}>
-        <div>
-          <div className={classes["all-vaults-text-display"]}>
-            {vaultDisplayType}{" "}
-          </div>
-          <div className={classes["all-vaults-mobile-container"]}>
-            <Button
-              id="fade-button"
-              aria-controls={openMobile ? "fade-menu" : undefined}
-              aria-haspopup="true"
-              aria-expanded={openMobile ? "true" : undefined}
-              onClick={handleClickMobile}
-              style={{
-                color: "#74ec65",
-              }}
-            >
-              <img
-                src={allVaultArrow}
-                alt="arrow"
-                width={15}
-                height={20}
-                id={classes["all-vaults-arrow-mobile"]}
-              />
-            </Button>
-            <Menu
-              id="fade-menu"
-              MenuListProps={{
-                "aria-labelledby": "fade-button",
-              }}
-              anchorEl={anchorElMobile}
-              open={openMobile}
-              onClose={handleClose}
-              TransitionComponent={Fade}
-              PaperProps={{
-                style: {
-                  transform: "translateX(-0px) translateY(-0px)",
-                  backgroundColor: "#090a10ba",
-                  color: "white",
-                },
-              }}
-            >
-              <MenuItem data-my-value={"All Vaults"} onClick={handleClose}>
-                All Vaults
-              </MenuItem>
-              <MenuItem data-my-value={"BNB"} onClick={handleClose}>
-                BNB
-              </MenuItem>
-              <MenuItem data-my-value={"wETH"} onClick={handleClose}>
-                wETH
-              </MenuItem>
-            </Menu>
-          </div>
-        </div>
-
-        {vaultManager ? (
+    <>
+      <div className={classes["vault-container"]}>
+        <Header title="Vaults"></Header>
+        <div className={classes["vault-navigation"]}>
           <div
-            className={classes["create-vault-mobile"]}
+            id={classes["vault-navigation-1"]}
+            onClick={() => {
+              setVaultManager(true);
+            }}
+            style={{ backgroundColor: !vaultManager && "#090a10" }}
+          >
+            Vault Manager
+          </div>
+          <div
+            id={classes["vault-navigation-2"]}
+            onClick={() => {
+              setVaultManager(false);
+            }}
+            style={{ backgroundColor: vaultManager && "#090a10" }}
+          >
+            Vault Monitor
+          </div>
+        </div>
+        <div className={classes["vault-line"]}></div>
+        <div className={classes["all-vaults"]}>
+          <div id={classes["all-vaults-text"]}>
+            {vaultDisplayType}
+            <div className={classes["menu-container"]}>
+              <Button
+                id="fade-button"
+                aria-controls={open ? "fade-menu" : undefined}
+                aria-haspopup="true"
+                aria-expanded={open ? "true" : undefined}
+                onClick={handleClick}
+                style={{
+                  color: "#74ec65",
+                }}
+              >
+                <img
+                  src={allVaultArrow}
+                  alt="arrow"
+                  width={15}
+                  height={20}
+                  id={classes["all-vaults-arrow"]}
+                />
+              </Button>
+              <Menu
+                id="fade-menu"
+                MenuListProps={{
+                  "aria-labelledby": "fade-button",
+                }}
+                anchorEl={anchorEl}
+                open={open}
+                onClose={handleClose}
+                TransitionComponent={Fade}
+                PaperProps={{
+                  style: {
+                    transform: "translateX(-220px) translateY(-65px)",
+                    backgroundColor: "#090a10ba",
+                    color: "white",
+                  },
+                }}
+              >
+                <MenuItem data-my-value={"All Vaults"} onClick={handleClose}>
+                  All Vaults
+                </MenuItem>
+                <MenuItem data-my-value={"BNB"} onClick={handleClose}>
+                  BNB
+                </MenuItem>
+                <MenuItem data-my-value={"wETH"} onClick={handleClose}>
+                  wETH
+                </MenuItem>
+              </Menu>
+            </div>
+          </div>
+          {!vaultManager && (
+            <div id={classes["liquidation-text"]}>
+              Showing vaults close to liquidation
+            </div>
+          )}
+          <div
+            id={
+              vaultManager
+                ? classes["create-vault"]
+                : classes["create-vault-hidden"]
+            }
             onClick={openModalTwo}
           >
             Create Vault
           </div>
-        ) : (
-          <div
-            className={classes["create-vault-mobile"]}
-            onClick={openModalTwo}
-            id={classes["close-to-liq-mobile"]}
-          >
-            Showing Vaults Close to Liquidation
+        </div>
+        <div className={classes["all-vaults-mobile"]}>
+          <div>
+            <div className={classes["all-vaults-text-display"]}>
+              {vaultDisplayType}{" "}
+            </div>
+            <div className={classes["all-vaults-mobile-container"]}>
+              <Button
+                id="fade-button"
+                aria-controls={openMobile ? "fade-menu" : undefined}
+                aria-haspopup="true"
+                aria-expanded={openMobile ? "true" : undefined}
+                onClick={handleClickMobile}
+                style={{
+                  color: "#74ec65",
+                }}
+              >
+                <img
+                  src={allVaultArrow}
+                  alt="arrow"
+                  width={15}
+                  height={20}
+                  id={classes["all-vaults-arrow-mobile"]}
+                />
+              </Button>
+              <Menu
+                id="fade-menu"
+                MenuListProps={{
+                  "aria-labelledby": "fade-button",
+                }}
+                anchorEl={anchorElMobile}
+                open={openMobile}
+                onClose={handleClose}
+                TransitionComponent={Fade}
+                PaperProps={{
+                  style: {
+                    transform: "translateX(-0px) translateY(-0px)",
+                    backgroundColor: "#090a10ba",
+                    color: "white",
+                  },
+                }}
+              >
+                <MenuItem data-my-value={"All Vaults"} onClick={handleClose}>
+                  All Vaults
+                </MenuItem>
+                <MenuItem data-my-value={"BNB"} onClick={handleClose}>
+                  BNB
+                </MenuItem>
+                <MenuItem data-my-value={"wETH"} onClick={handleClose}>
+                  wETH
+                </MenuItem>
+              </Menu>
+            </div>
           </div>
-        )}
-      </div>
-      <div className={classes["all-vault-header"]}>
-        {vaultManager && !window.isMobile && (
-          <>
-            <div>VAULT ID</div>
-            <div>COLLATERAL</div>
-            <div>DEBT (gDAI)</div>
-            <div>RATIO (%)</div>
-          </>
-        )}
-        {!vaultManager && !window.isMobile && (
-          <>
-            <div>VAULT ID</div>
-            <div>COLLATERAL ($)</div>
-            <div>DEBT (gDai)</div>
-            <div>RATIO (%)</div>
-          </>
-        )}
-      </div>
-      <div id={classes["vault-line-2"]}></div>
-      <div className={classes.vaults}>
-        {vaultManager && (
-          <>
-            {!isLoading ? (
-              (vaultDisplayType === "BNB" ||
-                vaultDisplayType === "All Vaults") &&
-              userVaultJSXBNB
-            ) : (
-              <LoadingImg></LoadingImg>
-            )}
-            {!isLoadingWeth ? (
-              (vaultDisplayType === "wETH" ||
-                vaultDisplayType === "All Vaults") &&
-              userVaultJSXWeth
-            ) : (
-              <LoadingImg></LoadingImg>
-            )}
-          </>
-        )}
-        {!vaultManager && (
-          <>
-            {!isLoadingLiquidatorBNB ? (
-              (vaultDisplayType === "BNB" ||
-                vaultDisplayType === "All Vaults") &&
-              userVaultsBNBLiqJsx
-            ) : (
-              <LoadingImg></LoadingImg>
-            )}
-            {!isLoadingLiquidatorWeth ? (
-              (vaultDisplayType === "wETH" ||
-                vaultDisplayType === "All Vaults") &&
-              userVaultsWethLiqJsx
-            ) : (
-              <LoadingImg></LoadingImg>
-            )}
-            {/* 
+
+          {vaultManager ? (
+            <div
+              className={classes["create-vault-mobile"]}
+              onClick={openModalTwo}
+            >
+              Create Vault
+            </div>
+          ) : (
+            <div
+              className={classes["create-vault-mobile"]}
+              onClick={openModalTwo}
+              id={classes["close-to-liq-mobile"]}
+            >
+              Showing Vaults Close to Liquidation
+            </div>
+          )}
+        </div>
+        <div className={classes["all-vault-header"]}>
+          {vaultManager && !window.isMobile && (
+            <>
+              <div>VAULT ID</div>
+              <div>COLLATERAL</div>
+              <div>DEBT (gDAI)</div>
+              <div>RATIO (%)</div>
+            </>
+          )}
+          {!vaultManager && !window.isMobile && (
+            <>
+              <div>VAULT ID</div>
+              <div>COLLATERAL ($)</div>
+              <div>DEBT (gDai)</div>
+              <div>RATIO (%)</div>
+            </>
+          )}
+        </div>
+        <div id={classes["vault-line-2"]}></div>
+        <div className={classes.vaults}>
+          {vaultManager && (
+            <>
+              {!isLoading ? (
+                (vaultDisplayType === "BNB" ||
+                  vaultDisplayType === "All Vaults") &&
+                userVaultJSXBNB
+              ) : (
+                <LoadingImg></LoadingImg>
+              )}
+              {!isLoadingWeth ? (
+                (vaultDisplayType === "wETH" ||
+                  vaultDisplayType === "All Vaults") &&
+                userVaultJSXWeth
+              ) : (
+                <LoadingImg></LoadingImg>
+              )}
+            </>
+          )}
+          {!vaultManager && (
+            <>
+              {!isLoadingLiquidatorBNB ? (
+                (vaultDisplayType === "BNB" ||
+                  vaultDisplayType === "All Vaults") &&
+                userVaultsBNBLiqJsx
+              ) : (
+                <LoadingImg></LoadingImg>
+              )}
+              {!isLoadingLiquidatorWeth ? (
+                (vaultDisplayType === "wETH" ||
+                  vaultDisplayType === "All Vaults") &&
+                userVaultsWethLiqJsx
+              ) : (
+                <LoadingImg></LoadingImg>
+              )}
+              {/*
 {!isLoadingLiquidatorBNB ? (
               (vaultDisplayType === "BNB" ||
                 vaultDisplayType === "All Vaults") &&
@@ -1140,82 +1201,89 @@ const Vault = () => {
             ) : (
               <LoadingImg></LoadingImg>
             )} */}
-          </>
-        )}
-        <Modal
-          isOpen={modalIsOpen}
-          onAfterOpen={afterOpenModal}
-          onRequestClose={closeModal}
-          ariaHideApp={false}
-          style={modalStyleVault}
-          closeTimeoutMS={500}
-          contentLabel="Vault Modal"
-        >
-          <VaultModal
-            closeHandler={closeModal}
-            id={vaultModalData.id}
-            collateral={vaultModalData.collateral}
-            debt={vaultModalData.debt}
-            ratio={vaultModalData.ratio}
-            availableBorrow={vaultModalData.availableBorrow}
-            isBNB={isBNBModal}
-            balances={balances}
-            tokenContract={tokenContract}
-            wethVaultContract={wethVaultContract}
-            wethContract={wethContract}
-            collateralBNB={depositCollateralBNBVault}
-            collateralWeth={depositCollateralWethVault}
-            allowances={allowances}
-          />
-        </Modal>
-        <Modal
-          isOpen={modalIsOpenTwo}
-          onAfterOpen={afterOpenModalTwo}
-          onRequestClose={closeModalTwo}
-          ariaHideApp={false}
-          style={modalStyleCreate}
-          closeTimeoutMS={500}
-          contentLabel="Vault Modal Two"
-        >
-          <CreateVaultModal
-            closeHandler={closeModalTwo}
-            wallet={walletAddress}
-            gdaiBNB={totalGdaiAvailableBNB}
-            gdaiWeth={totalGdaiAvailableWeth}
-            tokenContract={tokenContract}
-            wethVaultContract={wethVaultContract}
-            createWethVault={createWethVault}
-            createBNBVault={createBNBVault}
-          />
-        </Modal>
-        <Modal
-          isOpen={modalIsOpenThree}
-          onAfterOpen={afterOpenModalThree}
-          onRequestClose={closeModalThree}
-          ariaHideApp={false}
-          style={modalStyleLiquidate}
-          closeTimeoutMS={500}
-          contentLabel="Vault Modal Three"
-        >
-          <LiquidateVaultModal
-            closeHandler={closeModalThree}
-            id={vaultModalDataLiq.id}
-            isBNB={isBNBModal}
-            collateralRaw={parseFloat(vaultModalDataLiq.collateralRaw).toFixed(
-              2
-            )}
-            collateral={parseFloat(vaultModalDataLiq.collateral).toFixed(2)}
-            debt={parseFloat(vaultModalDataLiq.debt).toFixed(2)}
-            ratio={parseFloat(vaultModalDataLiq.ratio).toFixed(2)}
-            availableBorrow={parseFloat(
-              vaultModalDataLiq.availableBorrow
-            ).toFixed(2)}
-            liquidateVault={liquidateVault}
-          />
-        </Modal>
+            </>
+          )}
+          <Modal
+            isOpen={modalIsOpen}
+            onAfterOpen={afterOpenModal}
+            onRequestClose={closeModal}
+            ariaHideApp={false}
+            style={modalStyleVault}
+            closeTimeoutMS={500}
+            contentLabel="Vault Modal"
+          >
+            <VaultModal
+              closeHandler={closeModal}
+              id={vaultModalData.id}
+              collateral={vaultModalData.collateral}
+              debt={vaultModalData.debt}
+              ratio={vaultModalData.ratio}
+              availableBorrow={vaultModalData.availableBorrow}
+              isBNB={isBNBModal}
+              balances={balances}
+              tokenContract={tokenContract}
+              wethVaultContract={wethVaultContract}
+              wethContract={wethContract}
+              collateralBNB={depositCollateralBNBVault}
+              collateralWeth={depositCollateralWethVault}
+              allowances={allowances}
+              approveWethHandler={approveWeth}
+            />
+          </Modal>
+          <Modal
+            isOpen={modalIsOpenTwo}
+            onAfterOpen={afterOpenModalTwo}
+            onRequestClose={closeModalTwo}
+            ariaHideApp={false}
+            style={modalStyleCreate}
+            closeTimeoutMS={500}
+            contentLabel="Vault Modal Two"
+          >
+            <CreateVaultModal
+              closeHandler={closeModalTwo}
+              wallet={walletAddress}
+              gdaiBNB={totalGdaiAvailableBNB}
+              gdaiWeth={totalGdaiAvailableWeth}
+              tokenContract={tokenContract}
+              wethVaultContract={wethVaultContract}
+              createWethVault={createWethVault}
+              createBNBVault={createBNBVault}
+            />
+          </Modal>
+          <Modal
+            isOpen={modalIsOpenThree}
+            onAfterOpen={afterOpenModalThree}
+            onRequestClose={closeModalThree}
+            ariaHideApp={false}
+            style={modalStyleLiquidate}
+            closeTimeoutMS={500}
+            contentLabel="Vault Modal Three"
+          >
+            <LiquidateVaultModal
+              closeHandler={closeModalThree}
+              id={vaultModalDataLiq.id}
+              isBNB={isBNBModal}
+              collateralRaw={parseFloat(
+                vaultModalDataLiq.collateralRaw
+              ).toFixed(2)}
+              collateral={parseFloat(vaultModalDataLiq.collateral).toFixed(2)}
+              debt={parseFloat(vaultModalDataLiq.debt).toFixed(2)}
+              ratio={parseFloat(vaultModalDataLiq.ratio).toFixed(2)}
+              availableBorrow={parseFloat(
+                vaultModalDataLiq.availableBorrow
+              ).toFixed(2)}
+              liquidateVault={liquidateVault}
+              allowanceLiquidator={allowances.allowanceLiquidator}
+              allowanceLiquidatorWeth={allowances.allowanceLiquidatorWeth}
+              approvegDaiLiquidator={approvegDaiLiquidator}
+            />
+          </Modal>
+        </div>
+      </div>
+      <div className={classes["snackbar-container-vaults"]}>
         {snackbarOpen.open && <SnackbarUI error={snackbarOpen.error} />}
       </div>
-    </div>
+    </>
   );
 };
 

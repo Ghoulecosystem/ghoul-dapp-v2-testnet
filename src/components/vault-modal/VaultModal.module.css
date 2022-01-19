@@ -229,10 +229,10 @@
   color: rgba(255, 255, 255, 0.3);
 }
 
-.snackbar-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.snackbar-container-vault-modal {
+  position: absolute;
+  top: 105%;
+  left: 27%;
 }
 
 @media screen and (max-width: 688px) {
@@ -331,6 +331,22 @@
 
   .vault-modal-header {
     padding-right: 2rem;
+  }
+}
+
+@media screen and (max-width: 2000px) {
+  .vault-modal-container {
+    margin-top: 12rem;
+    margin-left: 10rem;
+    zoom: 0.8;
+  }
+}
+
+@media screen and (max-width: 450px) {
+  .vault-modal-container {
+    margin-top: 0rem;
+    margin-left: 1rem;
+    zoom: 0.9;
   }
 }
 

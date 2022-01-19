@@ -4,7 +4,6 @@ import cancelIcon from "../../assets/cancel.svg";
 import bscLogo from "../../assets/bsc_logo.png";
 import wethLogo from "../../assets/wEth_logo.svg";
 import Web3Context from "../../store/Web3-context";
-import SnackbarUI from "../snackbar/SnackbarUI";
 import LoadingImg from "../../components/loading-img-component/LoadingImg";
 
 const CreateVaultModal = (props) => {
@@ -12,10 +11,6 @@ const CreateVaultModal = (props) => {
   const walletAddress = web3Ctx.walletAddress;
   const [isLoading, setIsLoading] = useState(false);
   const [isBNBVaultCreate, setIsBNBVaultCreate] = useState(true);
-  const [snackbarOpen, setSnackbarOpen] = useState({
-    open: false,
-    error: false,
-  });
 
   const onCloseModalHandler = () => {
     if (isLoading) return;
@@ -28,10 +23,8 @@ const CreateVaultModal = (props) => {
     try {
       const vaultTx = await props.tokenContract.createVault();
       await vaultTx.wait();
-      setSnackbarOpen({ open: true, error: false });
     } catch (error) {
       setIsLoading(false);
-      setSnackbarOpen({ open: true, error: true });
     }
   };
 
@@ -40,10 +33,8 @@ const CreateVaultModal = (props) => {
     try {
       const vaultTx = await props.wethVaultContract.createVault();
       await vaultTx.wait();
-      setSnackbarOpen({ open: true, error: false });
     } catch (error) {
       setIsLoading(false);
-      setSnackbarOpen({ open: true, error: true });
     }
   };
 
@@ -147,10 +138,6 @@ const CreateVaultModal = (props) => {
     <>
       <div className={classes["create-vault-modal-container"]}>
         {isLoading ? <LoadingImg /> : renderContent()}
-      </div>
-      <div>
-        {" "}
-        {snackbarOpen.open && <SnackbarUI error={snackbarOpen.error} />}
       </div>
     </>
   );

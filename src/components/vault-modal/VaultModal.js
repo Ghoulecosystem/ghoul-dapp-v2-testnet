@@ -87,20 +87,6 @@ const VaultModal = (props) => {
     }
   }, []);
 
-  const handleChange = (event, newValue) => {
-    if (newValue === 0) {
-      newValue = 1;
-    }
-
-    setValue(newValue / 100);
-
-    if (manageState.showCollateral) {
-    } else if (manageState.showWithdraw) {
-    } else if (manageState.showRepay) {
-    } else {
-    }
-  };
-
   const depositCollateralHandler = (value) => {
     if (value < 0) {
       value = Math.abs(value);
@@ -148,6 +134,12 @@ const VaultModal = (props) => {
     if (value < 0) {
       value = Math.abs(value);
     }
+
+    if (parseFloat(props.debt) === 0) {
+      setValue(100);
+      return;
+    }
+
     if (value > parseFloat(props.balances.gdaiBalance)) {
       value = parseFloat(props.balances.gdaiBalance);
     }
@@ -178,19 +170,7 @@ const VaultModal = (props) => {
   };
 
   const approveWethHandler = async () => {
-    try {
-      const tx = await props.wethContract.approve(
-        wethVaultAddress,
-        ethers.utils.parseEther("100000000000")
-      );
-
-      setSnackbarOpen({ open: true, error: false });
-      await tx.wait();
-      setWethDepositApprove(true);
-    } catch (error) {
-      setSnackbarOpen({ open: true, error: true });
-      console.log(error);
-    }
+    props.approveWethHandler();
   };
 
   const collateralBNBHandler = async () => {
@@ -201,8 +181,8 @@ const VaultModal = (props) => {
         gasLimit: 60000,
       });
 
-      setSnackbarOpen({ open: true, error: false });
       await tx.wait();
+      setSnackbarOpen({ open: true, error: false });
       props.closeHandler();
       props.collateralBNB(props.id);
     } catch (error) {
@@ -223,8 +203,8 @@ const VaultModal = (props) => {
         }
       );
 
-      setSnackbarOpen({ open: true, error: false });
       await tx.wait();
+      setSnackbarOpen({ open: true, error: false });
       props.closeHandler();
       props.collateralWeth(props.id);
     } catch (error) {
@@ -245,8 +225,8 @@ const VaultModal = (props) => {
         txValue
       );
 
-      setSnackbarOpen({ open: true, error: false });
       await tx.wait();
+      setSnackbarOpen({ open: true, error: false });
       props.closeHandler();
       props.collateralBNB(props.id);
     } catch (error) {
@@ -267,8 +247,8 @@ const VaultModal = (props) => {
         txValue
       );
 
-      setSnackbarOpen({ open: true, error: false });
       await tx.wait();
+      setSnackbarOpen({ open: true, error: false });
       props.closeHandler();
       props.collateralWeth(props.id);
     } catch (error) {
@@ -283,16 +263,16 @@ const VaultModal = (props) => {
         const txValue = ethers.utils.parseEther(borrowValue.toString());
         const tx = await props.tokenContract.borrowToken(props.id, txValue);
 
-        setSnackbarOpen({ open: true, error: false });
         await tx.wait();
+        setSnackbarOpen({ open: true, error: false });
         props.closeHandler();
         props.collateralBNB(props.id);
       } else {
         const txValue = ethers.utils.parseEther(borrowValue.toString());
         const tx = await props.wethVaultContract.borrowToken(props.id, txValue);
 
-        setSnackbarOpen({ open: true, error: false });
         await tx.wait();
+        setSnackbarOpen({ open: true, error: false });
         props.closeHandler();
         props.collateralWeth(props.id);
       }
@@ -312,8 +292,8 @@ const VaultModal = (props) => {
         const txValue = ethers.utils.parseEther(repayValue.toString());
         const tx = await props.tokenContract.payBackToken(props.id, txValue);
 
-        setSnackbarOpen({ open: true, error: false });
         await tx.wait();
+        setSnackbarOpen({ open: true, error: false });
         props.closeHandler();
         props.collateralBNB(props.id);
       } else {
@@ -323,8 +303,8 @@ const VaultModal = (props) => {
           txValue
         );
 
-        setSnackbarOpen({ open: true, error: false });
         await tx.wait();
+        setSnackbarOpen({ open: true, error: false });
         props.closeHandler();
         props.collateralWeth(props.id);
       }
@@ -582,7 +562,7 @@ const VaultModal = (props) => {
       <>
         <div className={classes_slider.root}>
           <CustomSlider
-            value={value * 100}
+            value={parseFloat(props.debt) === 0 ? 99 : value * 100}
             aria-labelledby="continuous-slider"
           />
         </div>
@@ -649,7 +629,7 @@ const VaultModal = (props) => {
           Borrow gDAI
         </div>
       )}
-      <div className="snackbar-container">
+      <div className={classes["snackbar-container-vault-modal"]}>
         <> {snackbarOpen.open && <SnackbarUI error={snackbarOpen.error} />}</>
       </div>
     </div>

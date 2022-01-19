@@ -21,7 +21,13 @@ export default function SnackbarUI(props) {
 
   return (
     <div className="snackbar-container">
-      <Snackbar open={open} autoHideDuration={5000} onClose={handleClose}>
+      <Snackbar
+        open={open}
+        autoHideDuration={5000000000}
+        onClose={handleClose}
+        className={props.className}
+        sx={{ position: "relative" }}
+      >
         <Alert
           onClose={handleClose}
           severity={props.error ? "error" : "success"}

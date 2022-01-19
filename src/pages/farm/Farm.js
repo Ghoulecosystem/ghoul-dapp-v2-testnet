@@ -155,8 +155,9 @@ const Farm = () => {
         parseEther("1000000000000000")
       );
       setIsLoadingPools(true);
-      setSnackbarOpen({ open: true, error: false });
+
       await tx.wait();
+      setSnackbarOpen({ open: true, error: false });
       loadPools();
       setIsLoadingPools(false);
     } catch (error) {
@@ -173,8 +174,9 @@ const Farm = () => {
         id,
         ethers.utils.parseEther(amount.toString())
       );
-      setSnackbarOpen({ open: true, error: false });
+
       await tx.wait();
+      setSnackbarOpen({ open: true, error: false });
       loadPools();
       setIsLoadingPools(false);
     } catch (error) {
@@ -188,8 +190,9 @@ const Farm = () => {
     try {
       const tx = await web3Ctx.farmContract.withdraw(id, 0);
       setIsLoadingPools(true);
-      setSnackbarOpen({ open: true, error: false });
+
       await tx.wait();
+      setSnackbarOpen({ open: true, error: false });
       loadPools();
       setIsLoadingPools(false);
     } catch (error) {
@@ -207,8 +210,9 @@ const Farm = () => {
         ethers.utils.formatEther(amount.toString())
       );
       setIsLoadingPools(true);
-      setSnackbarOpen({ open: true, error: false });
+
       await tx.wait();
+      setSnackbarOpen({ open: true, error: false });
       loadPools();
       setIsLoadingPools(false);
     } catch (error) {

@@ -3,6 +3,8 @@ import classes from "./Swap.module.css";
 import Header from "../../components/header/Header";
 import ghoulLogo from "../../assets/ghoul_logo.svg";
 import daiLogo from "../../assets/dai_logo.svg";
+import busdLogo from "../../assets/Currency226.png";
+import usdtLogo from "../../assets/Currency=Tether.png";
 import swapArrows from "../../assets/swap-arrows.svg";
 import {
   swapAddress,
@@ -14,6 +16,7 @@ import Web3Context from "../../store/Web3-context";
 import LoadingImg from "../../components/loading-img-component/LoadingImg";
 import { ethers } from "ethers";
 import SnackbarUI from "../../components/snackbar/SnackbarUI";
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import Button from "@mui/material/Button";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
@@ -46,6 +49,12 @@ const Swap = () => {
   const [coinBalance, setCoinBalance] = useState(0);
   const [coinReserve, setCoinReserve] = useState(0);
 
+  let anchorLocation = "translateX(-200px) translateY(-120px)";
+  const { innerWidth: width, innerHeight: height } = window;
+  if (width < 450) {
+    anchorLocation = "translateX(-0px) translateY(-0px)";
+  }
+
   const open = Boolean(anchorEl);
 
   const handleClick = (event) => {
@@ -63,14 +72,18 @@ const Swap = () => {
       setAnchorEl(null);
       return;
     }
+
+    setInputOneValue(0);
+    setInputTwoValue(0);
+
     setCoin(myValue);
     setAnchorEl(null);
   };
 
   const loadReserves = useCallback(async () => {
     try {
-      // setIsLoadingReserves(true);
-      // // BALANCES
+      setIsLoadingReserves(true);
+      // // BALANCES;
       // const gDaiBalance = await web3Ctx.tokenContract.balanceOf(
       //   web3Ctx.walletAddress
       // );
@@ -268,25 +281,26 @@ const Swap = () => {
       // });
 
       setReserves({
-        gDaiBalance: parseFloat(5).toFixed(2),
-        daiBalance: 1,
-        busdBalance: 3,
-        usdtBalance: 4,
-        gDaiAllowance: 5,
-        daiAllowance: 6,
-        daiRate: 7,
-        gDaiRate: 8,
-        gDaiReserve: 9,
-        daiReserve: 10,
-        busdRate: 11,
-        gdaiRateBusd: 12,
-        gdaiReserveBusd: 13,
-        busdReserve: 14,
-        usdtRate: 15,
-        gdaiRateUsdt: 16,
-        gdaiReserveUsdt: 17,
-        usdtReserve: 18,
+        gDaiBalance: parseFloat(71.77).toFixed(2),
+        daiBalance: 28.2,
+        busdBalance: 10,
+        usdtBalance: 0,
+        gDaiAllowance: 9999999999,
+        daiAllowance: 9999999999,
+        daiRate: 101,
+        gDaiRate: 99,
+        gDaiReserve: 124.39,
+        daiReserve: 174.2,
+        busdRate: 101,
+        gdaiRateBusd: 99,
+        gdaiReserveBusd: 0.0,
+        busdReserve: 0.0,
+        usdtRate: 101,
+        gdaiRateUsdt: 99,
+        gdaiReserveUsdt: 0.0,
+        usdtReserve: 0.0,
       });
+
       setIsLoadingReserves(false);
     } catch (error) {
       setIsLoadingReserves(false);
@@ -328,27 +342,50 @@ const Swap = () => {
 
     try {
       if (togDai) {
-        const tx = await web3Ctx.daiContract.approve(
-          swapAddress,
-          ethers.utils.parseEther("1000000000000000")
-        );
+        let tx;
+        switch (coin) {
+          case "DAI":
+            tx = await web3Ctx.daiContract.approve(
+              swapAddress,
+              ethers.utils.parseEther("1000000000000000")
+            );
 
-        setSnackbarOpen({ open: true, error: false });
-        await tx.wait();
+            await tx.wait();
+            setSnackbarOpen({ open: true, error: false });
+            break;
+          case "BUSD":
+            tx = await web3Ctx.busdTokenContract.approve(
+              busdSwapAddress,
+              ethers.utils.parseEther("1000000000000000")
+            );
+
+            await tx.wait();
+            setSnackbarOpen({ open: true, error: false });
+            break;
+          case "USDT":
+            tx = await web3Ctx.usdtTokenContract.approve(
+              usdtSwapAddress,
+              ethers.utils.parseEther("1000000000000000")
+            );
+
+            await tx.wait();
+            setSnackbarOpen({ open: true, error: false });
+            break;
+          default:
+            break;
+        }
       } else {
         const tx = await web3Ctx.tokenContract.approve(
           swapAddress,
           ethers.utils.parseEther("1000000000000000")
         );
 
-        setSnackbarOpen({ open: true, error: false });
         await tx.wait();
+        setSnackbarOpen({ open: true, error: false });
       }
-
-      loadReserves();
-    } catch (error) {
+    } catch (e) {
       setSnackbarOpen({ open: true, error: true });
-      console.log(error);
+      console.log(e);
     }
 
     setIsLoadingSwap(false);
@@ -362,30 +399,71 @@ const Swap = () => {
 
     try {
       setIsLoadingSwap(true);
+      let tx;
       if (togDai) {
-        console.log(inputOneValue);
-        console.log(ethers.utils.parseEther(inputOneValue.toString()));
-        const tx = await web3Ctx.swapContract.swapFrom(
-          ethers.utils.parseEther(inputOneValue.toString())
-        );
-        setSnackbarOpen({ open: true, error: false });
-        await tx.wait();
+        switch (coin) {
+          case "DAI":
+            tx = await web3Ctx.swapContract.swapFrom(
+              ethers.utils.parseEther(inputOneValue.toString())
+            );
+
+            await tx.wait();
+            setSnackbarOpen({ open: true, error: false });
+            break;
+          case "BUSD":
+            tx = await web3Ctx.busdSwapContract.swapFrom(
+              ethers.utils.parseEther(inputOneValue.toString())
+            );
+
+            await tx.wait();
+            setSnackbarOpen({ open: true, error: false });
+            break;
+          case "USDT":
+            tx = await web3Ctx.usdtSwapContract.swapFrom(
+              ethers.utils.parseEther(inputOneValue.toString())
+            );
+
+            await tx.wait();
+            setSnackbarOpen({ open: true, error: false });
+            break;
+          default:
+            break;
+        }
+
         loadReserves();
         setInputOneValue(0);
         setInputTwoValue(0);
         setIsLoadingSwap(false);
       } else {
-        console.log(inputOneValue);
-        console.log(ethers.utils.parseEther(inputOneValue.toString()));
-        const tx = await web3Ctx.swapContract.swapTo(
-          ethers.utils.parseEther(inputOneValue.toString())
-        );
-        setSnackbarOpen({ open: true, error: false });
-        await tx.wait();
+        switch (coin) {
+          case "DAI":
+            tx = await web3Ctx.swapContract.swapTo(
+              ethers.utils.parseEther(inputOneValue.toString())
+            );
+            await tx.wait();
+            setSnackbarOpen({ open: true, error: false });
+            break;
+          case "BUSD":
+            tx = await web3Ctx.busdSwapContract.swapTo(
+              ethers.utils.parseEther(inputOneValue.toString())
+            );
+            await tx.wait();
+            setSnackbarOpen({ open: true, error: false });
+            break;
+          case "USDT":
+            tx = await web3Ctx.usdtSwapContract.swapTo(
+              ethers.utils.parseEther(inputOneValue.toString())
+            );
+            await tx.wait();
+            setSnackbarOpen({ open: true, error: false });
+            break;
+          default:
+            break;
+        }
+
+        loadReserves();
         setInputOneValue(0);
         setInputTwoValue(0);
-        loadReserves();
-
         setIsLoadingSwap(false);
       }
     } catch (error) {
@@ -397,35 +475,146 @@ const Swap = () => {
 
   const maxHandlerOne = () => {
     let recieveValue;
+    if (!togDai) {
+      let value = reserves.gDaiBalance;
+      setInputOneValue(reserves.gDaiBalance);
 
-    if (togDai) {
-      recieveValue = (
-        (parseFloat(reserves.daiBalance) * parseFloat(reserves.daiRate)) /
-        100
-      ).toFixed(2);
+      switch (coin) {
+        case "DAI":
+          recieveValue = (
+            (parseFloat(value) * parseFloat(reserves.gDaiRate)) /
+            100
+          ).toFixed(2);
 
-      recieveValue = recieveValue - recieveValue * (1 / 100);
-      if (recieveValue > parseFloat(reserves.gDaiReserve)) {
-        setExceedingBalance(true);
-      } else {
-        setExceedingBalance(false);
+          if (recieveValue > parseFloat(reserves.daiReserve)) {
+            setExceedingBalance(true);
+          } else {
+            setExceedingBalance(false);
+          }
+
+          if (value > reserves.gDaiBalance) {
+            setExceedingBalance(true);
+          } else {
+            setExceedingBalance(false);
+          }
+          break;
+        case "BUSD":
+          recieveValue = (
+            (parseFloat(value) * parseFloat(reserves.gdaiRateBusd)) /
+            100
+          ).toFixed(2);
+
+          if (recieveValue > parseFloat(reserves.busdReserve)) {
+            setExceedingBalance(true);
+          } else {
+            setExceedingBalance(false);
+          }
+
+          if (value > reserves.gDaiBalance) {
+            setExceedingBalance(true);
+          } else {
+            setExceedingBalance(false);
+          }
+          break;
+        case "USDC":
+          break;
+        case "USDT":
+          recieveValue = (
+            (parseFloat(value) * parseFloat(reserves.gdaiRateUsdt)) /
+            100
+          ).toFixed(2);
+
+          if (recieveValue > parseFloat(reserves.usdtReserve)) {
+            setExceedingBalance(true);
+          } else {
+            setExceedingBalance(false);
+          }
+
+          if (value > reserves.usdtBalance) {
+            setExceedingBalance(true);
+          } else {
+            setExceedingBalance(false);
+          }
+          break;
+
+        default:
+          break;
       }
-      setInputOneValue(parseFloat(reserves.daiBalance).toFixed(2));
+
       setInputTwoValue(recieveValue);
     } else {
-      recieveValue = (
-        (parseFloat(reserves.gDaiBalance) * parseFloat(reserves.gDaiRate)) /
-        100
-      ).toFixed(2);
-      recieveValue = recieveValue - recieveValue * (1 / 100);
+      let value;
+      switch (coin) {
+        case "DAI":
+          value = reserves.daiBalance;
+          recieveValue = (
+            (parseFloat(value) * parseFloat(reserves.daiRate)) /
+            100
+          ).toFixed(2);
 
-      if (recieveValue > parseFloat(reserves.daiReserve)) {
-        setExceedingBalance(true);
-      } else {
-        setExceedingBalance(false);
+          recieveValue = recieveValue - recieveValue * 0.1;
+
+          if (recieveValue > parseFloat(reserves.gDaiReserve)) {
+            setExceedingBalance(true);
+          } else {
+            setExceedingBalance(false);
+          }
+
+          if (value > reserves.daiBalance) {
+            setExceedingBalanceWallet(true);
+          } else {
+            setExceedingBalanceWallet(false);
+          }
+          break;
+        case "BUSD":
+          value = reserves.busdBalance;
+          recieveValue = (
+            (parseFloat(value) * parseFloat(reserves.busdRate)) /
+            100
+          ).toFixed(2);
+
+          recieveValue = recieveValue - recieveValue * 0.1;
+
+          if (recieveValue > parseFloat(reserves.gdaiReserveBusd)) {
+            setExceedingBalance(true);
+          } else {
+            setExceedingBalance(false);
+          }
+
+          if (value > reserves.busdBalance) {
+            setExceedingBalanceWallet(true);
+          } else {
+            setExceedingBalanceWallet(false);
+          }
+          break;
+        case "USDC":
+          break;
+        case "USDT":
+          value = reserves.usdtBalance;
+          recieveValue = (
+            (parseFloat(value) * parseFloat(reserves.usdtRate)) /
+            100
+          ).toFixed(2);
+
+          recieveValue = recieveValue - recieveValue * 0.1;
+
+          if (recieveValue > parseFloat(reserves.gdaiReserveUsdt)) {
+            setExceedingBalance(true);
+          } else {
+            setExceedingBalance(false);
+          }
+
+          if (value > reserves.busdBalance) {
+            setExceedingBalanceWallet(true);
+          } else {
+            setExceedingBalanceWallet(false);
+          }
+          break;
+
+        default:
+          break;
       }
-
-      setInputOneValue(parseFloat(reserves.gDaiBalance).toFixed(2));
+      setInputOneValue(value);
       setInputTwoValue(recieveValue);
     }
   };
@@ -463,7 +652,7 @@ const Swap = () => {
             100
           ).toFixed(2);
 
-          recieveValue = recieveValue - recieveValue * (1 / 100);
+          recieveValue = recieveValue - recieveValue * 0.1;
 
           if (recieveValue > parseFloat(reserves.gDaiReserve)) {
             setExceedingBalance(true);
@@ -471,17 +660,55 @@ const Swap = () => {
             setExceedingBalance(false);
           }
 
-          if (value > reserves.daiBalance) {
-            setExceedingBalanceWallet(true);
+          console.log(value);
+          console.log(reserves.daiBalance);
+          if (parseFloat(value) > parseFloat(reserves.daiBalance)) {
+            setExceedingBalance(true);
           } else {
-            setExceedingBalanceWallet(false);
+            setExceedingBalance(false);
           }
           break;
         case "BUSD":
+          recieveValue = (
+            (parseFloat(value) * parseFloat(reserves.busdRate)) /
+            100
+          ).toFixed(2);
+
+          recieveValue = recieveValue - recieveValue * 0.1;
+
+          if (recieveValue > parseFloat(reserves.gdaiReserveBusd)) {
+            setExceedingBalance(true);
+          } else {
+            setExceedingBalance(false);
+          }
+
+          if (value > reserves.busdBalance) {
+            setExceedingBalance(true);
+          } else {
+            setExceedingBalance(false);
+          }
           break;
         case "USDC":
           break;
         case "USDT":
+          recieveValue = (
+            (parseFloat(value) * parseFloat(reserves.usdtRate)) /
+            100
+          ).toFixed(2);
+
+          recieveValue = recieveValue - recieveValue * 0.1;
+
+          if (recieveValue > parseFloat(reserves.gdaiReserveUsdt)) {
+            setExceedingBalance(true);
+          } else {
+            setExceedingBalance(false);
+          }
+
+          if (value > reserves.busdBalance) {
+            setExceedingBalance(true);
+          } else {
+            setExceedingBalance(false);
+          }
           break;
 
         default:
@@ -490,32 +717,64 @@ const Swap = () => {
     } else {
       switch (coin) {
         case "DAI":
+          recieveValue = (
+            (parseFloat(value) * parseFloat(reserves.gDaiRate)) /
+            100
+          ).toFixed(2);
+
+          if (recieveValue > parseFloat(reserves.daiReserve)) {
+            setExceedingBalance(true);
+          } else {
+            setExceedingBalance(false);
+          }
+
+          if (value > reserves.gDaiBalance) {
+            setExceedingBalance(true);
+          } else {
+            setExceedingBalance(false);
+          }
           break;
         case "BUSD":
+          recieveValue = (
+            (parseFloat(value) * parseFloat(reserves.gdaiRateBusd)) /
+            100
+          ).toFixed(2);
+
+          if (recieveValue > parseFloat(reserves.busdReserve)) {
+            setExceedingBalance(true);
+          } else {
+            setExceedingBalance(false);
+          }
+
+          if (value > reserves.gDaiBalance) {
+            setExceedingBalance(true);
+          } else {
+            setExceedingBalance(false);
+          }
           break;
         case "USDC":
           break;
         case "USDT":
+          recieveValue = (
+            (parseFloat(value) * parseFloat(reserves.gdaiRateUsdt)) /
+            100
+          ).toFixed(2);
+
+          if (recieveValue > parseFloat(reserves.usdtReserve)) {
+            setExceedingBalance(true);
+          } else {
+            setExceedingBalance(false);
+          }
+
+          if (value > reserves.usdtBalance) {
+            setExceedingBalance(true);
+          } else {
+            setExceedingBalance(false);
+          }
           break;
 
         default:
           break;
-      }
-      recieveValue = (
-        (parseFloat(value) * parseFloat(reserves.gDaiRate)) /
-        100
-      ).toFixed(2);
-
-      if (recieveValue > parseFloat(reserves.daiReserve)) {
-        setExceedingBalance(true);
-      } else {
-        setExceedingBalance(false);
-      }
-
-      if (value > reserves.gDaiBalance) {
-        setExceedingBalanceWallet(true);
-      } else {
-        setExceedingBalanceWallet(false);
       }
     }
 
@@ -524,170 +783,326 @@ const Swap = () => {
   };
 
   const inputTwoHandler = () => {};
-  console.log();
-  return (
-    <div className={classes["swap-container"]}>
-      <Header title="Swap"></Header>
-      <div id={classes["vault-line"]}></div>
-      {isLoadingReserves ? (
-        <LoadingImg />
-      ) : (
-        <div className={classes["swap-box"]}>
-          <>
-            <h1 id={classes["mint-gdai"]}> Mint gDAI with Stablecoins</h1>
-            <div className={classes["swap-line"]}></div>
-            <div className={classes["swap-box-header"]}>
-              <span className={classes["col-one"]}>
-                Deposit <span id={classes.dai}>{togDai ? coin : "gDAI"}</span>
-                <div id={classes["dai-2"]}></div>
-              </span>
-              <span className={classes["col-two"]}>
-                {togDai ? coin : "gDAI"}
-                {" Balance: "}
-                <span id={classes.balance}>
-                  {coin === "DAI" &&
-                    (togDai ? reserves.daiBalance : reserves.gDaiBalance)}
-                  {coin === "BUSD" &&
-                    (togDai ? reserves.busdBalance : reserves.gDaiBalance)}
-                  {coin === "USDT" &&
-                    (togDai ? reserves.usdtBalance : reserves.gDaiBalance)}
-                </span>
-              </span>
-            </div>
-            <div className={classes["swap-input"]}>
-              <Button
-                id="fade-button"
-                aria-controls={open ? "fade-menu" : undefined}
-                aria-haspopup="true"
-                aria-expanded={open ? "true" : undefined}
-                onClick={togDai && handleClick}
-                style={{
-                  color: "#74ec65",
-                  padding: "0",
-                  minWidth: 0,
-                }}
-              >
-                <img
-                  src={togDai ? daiLogo : ghoulLogo}
-                  alt=""
-                  id={classes["swap-menu-icon"]}
-                  width={34}
-                  height={30}
-                />
-              </Button>
-              <Menu
-                id="fade-menu"
-                MenuListProps={{
-                  "aria-labelledby": "fade-button",
-                }}
-                anchorEl={anchorEl}
-                open={open}
-                onClose={handleClose}
-                TransitionComponent={Fade}
-                PaperProps={{
-                  style: {
-                    transform: "translateX(-190px) translateY(-120px)",
-                    backgroundColor: "#090a10ba",
-                    color: "white",
-                  },
-                }}
-              >
-                <MenuItem data-my-value={"DAI"} onClick={handleClose}>
-                  DAI
-                </MenuItem>
-                <MenuItem data-my-value={"BUSD"} onClick={handleClose}>
-                  BUSD
-                </MenuItem>
-                {/* <MenuItem data-my-value={"USDC"} onClick={handleClose}>
-                  USDC
-                </MenuItem> */}
-                <MenuItem data-my-value={"USDT"} onClick={handleClose}>
-                  USDT
-                </MenuItem>
-              </Menu>
+  const renderBalances = () => {
+    switch (coin) {
+      case "DAI":
+        return togDai ? reserves.daiBalance : reserves.gDaiBalance;
+      case "BUSD":
+        return togDai ? reserves.busdBalance : reserves.gDaiBalance;
+      case "USDT":
+        return togDai ? reserves.usdtBalance : reserves.gDaiBalance;
+      default:
+        break;
+    }
+  };
 
-              <input
-                type="number"
-                defaultValue={0}
-                max={togDai ? reserves.daiBalance : reserves.gDaiBalance}
-                value={inputOneValue}
-                onChange={(e) => {
-                  inputOneHandler(e.target.value);
-                }}
-              />
-              <span id={classes.max} onClick={maxHandlerOne}>
-                MAX
-              </span>
-            </div>
-            <div className={classes["swap-arrow"]}>
-              <img src={swapArrows} alt="" onClick={flipHandler} />
-            </div>
-            <div className={classes["swap-box-header"]}>
-              <span className={classes["col-one"]}>
-                Recieve <span id={classes.dai}>{togDai ? "gDAI" : coin}</span>
-              </span>
-              <span className={classes["col-two"]}>
-                Availble {togDai ? "gDAI: " : `${coin}: `}
-                <span id={classes.balance}>
-                  {coin === "DAI" &&
-                    (togDai ? reserves.gDaiReserve : reserves.daiReserve)}
-                  {coin === "BUSD" &&
-                    (togDai ? reserves.gDaiReserve : reserves.busdReserve)}
-                  {coin === "USDT" &&
-                    (togDai ? reserves.gDaiReserve : reserves.usdtReserve)}
+  const renderReserves = () => {
+    switch (coin) {
+      case "DAI":
+        return togDai ? reserves.gDaiBalance : reserves.daiReserve;
+      case "BUSD":
+        return togDai ? reserves.gdaiReserveBusd : reserves.busdReserve;
+      case "USDT":
+        return togDai ? reserves.gdaiReserveUsdt : reserves.usdtReserve;
+      default:
+        break;
+    }
+  };
+
+  const renderIcons = () => {
+    switch (coin) {
+      case "DAI":
+        return daiLogo;
+      case "BUSD":
+        return busdLogo;
+      case "USDT":
+        return usdtLogo;
+      default:
+        break;
+    }
+  };
+
+  const renderButtons = () => {
+    if (togDai) {
+      switch (coin) {
+        case "DAI":
+          if (daiApproved && !exceedingBalance) {
+            return (
+              <button id={classes["swap-btn"]} onClick={swapHandler}>
+                Swap
+              </button>
+            );
+          }
+
+          if (exceedingBalance) {
+            return (
+              <button id={classes["approve-btn"]}>
+                Deposit Exceeds Available Reserves or User Balance
+              </button>
+            );
+          }
+
+          if (!daiApproved) {
+            return (
+              <button id={classes["approve-btn"]} onClick={approveHandler}>
+                Approve DAI
+              </button>
+            );
+          }
+
+          break;
+        case "BUSD":
+          if (busdApproved && !exceedingBalance) {
+            return (
+              <button id={classes["swap-btn"]} onClick={swapHandler}>
+                Swap
+              </button>
+            );
+          }
+
+          if (exceedingBalance) {
+            return (
+              <button id={classes["approve-btn"]}>
+                Deposit Exceeds Available Reserves or User Balance
+              </button>
+            );
+          }
+
+          if (!busdApproved) {
+            return (
+              <button id={classes["approve-btn"]} onClick={approveHandler}>
+                Approve BUSD
+              </button>
+            );
+          }
+
+          break;
+        case "USDT":
+          if (daiApproved && !exceedingBalance) {
+            return (
+              <button id={classes["swap-btn"]} onClick={swapHandler}>
+                Swap
+              </button>
+            );
+          }
+
+          if (exceedingBalance) {
+            return (
+              <button id={classes["approve-btn"]}>
+                Deposit Exceeds Available Reserves or User Balance
+              </button>
+            );
+          }
+
+          if (!usdtApproved) {
+            return (
+              <button id={classes["approve-btn"]} onClick={approveHandler}>
+                Approve USDT
+              </button>
+            );
+          }
+
+          break;
+        default:
+          break;
+      }
+    } else {
+      if (!gDaiApproved) {
+        return (
+          <button id={classes["approve-btn"]} onClick={approveHandler}>
+            Approve gDAI
+          </button>
+        );
+      }
+
+      if (exceedingBalance) {
+        return (
+          <button id={classes["approve-btn"]}>
+            Deposit Exceeds Available Reserves or User Balance
+          </button>
+        );
+      }
+
+      if (gDaiApproved && !exceedingBalance) {
+        return (
+          <button id={classes["swap-btn"]} onClick={swapHandler}>
+            Swap
+          </button>
+        );
+      }
+    }
+  };
+
+  return (
+    <>
+      <div className={classes["swap-container"]}>
+        <Header title="Swap"></Header>
+        <div id={classes["vault-line"]}></div>
+        {isLoadingReserves ? (
+          <LoadingImg />
+        ) : (
+          <div className={classes["swap-box"]}>
+            <>
+              <h1 id={classes["mint-gdai"]}>
+                {" "}
+                {togDai
+                  ? "Mint gDAI with Stablecoins"
+                  : "Mint Stablecoins with gDAI"}
+              </h1>
+              <div className={classes["swap-line"]}></div>
+              <div className={classes["swap-box-header"]}>
+                <span className={classes["col-one"]}>
+                  Deposit <span id={classes.dai}>{togDai ? coin : "gDAI"}</span>
+                  <div id={classes["dai-2"]}></div>
                 </span>
-              </span>
-            </div>
-            <div className={classes["swap-input"]}>
-              <img src={togDai ? ghoulLogo : daiLogo} alt="" />
-              <input
-                type="number"
-                defaultValue={0}
-                max={togDai ? reserves.gDaiBalance : reserves.daiBalance}
-                value={inputTwoValue}
-                onChange={(e) => {
-                  inputTwoHandler(e.target.value);
-                }}
-              />
-            </div>
-            <div id={classes["swap-btn-div"]}>
-              {exceedingBalance && (
-                <button id={classes["approve-btn"]}>
-                  Deposit Exceeds Available Reserves or User Balance
-                </button>
-              )}
-              {togDai &&
-                !exceedingBalance &&
-                (daiApproved ? (
-                  <button id={classes["swap-btn"]} onClick={swapHandler}>
-                    Swap
-                  </button>
-                ) : (
-                  <button id={classes["approve-btn"]} onClick={approveHandler}>
-                    Approve DAI
-                  </button>
-                ))}
-              {!togDai &&
-                !exceedingBalance &&
-                (gDaiApproved ? (
-                  <button id={classes["swap-btn"]} onClick={swapHandler}>
-                    Swap
-                  </button>
-                ) : (
-                  <button id={classes["approve-btn"]} onClick={approveHandler}>
-                    Approve gDAI
-                  </button>
-                ))}
-            </div>
-            <div id={classes["footer-text"]}>
-              <p>Static fee of 1%</p>
-            </div>
-          </>
-          {snackbarOpen.open && <SnackbarUI error={snackbarOpen.error} />}
-        </div>
-      )}
-    </div>
+                <span className={classes["col-two"]}>
+                  {togDai ? coin : "gDAI"}
+                  {" Balance: "}
+                  <span id={classes.balance}>{renderBalances()}</span>
+                </span>
+              </div>
+              <div className={classes["swap-input"]}>
+                <Button
+                  id="fade-button"
+                  aria-controls={open ? "fade-menu" : undefined}
+                  aria-haspopup="true"
+                  aria-expanded={open ? "true" : undefined}
+                  onClick={togDai ? handleClick : undefined}
+                  style={{
+                    color: "#74ec65",
+                    padding: "0",
+                    minWidth: 0,
+                  }}
+                >
+                  <img
+                    src={togDai ? renderIcons() : ghoulLogo}
+                    alt=""
+                    id={classes["swap-menu-icon"]}
+                    width={34}
+                    height={30}
+                  />
+                  <div className={classes["coin-menu"]}>
+                    {togDai ? coin : "gDai"}
+                    {togDai && <KeyboardArrowDownIcon />}
+                  </div>
+                </Button>
+                <Menu
+                  id="fade-menu"
+                  MenuListProps={{
+                    "aria-labelledby": "fade-button",
+                  }}
+                  anchorEl={anchorEl}
+                  open={open}
+                  onClose={handleClose}
+                  TransitionComponent={Fade}
+                  PaperProps={{
+                    style: {
+                      transform: anchorLocation,
+                      backgroundColor: "#090a10ba",
+                      color: "white",
+                    },
+                  }}
+                >
+                  <MenuItem data-my-value={"DAI"} onClick={handleClose}>
+                    DAI
+                  </MenuItem>
+                  <MenuItem data-my-value={"BUSD"} onClick={handleClose}>
+                    BUSD
+                  </MenuItem>
+                  {/* <MenuItem data-my-value={"USDC"} onClick={handleClose}>
+              USDC
+            </MenuItem> */}
+                  <MenuItem data-my-value={"USDT"} onClick={handleClose}>
+                    USDT
+                  </MenuItem>
+                </Menu>
+                <input
+                  id={classes["input-one"]}
+                  type="number"
+                  defaultValue={0}
+                  max={togDai ? reserves.daiBalance : reserves.gDaiBalance}
+                  value={inputOneValue}
+                  onChange={(e) => {
+                    inputOneHandler(e.target.value);
+                  }}
+                />
+                <span id={classes.max} onClick={maxHandlerOne}>
+                  MAX
+                </span>
+              </div>
+              <div className={classes["swap-arrow"]}>
+                <img src={swapArrows} alt="" onClick={flipHandler} />
+              </div>
+              <div className={classes["swap-box-header"]}>
+                <span className={classes["col-one"]}>
+                  Recieve <span id={classes.dai}>{togDai ? "gDAI" : coin}</span>
+                </span>
+                <span className={classes["col-two"]}>
+                  Availble {togDai ? "gDAI: " : `${coin}: `}
+                  <span id={classes.balance}>{renderReserves()}</span>
+                </span>
+              </div>
+              <div className={classes["swap-input"]}>
+                <img src={togDai ? ghoulLogo : renderIcons()} alt="" />
+                <input
+                  type="number"
+                  defaultValue={0}
+                  max={togDai ? reserves.gDaiBalance : reserves.daiBalance}
+                  value={inputTwoValue}
+                  onChange={(e) => {
+                    inputTwoHandler(e.target.value);
+                  }}
+                />
+              </div>
+              <div id={classes["swap-btn-div"]}>{renderButtons()}</div>
+              <div id={classes["footer-text"]}>
+                <p>Static fee of 1%</p>
+              </div>
+            </>
+          </div>
+        )}
+      </div>
+      <div className={classes["snackbar-swap-container"]}>
+        <>
+          {" "}
+          {snackbarOpen.open && (
+            <SnackbarUI
+              error={snackbarOpen.error}
+              className={classes["snackbar-swap"]}
+            />
+          )}
+        </>
+      </div>
+    </>
   );
 };
 
 export default Swap;
+
+// {exceedingBalance && (
+//   <button id={classes["approve-btn"]}>
+//     Deposit Exceeds Available Reserves or User Balance
+//   </button>
+// )}
+// {togDai &&
+//   !exceedingBalance &&
+//   (daiApproved ? (
+//     <button id={classes["swap-btn"]} onClick={swapHandler}>
+//       Swap
+//     </button>
+//   ) : (
+//     <button id={classes["approve-btn"]} onClick={approveHandler}>
+//       Approve DAI
+//     </button>
+//   ))}
+// {!togDai &&
+//   !exceedingBalance &&
+//   (gDaiApproved ? (
+//     <button id={classes["swap-btn"]} onClick={swapHandler}>
+//       Swap
+//     </button>
+//   ) : (
+//     <button id={classes["approve-btn"]} onClick={approveHandler}>
+//       Approve gDAI
+//     </button>
+//   ))}

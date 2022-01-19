@@ -214,6 +214,7 @@
   /* identical to box height, or 157% */
 
   color: rgba(255, 255, 255, 0.3);
+  float: right;
 }
 
 #debt-value {
@@ -227,6 +228,7 @@
   /* identical to box height, or 157% */
 
   color: rgba(255, 255, 255, 0.3);
+  float: left;
 }
 
 .snackbar-container-vault-modal {

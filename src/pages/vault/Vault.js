@@ -1111,7 +1111,10 @@ const Vault = () => {
         </div>
         <div className={classes["all-vaults-mobile"]}>
           <div>
-            <div className={classes["all-vaults-text-display"]}>
+            <div
+              className={classes["all-vaults-text-display"]}
+              style={{ color: !themeCtx.darkMode ? txtColor : undefined }}
+            >
               {vaultDisplayType}{" "}
             </div>
             <div className={classes["all-vaults-mobile-container"]}>
@@ -1126,7 +1129,7 @@ const Vault = () => {
                 }}
               >
                 <img
-                  src={allVaultArrow}
+                  src={imgSrc}
                   alt="arrow"
                   width={15}
                   height={20}

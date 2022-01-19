@@ -29,6 +29,9 @@ import exchangeLogoLm from "../../assets/exchange-lm.png";
 import bondsLogoLm from "../../assets/bonds-lm.png";
 import prifiLogoLm from "../../assets/prifi-lm.png";
 import governanceLogoLm from "../../assets/governance-lm.svg";
+import Switch from "@mui/material/Switch";
+
+const label = { inputProps: { "aria-label": "Switch demo" } };
 
 const Navbar = () => {
   const web3Ctx = useContext(Web3Context);
@@ -353,18 +356,11 @@ const Navbar = () => {
           </a>
         </div>
 
-        <div className={classes["feature-elem"]}>
-          <div className={classes["dark-mode"]} onClick={darkModeHandler}>
-            Dark Mode
-          </div>
+        <div className={classes["feature-elem-2"]}>
+          <div className={classes["dark-mode"]}>Light Mode</div>
           <div className={classes["ios-switch"]}>
             {" "}
-            {/* <FormControlLabel
-              checked={darkMode}
-              onChange={darkModeHandler}
-              control={<IOSSwitch sx={{ m: 1 }} defaultChecked />}
-              label=""
-            /> */}
+            <Switch {...label} color="default" onChange={darkModeHandler} />
           </div>
         </div>
       </div>

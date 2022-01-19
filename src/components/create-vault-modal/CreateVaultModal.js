@@ -5,12 +5,31 @@ import bscLogo from "../../assets/bsc_logo.png";
 import wethLogo from "../../assets/wEth_logo.svg";
 import Web3Context from "../../store/Web3-context";
 import LoadingImg from "../../components/loading-img-component/LoadingImg";
+import ThemeContext from "../../store/Theme-context";
+import blackCross from "../../assets/fi_x.svg";
 
 const CreateVaultModal = (props) => {
   const web3Ctx = useContext(Web3Context);
   const walletAddress = web3Ctx.walletAddress;
   const [isLoading, setIsLoading] = useState(false);
   const [isBNBVaultCreate, setIsBNBVaultCreate] = useState(true);
+
+  const themeCtx = useContext(ThemeContext);
+
+  let bgColor;
+  let bgColor2;
+  let bgColorBox;
+  let txtColor;
+  let inputColor;
+  let imgSrc = cancelIcon;
+  if (!themeCtx.darkMode) {
+    bgColor = "#FFFFFF";
+    bgColorBox = "rgba(0, 0, 0, 0.2)";
+    txtColor = "#000000";
+    inputColor = "rgba(0, 0, 0, 0.1)";
+    bgColor2 = "rgba(0, 0, 0, 0.5)";
+    imgSrc = blackCross;
+  }
 
   const onCloseModalHandler = () => {
     if (isLoading) return;
@@ -73,55 +92,121 @@ const CreateVaultModal = (props) => {
     return (
       <>
         <div className={classes["create-vault-modal-header"]}>
-          <div>Create Vault</div>
+          <div style={{ color: !themeCtx.darkMode ? txtColor : undefined }}>
+            Create Vault
+          </div>
           <button onClick={onCloseModalHandler}>
-            <img src={cancelIcon} alt="" />
+            <img src={imgSrc} alt="" />
           </button>
         </div>
-        <div id={classes.line}></div>
+        <div
+          id={classes.line}
+          style={{ background: !themeCtx.darkMode ? bgColor2 : undefined }}
+        ></div>
         <div className={classes["col-titles"]}>
-          <div className={classes["col-one"]}>TYPE</div>
+          <div
+            className={classes["col-one"]}
+            style={{ color: !themeCtx.darkMode ? bgColor2 : undefined }}
+          >
+            TYPE
+          </div>
           <div className={classes["col-two"]}>
-            <div>GDAI AVAILABLE</div>
-            <div>MIN COL. RATIO</div>
+            <div style={{ color: !themeCtx.darkMode ? bgColor2 : undefined }}>
+              GDAI AVAILABLE
+            </div>
+            <div style={{ color: !themeCtx.darkMode ? bgColor2 : undefined }}>
+              MIN COL. RATIO
+            </div>
           </div>
         </div>
         <div className={classes["vault-container"]}>
-          <div className={classes.vault}>
+          <div
+            className={classes.vault}
+            style={{ background: !themeCtx.darkMode ? bgColorBox : undefined }}
+          >
             <div className={classes["vault-elem"]}>
               <img src={bscLogo} alt="" />
               <div>
-                <span id={classes["mobile-s-1"]}>Type</span>
-                <div>BNB</div>
+                <span
+                  id={classes["mobile-s-1"]}
+                  style={{ color: !themeCtx.darkMode ? txtColor : undefined }}
+                >
+                  Type
+                </span>
+                <div
+                  style={{ color: !themeCtx.darkMode ? txtColor : undefined }}
+                >
+                  BNB
+                </div>
               </div>
             </div>
             <div id={classes["gdai-avai-1"]}>
-              <span id={classes["mobile-s-2"]}>GDAI AVAILABLE</span>
-              <div>{props.gdaiBNB} gDAI</div>
+              <span
+                id={classes["mobile-s-2"]}
+                style={{ color: !themeCtx.darkMode ? txtColor : undefined }}
+              >
+                GDAI AVAILABLE
+              </span>
+              <div style={{ color: !themeCtx.darkMode ? txtColor : undefined }}>
+                {props.gdaiBNB} gDAI
+              </div>
             </div>
             <div id={classes["min-col-ratio-1"]}>
-              <span id={classes["mobile-s-2"]}>MIN COL. RATIO</span>
-              <div>150%</div>
+              <span
+                id={classes["mobile-s-2"]}
+                style={{ color: !themeCtx.darkMode ? txtColor : undefined }}
+              >
+                MIN COL. RATIO
+              </span>
+              <div style={{ color: !themeCtx.darkMode ? txtColor : undefined }}>
+                150%
+              </div>
             </div>
             <div className={classes["create-vault"]} onClick={createBNBVault}>
               Create Vault
             </div>
           </div>
-          <div className={classes.vault}>
+          <div
+            className={classes.vault}
+            style={{ background: !themeCtx.darkMode ? bgColorBox : undefined }}
+          >
             <div className={classes["vault-elem-2"]}>
               <img src={wethLogo} alt="" />
               <div>
-                <span id={classes["mobile-s-2"]}>Type</span>
-                <div>wETH</div>
+                <span
+                  id={classes["mobile-s-2"]}
+                  style={{ color: !themeCtx.darkMode ? txtColor : undefined }}
+                >
+                  Type
+                </span>
+                <div
+                  style={{ color: !themeCtx.darkMode ? txtColor : undefined }}
+                >
+                  wETH
+                </div>
               </div>
             </div>
             <div id={classes["gdai-avai-2"]}>
-              <span id={classes["mobile-s-2"]}>GDAI AVAILABLE</span>
-              <div>{props.gdaiWeth} gDAI</div>
+              <span
+                id={classes["mobile-s-2"]}
+                style={{ color: !themeCtx.darkMode ? txtColor : undefined }}
+              >
+                GDAI AVAILABLE
+              </span>
+              <div style={{ color: !themeCtx.darkMode ? txtColor : undefined }}>
+                {props.gdaiWeth} gDAI
+              </div>
             </div>
             <div id={classes["min-col-ratio-2"]}>
-              <span id={classes["mobile-s-2"]}>MIN COL. RATIO</span>
-              <div>150%</div>
+              <span
+                id={classes["mobile-s-2"]}
+                style={{ color: !themeCtx.darkMode ? txtColor : undefined }}
+              >
+                MIN COL. RATIO
+              </span>
+              <div style={{ color: !themeCtx.darkMode ? txtColor : undefined }}>
+                150%
+              </div>
             </div>
             <div
               className={classes["create-vault-2"]}
@@ -136,7 +221,10 @@ const CreateVaultModal = (props) => {
   };
   return (
     <>
-      <div className={classes["create-vault-modal-container"]}>
+      <div
+        className={classes["create-vault-modal-container"]}
+        style={{ background: !themeCtx.darkMode ? bgColor : undefined }}
+      >
         {isLoading ? <LoadingImg /> : renderContent()}
       </div>
     </>

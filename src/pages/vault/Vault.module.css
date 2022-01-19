@@ -377,7 +377,7 @@
   .all-vaults-mobile-container {
     position: absolute;
     left: 23%;
-    top: 19.5%;
+    top: 20%;
   }
 
   .vault-navigation {
@@ -393,6 +393,14 @@
 
   #vault-navigation-2 {
     width: 39vw;
+  }
+}
+
+@media screen and (max-width: 412px) {
+  .all-vaults-mobile-container {
+    position: absolute;
+    left: 23%;
+    top: 19.5%;
   }
 }
 
@@ -484,6 +492,14 @@
   }
 }
 
+@media screen and (max-height: 800px) {
+  .all-vaults-mobile-container {
+    position: absolute;
+    left: 23%;
+    top: 22.5%;
+  }
+}
+
 @media screen and (max-width: 375px) {
   .vault-navigation {
     padding-right: 5rem;
@@ -505,7 +521,7 @@
   .all-vaults-mobile-container {
     position: absolute;
     left: 25%;
-    top: 27%;
+    top: 29%;
   }
 
   .vault-navigation {
@@ -534,8 +550,8 @@
 @media screen and (max-height: 740px) {
   .all-vaults-mobile-container {
     position: absolute;
-    left: 23%;
-    top: 26%;
+    left: 24%;
+    top: 27%;
   }
 }
 
@@ -567,13 +583,5 @@
 
   #vault-navigation-2 {
     width: 38vw;
-  }
-}
-
-@media screen and (max-height: 800px) {
-  .all-vaults-mobile-container {
-    position: absolute;
-    left: 23%;
-    top: 22.5%;
   }
 }

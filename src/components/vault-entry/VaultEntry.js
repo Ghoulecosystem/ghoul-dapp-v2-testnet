@@ -51,6 +51,7 @@ const VaultEntry = (props) => {
         onClick={returnVaultData}
         className={classes["vault-item-mobile"]}
         data-id="123"
+        style={{ background: !themeCtx.darkMode ? bgColorBox : undefined }}
       >
         {/* <div className={classes["vault-item-text-mobile"]}>
           <div id={classes["vault-id-mobile"]}>
@@ -70,25 +71,42 @@ const VaultEntry = (props) => {
         />
         <div id={classes["vault-id-mobile"]}>
           <div>
-            <span>VAULT ID</span>
+            <span style={{ color: !themeCtx.darkMode ? txtColor : undefined }}>
+              VAULT ID
+            </span>
           </div>
-          <div>#{props.id}</div>
+          <div style={{ color: !themeCtx.darkMode ? txtColor : undefined }}>
+            #{props.id}
+          </div>
         </div>
         <div id={classes["one-mobile"]}>
-          <span>COLLATERAL {props.isBNB ? "(BNB)" : "(wETH)"}</span>
-          <div>{props.collateral}</div>
+          <span style={{ color: !themeCtx.darkMode ? txtColor : undefined }}>
+            COLLATERAL {props.isBNB ? "(BNB)" : "(wETH)"}
+          </span>
+          <div style={{ color: !themeCtx.darkMode ? txtColor : undefined }}>
+            {props.collateral}
+          </div>
         </div>
         <div id={classes["two-mobile"]}>
-          <span>DEBT (gDAI)</span>
-          <div>{props.debt}</div>
+          <span style={{ color: !themeCtx.darkMode ? txtColor : undefined }}>
+            DEBT (gDAI)
+          </span>
+          <div style={{ color: !themeCtx.darkMode ? txtColor : undefined }}>
+            {" "}
+            {props.debt}
+          </div>
         </div>
         <div id={classes["three-mobile"]}>
-          <span>RATIO </span>
+          <span style={{ color: !themeCtx.darkMode ? txtColor : undefined }}>
+            RATIO{" "}
+          </span>
 
           {props.isLiq ? (
             <div id={classes["yellow-ratio"]}>{props.ratio}</div>
           ) : (
-            <div>{props.ratio}</div>
+            <div style={{ color: !themeCtx.darkMode ? txtColor : undefined }}>
+              {props.ratio}
+            </div>
           )}
         </div>
         <img src={vaultArrow} alt="vArrow" id={classes["vault-arrow"]} />

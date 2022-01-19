@@ -114,6 +114,26 @@ span > img {
   color: #57585d;
 }
 
+.feature-elem-2 {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: 354px;
+  height: 56px;
+  background: rgba(117, 236, 101, 0);
+  border-radius: 8px;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 22px;
+  /* identical to box height, or 122% */
+
+  display: flex;
+  align-items: center;
+
+  color: #57585d;
+}
+
 .feature-elem:hover {
   color: #001f3f;
   background-color: rgba(179, 218, 191, 0.564);

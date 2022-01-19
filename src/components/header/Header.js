@@ -5,6 +5,7 @@ import classes from "./Header.module.css";
 import pin from "../../assets/vault_pin.svg";
 import bscLogo from "../../assets/bsc_logo.png";
 import hamburgerIcon from "../../assets/hamburger_menu.png";
+import hamburgerIconDark from "../../assets/blackhamburger.svg";
 import NavbarHamburger from "../navbar/NavbarHamburger";
 
 const Header = (props) => {
@@ -20,11 +21,13 @@ const Header = (props) => {
   let bgColorBox;
   let txtColor;
   let inputColor;
+  let hamburgerIm = hamburgerIcon;
   if (!themeCtx.darkMode) {
     bgColor = "#FFFFFF";
     bgColorBox = "rgba(0, 0, 0, 0.05)";
     txtColor = "#000000";
     inputColor = "rgba(0, 0, 0, 0.1)";
+    hamburgerIm = hamburgerIconDark;
   }
 
   useEffect(() => {
@@ -58,7 +61,7 @@ const Header = (props) => {
         style={{ background: !themeCtx.darkMode ? bgColor : undefined }}
       >
         <div id={classes["hamburger-icon"]} onClick={showHamburgerHandler}>
-          <img src={hamburgerIcon} alt="hamburger-icon" />
+          <img src={hamburgerIm} alt="hamburger-icon" />
         </div>
         <div className={classes["vault-info"]}>
           <div

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import classes from "./VaultModal.module.css";
 import cancelIcon from "../../assets/cancel.svg";
 import { makeStyles, withStyles } from "@material-ui/core/styles";
@@ -6,6 +6,8 @@ import Slider from "@material-ui/core/Slider";
 import { ethers } from "ethers";
 import { wethVaultAddress } from "../../utils/contract_abis";
 import SnackbarUI from "../../components/snackbar/SnackbarUI";
+import ThemeContext from "../../store/Theme-context";
+import blackCross from "../../assets/fi_x.svg";
 
 const CustomSlider = withStyles({
   rail: {
@@ -66,6 +68,23 @@ const VaultModal = (props) => {
     open: false,
     error: false,
   });
+
+  const themeCtx = useContext(ThemeContext);
+
+  let bgColor;
+  let bgColor2;
+  let bgColorBox;
+  let txtColor;
+  let inputColor;
+  let imgSrc = cancelIcon;
+  if (!themeCtx.darkMode) {
+    bgColor = "#FFFFFF";
+    bgColorBox = "rgba(0, 0, 0, 0.2)";
+    txtColor = "#000000";
+    inputColor = "rgba(0, 0, 0, 0.1)";
+    bgColor2 = "rgba(0, 0, 0, 0.5)";
+    imgSrc = blackCross;
+  }
 
   const resetState = () => {
     setValue(99);
@@ -315,42 +334,107 @@ const VaultModal = (props) => {
   };
 
   return (
-    <div className={classes["vault-modal-container"]}>
+    <div
+      className={classes["vault-modal-container"]}
+      style={{ background: !themeCtx.darkMode ? bgColor : undefined }}
+    >
       <div className={classes["vault-modal-header"]}>
-        <div>
+        <div style={{ color: !themeCtx.darkMode ? txtColor : undefined }}>
           {props.isBNB ? " BNB Vault " : " Weth Vault "}#{props.id}
         </div>
         <div id={classes["close-btn"]}>
           <button onClick={props.closeHandler}>
-            <img src={cancelIcon} alt="" id={classes["cancel-icon"]} />
+            <img src={imgSrc} alt="" id={classes["cancel-icon"]} />
           </button>
         </div>
       </div>
-      <div className={classes["modal-line"]}></div>
+      <div
+        className={classes["modal-line"]}
+        style={{ background: !themeCtx.darkMode ? bgColor2 : undefined }}
+      ></div>
       <div className={classes["vault-modal-content"]}>
         <div className={classes["vault-modal-content-item"]}>
-          <span className={classes["col-one"]}>Collateral</span>
-          <span className={classes["col-two"]}>{props.collateral}</span>
-          <span id={classes["collateral-value"]}> $0.00</span>
+          <span
+            className={classes["col-one"]}
+            style={{ color: !themeCtx.darkMode ? txtColor : undefined }}
+          >
+            Collateral
+          </span>
+          <span
+            className={classes["col-two"]}
+            style={{ color: !themeCtx.darkMode ? txtColor : undefined }}
+          >
+            {props.collateral}
+            {props.isBNB ? " BNB" : " wETH"}
+          </span>
+          <span
+            id={classes["collateral-value"]}
+            style={{ color: !themeCtx.darkMode ? txtColor : undefined }}
+          >
+            {" "}
+            $0.00
+          </span>
         </div>
         <div className={classes["vault-modal-content-item"]}>
-          <span className={classes["col-one"]}>Debt</span>
-          <span className={classes["col-two"]}>{props.debt} gDAI</span>
-          <span id={classes["debt-value"]}> $0.00</span>
+          <span
+            className={classes["col-one"]}
+            style={{ color: !themeCtx.darkMode ? txtColor : undefined }}
+          >
+            Debt
+          </span>
+          <span
+            className={classes["col-two"]}
+            style={{ color: !themeCtx.darkMode ? txtColor : undefined }}
+          >
+            {props.debt} gDAI
+          </span>
+          <span
+            id={classes["debt-value"]}
+            style={{ color: !themeCtx.darkMode ? txtColor : undefined }}
+          >
+            {" "}
+            $0.00
+          </span>
         </div>
         <div className={classes["vault-modal-content-item"]}>
-          <span className={classes["col-one"]}>Collateral to Debt Ratio</span>
-          <span className={classes["col-two"]}>{props.ratio.toFixed(2)}</span>
+          <span
+            className={classes["col-one"]}
+            style={{ color: !themeCtx.darkMode ? txtColor : undefined }}
+          >
+            Collateral to Debt Ratio
+          </span>
+          <span
+            className={classes["col-two"]}
+            style={{ color: !themeCtx.darkMode ? txtColor : undefined }}
+          >
+            {props.ratio.toFixed(2)} &#37;
+          </span>
         </div>
         <div className={classes["vault-modal-content-item"]}>
-          <span className={classes["col-one"]}>Available to Borrow</span>
-          <span className={classes["col-two"]}>
+          <span
+            className={classes["col-one"]}
+            style={{ color: !themeCtx.darkMode ? txtColor : undefined }}
+          >
+            Available to Borrow
+          </span>
+          <span
+            className={classes["col-two"]}
+            style={{ color: !themeCtx.darkMode ? txtColor : undefined }}
+          >
             {props.availableBorrow} gDAI
           </span>
         </div>
       </div>
-      <div className={classes["modal-line-2"]}></div>
-      <div id={classes.manage}>Manage</div>
+      <div
+        className={classes["modal-line-2"]}
+        style={{ background: !themeCtx.darkMode ? bgColor2 : undefined }}
+      ></div>
+      <div
+        id={classes.manage}
+        style={{ color: !themeCtx.darkMode ? txtColor : undefined }}
+      >
+        Manage
+      </div>
       <div className={classes["manage-actions"]}>
         <div
           className={classes["manage-actions-elem"]}
@@ -365,9 +449,12 @@ const VaultModal = (props) => {
             resetState();
           }}
           style={{
-            color: manageState.showCollateral && "white",
+            color:
+              manageState.showCollateral &&
+              (!themeCtx.darkMode ? txtColor : "white"),
             backgroundColor:
-              manageState.showCollateral && "rgba(255, 255, 255, 0.05)",
+              manageState.showCollateral &&
+              (!themeCtx.darkMode ? bgColorBox : "rgba(255, 255, 255, 0.05)"),
             borderColor: manageState.showCollateral && "#090a10",
           }}
         >
@@ -386,9 +473,12 @@ const VaultModal = (props) => {
             resetState();
           }}
           style={{
-            color: manageState.showWithdraw && "white",
+            color:
+              manageState.showWithdraw &&
+              (!themeCtx.darkMode ? txtColor : "white"),
             backgroundColor:
-              manageState.showWithdraw && "rgba(255, 255, 255, 0.05)",
+              manageState.showWithdraw &&
+              (!themeCtx.darkMode ? bgColorBox : "rgba(255, 255, 255, 0.05)"),
             borderColor: manageState.showWithdraw && "#090a10",
           }}
         >
@@ -407,9 +497,12 @@ const VaultModal = (props) => {
             resetState();
           }}
           style={{
-            color: manageState.showRepay && "white",
+            color:
+              manageState.showRepay &&
+              (!themeCtx.darkMode ? txtColor : "white"),
             backgroundColor:
-              manageState.showRepay && "rgba(255, 255, 255, 0.05)",
+              manageState.showRepay &&
+              (!themeCtx.darkMode ? bgColorBox : "rgba(255, 255, 255, 0.05)"),
             borderColor: manageState.showRepay && "#090a10",
           }}
         >
@@ -428,9 +521,12 @@ const VaultModal = (props) => {
             resetState();
           }}
           style={{
-            color: manageState.showBorrow && "white",
+            color:
+              manageState.showBorrow &&
+              (!themeCtx.darkMode ? txtColor : "white"),
             backgroundColor:
-              manageState.showBorrow && "rgba(255, 255, 255, 0.05)",
+              manageState.showBorrow &&
+              (!themeCtx.darkMode ? bgColorBox : "rgba(255, 255, 255, 0.05)"),
             borderColor: manageState.showBorrow && "#090a10",
           }}
         >
@@ -441,21 +537,44 @@ const VaultModal = (props) => {
         <div className={classes["vault-modal-content-item"]}>
           <span className={classes["col-one"]}>
             {manageState.showCollateral && (
-              <span id={classes.deposit}>Deposit Collateral</span>
+              <span
+                id={classes.deposit}
+                style={{ color: !themeCtx.darkMode ? txtColor : undefined }}
+              >
+                Deposit Collateral
+              </span>
             )}
             {manageState.showWithdraw && (
-              <span id={classes.deposit}>Withdraw Collateral</span>
+              <span
+                id={classes.deposit}
+                style={{ color: !themeCtx.darkMode ? txtColor : undefined }}
+              >
+                Withdraw Collateral
+              </span>
             )}
             {manageState.showRepay && (
-              <span id={classes.deposit}>Repay gDAI Debt</span>
+              <span
+                id={classes.deposit}
+                style={{ color: !themeCtx.darkMode ? txtColor : undefined }}
+              >
+                Repay gDAI Debt
+              </span>
             )}
             {manageState.showBorrow && (
-              <span id={classes.deposit}>Borrow gDAI</span>
+              <span
+                id={classes.deposit}
+                style={{ color: !themeCtx.darkMode ? txtColor : undefined }}
+              >
+                Borrow gDAI
+              </span>
             )}
           </span>
           <span className={classes["col-two"]}>
             {manageState.showCollateral && (
-              <span id={classes.balance}>
+              <span
+                id={classes.balance}
+                style={{ color: !themeCtx.darkMode ? txtColor : undefined }}
+              >
                 Balance:{" "}
                 <span id={classes["balance-colour"]}>
                   {" "}
@@ -506,6 +625,10 @@ const VaultModal = (props) => {
               onChange={(e) => {
                 depositCollateralHandler(e.target.value);
               }}
+              style={{
+                background: !themeCtx.darkMode ? bgColorBox : undefined,
+                color: !themeCtx.darkMode ? txtColor : undefined,
+              }}
             />
             <span id={classes.max} onClick={setMaxHandler}>
               MAX
@@ -520,6 +643,10 @@ const VaultModal = (props) => {
               value={withdrawValue}
               onChange={(e) => {
                 withdrawValueHandler(e.target.value);
+              }}
+              style={{
+                background: !themeCtx.darkMode ? bgColorBox : undefined,
+                color: !themeCtx.darkMode ? txtColor : undefined,
               }}
             />
             <span id={classes.max} onClick={setMaxHandler}>
@@ -536,6 +663,10 @@ const VaultModal = (props) => {
               onChange={(e) => {
                 repayValueHandler(e.target.value);
               }}
+              style={{
+                background: !themeCtx.darkMode ? bgColorBox : undefined,
+                color: !themeCtx.darkMode ? txtColor : undefined,
+              }}
             />
             <span id={classes.max} onClick={setMaxHandler}>
               MAX
@@ -550,6 +681,10 @@ const VaultModal = (props) => {
               value={borrowValue}
               onChange={(e) => {
                 borrowValueHandler(e.target.value);
+              }}
+              style={{
+                background: !themeCtx.darkMode ? bgColorBox : undefined,
+                color: !themeCtx.darkMode ? txtColor : undefined,
               }}
             />
             <span id={classes.max} onClick={setMaxHandler}>
@@ -571,12 +706,22 @@ const VaultModal = (props) => {
             <div className={classes["riskier-safer-container"]}>
               <span className={classes["col-one"]}>
                 <span id={classes.deposit}>
-                  <span className={classes["riskier-safer"]}>RISKIER</span>
+                  <span
+                    className={classes["riskier-safer"]}
+                    style={{ color: !themeCtx.darkMode ? txtColor : undefined }}
+                  >
+                    RISKIER
+                  </span>
                 </span>
               </span>
               <span className={classes["col-two"]}>
                 <span id={classes.balance}>
-                  <span className={classes["riskier-safer"]}>SAFER</span>
+                  <span
+                    className={classes["riskier-safer"]}
+                    style={{ color: !themeCtx.darkMode ? txtColor : undefined }}
+                  >
+                    SAFER
+                  </span>
                 </span>
               </span>
             </div>

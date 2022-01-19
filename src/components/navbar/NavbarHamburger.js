@@ -23,9 +23,22 @@ import vaultActive from "../../assets/vaults-active.png";
 import ghoulXLogo from "../../assets/GhoulX logo.png";
 import ghoulLogoFinal from "../../assets/ghoul_logo_final.png";
 import twitterLogo from "../../assets/twitterlogo.png";
+import ThemeContext from "../../store/Theme-context";
+import vaultLogoLm from "../../assets/vault-lm.png";
+import swapLogoLm from "../../assets/swap-lm.png";
+import farmLogoLm from "../../assets/farm-lm.png";
+import exchangeLogoLm from "../../assets/exchange-lm.png";
+import bondsLogoLm from "../../assets/bonds-lm.png";
+import prifiLogoLm from "../../assets/prifi-lm.png";
+import governanceLogoLm from "../../assets/governance-lm.svg";
+import blackCancelIcon from "../../assets/fi_x.svg";
+import Switch from "@mui/material/Switch";
+
+const label = { inputProps: { "aria-label": "Switch demo" } };
 
 const NavbarHamburger = (props) => {
   const web3Ctx = useContext(Web3Context);
+  const themeCtx = useContext(ThemeContext);
   const [gDaiBalance, setgDaiBalance] = useState(0);
   const [ghoulBalance, setGhoulBalance] = useState(0);
   const [bnbBlance, setBNBBalance] = useState(0);
@@ -36,6 +49,40 @@ const NavbarHamburger = (props) => {
   const walletAddress = web3Ctx.walletAddress;
 
   const location = useLocation();
+
+  let bgColor;
+  let filter;
+  let elemColor;
+  let txtColor;
+  let txtColor2;
+  let vaultIm = vault;
+  let swapIm = swapLogo;
+  let farmIm = farmLogo;
+  let exchangeIm = exchangeLogo;
+  let bondsIm = bondLogo;
+  let prifiIm = prifiLogo;
+  let governanceIm = governance;
+  let cancelIm = cancelIcon;
+  if (!themeCtx.darkMode) {
+    bgColor = "#FFFFFF";
+    // "linear-gradient(170.43deg, #FFFFFF 0%, rgba(234, 234, 234, 0) 100%)";
+    filter = "drop-shadow(0px 4px 8px rgba(0, 0, 0, 0.25))";
+    elemColor = "rgba(0, 0, 0, 0.05)";
+    txtColor = "#000000";
+    txtColor2 = "rgba(0, 0, 0, 0.3)";
+    vaultIm = vaultLogoLm;
+    farmIm = farmLogoLm;
+    swapIm = swapLogoLm;
+    exchangeIm = exchangeLogoLm;
+    bondsIm = bondsLogoLm;
+    prifiIm = prifiLogoLm;
+    governanceIm = governanceLogoLm;
+    cancelIm = blackCancelIcon;
+  }
+
+  const darkModeHandler = () => {
+    themeCtx.toggleDarkMode();
+  };
 
   useEffect(() => {
     const loadBalances = async () => {
@@ -76,9 +123,14 @@ const NavbarHamburger = (props) => {
   };
 
   return (
-    <div className={classes["navbar-container"]}>
+    <div
+      className={classes["navbar-container"]}
+      style={{
+        background: !themeCtx.darkMode ? bgColor : undefined,
+      }}
+    >
       <img
-        src={cancelIcon}
+        src={cancelIm}
         alt=""
         id={classes["cancel-icon"]}
         onClick={onCloseHamburger}
@@ -98,47 +150,124 @@ const NavbarHamburger = (props) => {
               <p>Connect Wallet</p>
             )}
           </div>
-          <div className={classes["row-elem-2"]}>
+          <div
+            className={classes["row-elem-2"]}
+            style={{
+              background: !themeCtx.darkMode ? elemColor : undefined,
+            }}
+          >
             {!web3Ctx.walletAddress ? (
-              <p>CHAIN</p>
+              <p
+                style={{
+                  color: !themeCtx.darkMode ? txtColor : undefined,
+                }}
+              >
+                CHAIN
+              </p>
             ) : (
               <>
                 <img src={bscLogo} alt="" />
-                <span id={classes["chain-text"]}>BSC Network</span>
+                <span
+                  id={classes["chain-text"]}
+                  style={{
+                    color: !themeCtx.darkMode ? txtColor : undefined,
+                  }}
+                >
+                  BSC Network
+                </span>
               </>
             )}
           </div>
         </div>
         <div className={classes["row-nav"]}>
-          <div className={classes["row-elem"]}>
-            <span>
+          <div
+            className={classes["row-elem"]}
+            style={{
+              background: !themeCtx.darkMode ? elemColor : undefined,
+            }}
+          >
+            <span
+              style={{
+                color: !themeCtx.darkMode ? txtColor : undefined,
+              }}
+            >
               <img src={logo} alt="" />
             </span>
-            <h3>{gDaiBalance}</h3>
+            <h3
+              style={{
+                color: !themeCtx.darkMode ? txtColor : undefined,
+              }}
+            >
+              {gDaiBalance}
+            </h3>
           </div>
-          <div className={classes["row-elem"]}>
-            <span>
+          <div
+            className={classes["row-elem"]}
+            style={{
+              background: !themeCtx.darkMode ? elemColor : undefined,
+            }}
+          >
+            <span
+              style={{
+                color: !themeCtx.darkMode ? txtColor : undefined,
+              }}
+            >
               <img src={ghoulLogoFinal} alt="" />
             </span>
-            <h3>{ghoulBalance}</h3>
+            <h3
+              style={{
+                color: !themeCtx.darkMode ? txtColor : undefined,
+              }}
+            >
+              {ghoulBalance}
+            </h3>
           </div>
         </div>
         <div className={classes["row-nav"]}>
-          <div className={classes["row-elem"]}>
+          <div
+            className={classes["row-elem"]}
+            style={{
+              background: !themeCtx.darkMode ? elemColor : undefined,
+            }}
+          >
             <span>
               <img src={ghoulXLogo} alt="" />
             </span>
-            <h3>2.00</h3>
+            <h3
+              style={{
+                color: !themeCtx.darkMode ? txtColor : undefined,
+              }}
+            >
+              2.00
+            </h3>
           </div>
-          <div className={classes["row-elem"]}>
+          <div
+            className={classes["row-elem"]}
+            style={{
+              background: !themeCtx.darkMode ? elemColor : undefined,
+            }}
+          >
             <span>
               <img src={bnbLogo} alt="" />
             </span>
-            <h3>{bnbBlance}</h3>
+            <h3
+              style={{
+                color: !themeCtx.darkMode ? txtColor : undefined,
+              }}
+            >
+              {bnbBlance}
+            </h3>
           </div>
         </div>
       </div>
-      <h1 id={classes["features-h1"]}>FEATURES</h1>
+      <h1
+        id={classes["features-h1"]}
+        style={{
+          color: !themeCtx.darkMode ? txtColor2 : undefined,
+        }}
+      >
+        FEATURES
+      </h1>
       <div className={classes.features}>
         <NavLink
           activeClassName={classes["feature-elem-active"]}
@@ -148,7 +277,7 @@ const NavbarHamburger = (props) => {
           <div className={classes["feature-elem"]}>
             <img
               className={classes["feature-community-img"]}
-              src={location.pathname === "/vaults" ? vaultActive : vault}
+              src={location.pathname === "/vaults" ? vaultActive : vaultIm}
               alt=""
             />
             <h4>Vaults</h4>
@@ -163,7 +292,7 @@ const NavbarHamburger = (props) => {
           <div className={classes["feature-elem"]}>
             <img
               className={classes["feature-community-img"]}
-              src={location.pathname === "/swap" ? swapLogoActive : swapLogo}
+              src={location.pathname === "/swap" ? swapLogoActive : swapIm}
               alt=""
             />
             <h4>Swap</h4>
@@ -178,7 +307,7 @@ const NavbarHamburger = (props) => {
           <div className={classes["feature-elem"]}>
             <img
               className={classes["feature-community-img"]}
-              src={location.pathname === "/farm" ? farmLogoActive : farmLogo}
+              src={location.pathname === "/farm" ? farmLogoActive : farmIm}
               alt="farm"
             />
             <h4>Farm</h4>
@@ -193,7 +322,7 @@ const NavbarHamburger = (props) => {
           <div className={classes["feature-elem"]}>
             <img
               className={classes["feature-community-img"]}
-              src={exchangeLogo}
+              src={exchangeIm}
               alt=""
             />
             <h4>Exchange</h4>
@@ -203,7 +332,7 @@ const NavbarHamburger = (props) => {
         <div className={classes["feature-elem"]}>
           <img
             className={classes["feature-community-img"]}
-            src={bondLogo}
+            src={bondsIm}
             alt=""
           />
           Bonds (soon)
@@ -212,14 +341,21 @@ const NavbarHamburger = (props) => {
         <div className={classes["feature-elem"]}>
           <img
             className={classes["feature-community-img"]}
-            src={prifiLogo}
+            src={prifiIm}
             alt=""
           />
           PRIFI (soon)
         </div>
       </div>
 
-      <h1 id={classes["community-h1"]}>COMMUNITY</h1>
+      <h1
+        id={classes["community-h1"]}
+        style={{
+          color: !themeCtx.darkMode ? txtColor2 : undefined,
+        }}
+      >
+        COMMUNITY
+      </h1>
       <div className={classes.features}>
         <div className={classes["feature-elem"]}>
           <a
@@ -229,7 +365,7 @@ const NavbarHamburger = (props) => {
           >
             <img
               className={classes["feature-community-img"]}
-              src={governance}
+              src={governanceIm}
               alt=""
               width="20"
               height="20"
@@ -288,16 +424,11 @@ const NavbarHamburger = (props) => {
           </a>
         </div>
 
-        <div className={classes["feature-elem"]}>
-          <div className={classes["dark-mode"]}>Dark Mode</div>
+        <div className={classes["feature-elem-2"]}>
+          <div className={classes["dark-mode"]}>Light Mode</div>
           <div className={classes["ios-switch"]}>
             {" "}
-            {/* <FormControlLabel
-              checked={darkMode}
-              onChange={darkModeHandler}
-              control={<IOSSwitch sx={{ m: 1 }} defaultChecked />}
-              label=""
-            /> */}
+            <Switch {...label} color="default" onChange={darkModeHandler} />
           </div>
         </div>
       </div>

@@ -1,13 +1,23 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import bscLogo from "../../assets/bsc_logo.png";
 import wethLogo from "../../assets/wEth_logo.svg";
 import classes from "./VaultEntry.module.css";
 import vaultArrow from "../../assets/responsive_vault_arrow.svg";
+import ThemeContext from "../../store/Theme-context";
 
 const VaultEntry = (props) => {
   const returnVaultData = () => {
     props.openModal(props.id, props.isBNB);
   };
+
+  const themeCtx = useContext(ThemeContext);
+
+  let bgColorBox;
+  let txtColor;
+  if (!themeCtx.darkMode) {
+    bgColorBox = "rgba(0, 0, 0, 0.03)";
+    txtColor = "#000000";
+  }
 
   return (
     <>
@@ -15,8 +25,12 @@ const VaultEntry = (props) => {
         onClick={returnVaultData}
         className={classes["vault-item"]}
         data-id="123"
+        style={{ background: !themeCtx.darkMode ? bgColorBox : undefined }}
       >
-        <div className={classes["vault-item-text"]}>
+        <div
+          className={classes["vault-item-text"]}
+          style={{ color: !themeCtx.darkMode ? txtColor : undefined }}
+        >
           <div id={classes["vault-id"]}>
             <img src={props.isBNB ? bscLogo : wethLogo} alt="" />
             <div>#{props.id}</div>

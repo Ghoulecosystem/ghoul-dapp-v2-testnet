@@ -55,13 +55,10 @@ const defaultWeb3State = {
 
 const web3Reducer = (state, action) => {
   if (action.type === "WALLET_CONNECT") {
-    console.log("Wallet Connect ACTION");
-
     const walletAddress = action.walletAddress;
     const provider = action.provider;
     const signer = action.signer;
     const ethersContracts = action.contracts;
-    console.log(ethersContracts.tokenContract);
     return {
       walletAddress: walletAddress,
       provider: provider,
@@ -216,6 +213,13 @@ const Web3Provider = (props) => {
         cacheProvider: false, // optional
         providerOptions, // required
         disableInjectedProvider: false, // optional. For MetaMask / Brave / Opera.
+        theme: {
+          background: "rgb(39, 49, 56)",
+          main: "rgb(199, 199, 199)",
+          secondary: "rgb(136, 136, 136)",
+          border: "rgba(195, 195, 195, 0.14)",
+          hover: "rgb(16, 26, 32)",
+        },
       });
 
       const provider = await web3Modal.connect();

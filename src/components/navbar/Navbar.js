@@ -11,6 +11,7 @@ import socials from "../../assets/socials.svg";
 import docsSupprt from "../../assets/docs_support.svg";
 import { NavLink } from "react-router-dom";
 import Web3Context from "../../store/Web3-context";
+import ThemeContext from "../../store/Theme-context";
 import swapLogo from "../../assets/swap.png";
 import swapLogoActive from "../../assets/swap-active.png";
 import farmLogo from "../../assets/farm.png";
@@ -24,10 +25,10 @@ import twitterLogo from "../../assets/twitterlogo.png";
 
 const Navbar = () => {
   const web3Ctx = useContext(Web3Context);
+  const themeCtx = useContext(ThemeContext);
   const [gDaiBalance, setgDaiBalance] = useState(0);
   const [ghoulBalance, setGhoulBalance] = useState(0);
   const [bnbBlance, setBNBBalance] = useState(0);
-  const [darkMode, setDarkmode] = useState(true);
   const tokenContract = web3Ctx.tokenContract;
   const ghoulContract = web3Ctx.goulContract;
   // const ghoulXContract = web3Ctx.goulXContract;
@@ -35,6 +36,26 @@ const Navbar = () => {
   const walletAddress = web3Ctx.walletAddress;
 
   const location = useLocation();
+
+  let bgColor;
+  let filter;
+  let elemColor;
+  let txtColor;
+  let txtColor2;
+  if (!themeCtx.darkMode) {
+    bgColor =
+      "linear-gradient(170.43deg, #FFFFFF 0%, rgba(234, 234, 234, 0) 99.52%)";
+    filter = "drop-shadow(0px 4px 8px rgba(0, 0, 0, 0.25))";
+    elemColor = "rgba(0, 0, 0, 0.05)";
+    txtColor = "#000000";
+    txtColor2 = "rgba(0, 0, 0, 0.3)";
+  }
+
+  const darkModeHandler = () => {
+    themeCtx.toggleDarkMode();
+  };
+
+  useEffect(() => {}, [ghoulContract, tokenContract, walletAddress]);
 
   useEffect(() => {
     const loadBalances = async () => {
@@ -60,47 +81,99 @@ const Navbar = () => {
     loadBalances();
   }, [ghoulContract, tokenContract, walletAddress]);
 
-  const darkModeHandler = (event) => {
-    setDarkmode(event.target.checked);
-    localStorage.setItem("darkMode", event.target.checked.toString());
-  };
-
   return (
-    <div className={classes["navbar-container"]}>
+    <div
+      className={classes["navbar-container"]}
+      style={{
+        background: !themeCtx.darkMode ? bgColor : undefined,
+        filter: !themeCtx.darkMode ? filter : undefined,
+      }}
+    >
       <div className={classes["logo-container"]}>
         <img src={logo} alt="" />
       </div>
       <div className={classes["navbar-header"]}>
         <div className={classes["row-nav"]}>
-          <div className={classes["row-elem"]}>
+          <div
+            className={classes["row-elem"]}
+            style={{
+              background: !themeCtx.darkMode ? elemColor : undefined,
+            }}
+          >
             <span>
               <img src={logo} alt="" />
             </span>
-            <h3>{gDaiBalance}</h3>
+            <h3
+              style={{
+                color: !themeCtx.darkMode ? txtColor : undefined,
+              }}
+            >
+              {gDaiBalance}
+            </h3>
           </div>
-          <div className={classes["row-elem"]}>
+          <div
+            className={classes["row-elem"]}
+            style={{
+              background: !themeCtx.darkMode ? elemColor : undefined,
+            }}
+          >
             <span>
               <img src={ghoulTokenLogo} alt="gl" width="24.72" height="16.41" />
             </span>
-            <h3>{ghoulBalance}</h3>
+            <h3
+              style={{
+                color: !themeCtx.darkMode ? txtColor : undefined,
+              }}
+            >
+              {ghoulBalance}
+            </h3>
           </div>
         </div>
         <div className={classes["row-nav"]}>
-          <div className={classes["row-elem"]}>
+          <div
+            className={classes["row-elem"]}
+            style={{
+              background: !themeCtx.darkMode ? elemColor : undefined,
+            }}
+          >
             <span>
               <img src={ghoulXLogo} alt="gxl" width="24.72" height="16.41" />
             </span>
-            <h3>2.00</h3>
+            <h3
+              style={{
+                color: !themeCtx.darkMode ? txtColor : undefined,
+              }}
+            >
+              2.00
+            </h3>
           </div>
-          <div className={classes["row-elem"]}>
+          <div
+            className={classes["row-elem"]}
+            style={{
+              background: !themeCtx.darkMode ? elemColor : undefined,
+            }}
+          >
             <span>
               <img src={bnbLogo} alt="" />
             </span>
-            <h3>{bnbBlance}</h3>
+            <h3
+              style={{
+                color: !themeCtx.darkMode ? txtColor : undefined,
+              }}
+            >
+              {bnbBlance}
+            </h3>
           </div>
         </div>
       </div>
-      <h1 id={classes["features-h1"]}>FEATURES</h1>
+      <h1
+        id={classes["features-h1"]}
+        style={{
+          color: !themeCtx.darkMode ? txtColor2 : undefined,
+        }}
+      >
+        FEATURES
+      </h1>
       <div className={classes.features}>
         <NavLink
           activeClassName={classes["feature-elem-active"]}
@@ -181,7 +254,14 @@ const Navbar = () => {
         </div>
       </div>
 
-      <h1 id={classes["community-h1"]}>COMMUNITY</h1>
+      <h1
+        id={classes["community-h1"]}
+        style={{
+          color: !themeCtx.darkMode ? txtColor2 : undefined,
+        }}
+      >
+        COMMUNITY
+      </h1>
       <div className={classes.features}>
         <div className={classes["feature-elem"]}>
           <a
@@ -253,7 +333,9 @@ const Navbar = () => {
         </div>
 
         <div className={classes["feature-elem"]}>
-          <div className={classes["dark-mode"]}>Dark Mode</div>
+          <div className={classes["dark-mode"]} onClick={darkModeHandler}>
+            Dark Mode
+          </div>
           <div className={classes["ios-switch"]}>
             {" "}
             {/* <FormControlLabel

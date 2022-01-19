@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import Web3Context from "../../store/Web3-context";
+import ThemeContext from "../../store/Theme-context";
 import classes from "./Header.module.css";
 import pin from "../../assets/vault_pin.svg";
 import bscLogo from "../../assets/bsc_logo.png";
@@ -8,12 +9,23 @@ import NavbarHamburger from "../navbar/NavbarHamburger";
 
 const Header = (props) => {
   const web3Ctx = useContext(Web3Context);
-
+  const themeCtx = useContext(ThemeContext);
   const [showHamburger, setShowHamburger] = useState(false);
 
   const shortenAddress = (str) => {
     return str.substring(0, 6) + "..." + str.substring(str.length - 4);
   };
+
+  let bgColor;
+  let bgColorBox;
+  let txtColor;
+  let inputColor;
+  if (!themeCtx.darkMode) {
+    bgColor = "#FFFFFF";
+    bgColorBox = "rgba(0, 0, 0, 0.05)";
+    txtColor = "#000000";
+    inputColor = "rgba(0, 0, 0, 0.1)";
+  }
 
   useEffect(() => {
     if (!web3Ctx.walletAddress) {
@@ -41,32 +53,65 @@ const Header = (props) => {
         </div>
       )}
 
-      <div className={classes["vault-header"]}>
+      <div
+        className={classes["vault-header"]}
+        style={{ background: !themeCtx.darkMode ? bgColor : undefined }}
+      >
         <div id={classes["hamburger-icon"]} onClick={showHamburgerHandler}>
           <img src={hamburgerIcon} alt="hamburger-icon" />
         </div>
         <div className={classes["vault-info"]}>
-          <div id={classes.vaults}>{props.title}</div>
+          <div
+            id={classes.vaults}
+            style={{ color: !themeCtx.darkMode ? txtColor : undefined }}
+          >
+            {props.title}
+          </div>
         </div>
         <div className={classes["chain-wallet"]}>
-          <div>
+          <div
+            style={{ background: !themeCtx.darkMode ? bgColorBox : undefined }}
+          >
             {!web3Ctx.walletAddress ? (
-              <p>CHAIN</p>
+              <p style={{ color: !themeCtx.darkMode ? txtColor : undefined }}>
+                {" "}
+                CHAIN
+              </p>
             ) : (
               <div id={classes["chain-connect"]}>
                 <img src={bscLogo} alt="" />
-                <div>BSC Network</div>
+                <div
+                  style={{ color: !themeCtx.darkMode ? txtColor : undefined }}
+                >
+                  BSC Network
+                </div>
               </div>
             )}
           </div>
 
           {web3Ctx.walletAddress ? (
-            <div onClick={() => {}} id={classes.connected}>
-              <p>{shortenAddress(web3Ctx.walletAddress)}</p>
+            <div
+              onClick={() => {}}
+              id={classes.connected}
+              style={{
+                background: !themeCtx.darkMode ? bgColorBox : undefined,
+              }}
+            >
+              <p style={{ color: !themeCtx.darkMode ? txtColor : undefined }}>
+                {shortenAddress(web3Ctx.walletAddress)}
+              </p>
             </div>
           ) : (
-            <div onClick={web3Ctx.connectWallet} id={classes.connect}>
-              <p>Connect Wallet</p>
+            <div
+              onClick={web3Ctx.connectWallet}
+              id={classes.connect}
+              style={{
+                background: !themeCtx.darkMode ? bgColorBox : undefined,
+              }}
+            >
+              <p style={{ color: !themeCtx.darkMode ? txtColor : undefined }}>
+                Connect Wallet
+              </p>
             </div>
           )}
         </div>

@@ -21,6 +21,8 @@ const Web3Context = React.createContext({
   connectWallet: () => {},
   checkIfWalletConnected: () => {},
   manualConnect: () => {},
+  toggleDarkMode: () => {},
+  darkMode: true,
 });
 
 export default Web3Context;

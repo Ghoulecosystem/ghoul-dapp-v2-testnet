@@ -9,11 +9,14 @@ import Exchange from "./pages/exchange/Exchange";
 import Farm from "./pages/farm/Farm";
 import Web3Context from "./store/Web3-context";
 
-//https://www.figma.com/file/lxY33epqCuVV4X8l5rJYiP/Ghoul-Finance?node-id=0%3A1
-
 function App() {
   const web3Ctx = useContext(Web3Context);
   const [isLoading, setIsLoading] = useState(false);
+  const [theme, setTheme] = useState("light");
+  const themeToggler = () => {
+    theme === "light" ? setTheme("dark") : setTheme("light");
+  };
+
   useEffect(() => {
     setIsLoading(true);
     web3Ctx.checkIfWalletConnected();

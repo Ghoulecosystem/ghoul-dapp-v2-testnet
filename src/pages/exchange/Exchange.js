@@ -1,12 +1,23 @@
-import React from "react";
+import React, { useContext } from "react";
 import classes from "./Exchange.module.css";
 import Header from "../../components/header/Header";
 import ghoulLogo from "../../assets/ghoul_logo.svg";
 import swapArrows from "../../assets/swap-arrows.svg";
+import ThemeContext from "../../store/Theme-context";
 
 const Exchange = () => {
+  const themeCtx = useContext(ThemeContext);
+
+  let bgColor;
+  if (!themeCtx.darkMode) {
+    bgColor = "#FFFFFF";
+  }
+
   return (
-    <div className={classes["exchange-container"]}>
+    <div
+      className={classes["exchange-container"]}
+      style={{ background: !themeCtx.darkMode ? bgColor : undefined }}
+    >
       <Header title="Exchange"></Header>
       <div id={classes["vault-line"]}></div>
       <div className={classes["swap-box"]}>

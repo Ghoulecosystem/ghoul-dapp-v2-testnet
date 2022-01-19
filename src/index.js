@@ -3,9 +3,9 @@ import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
-import { BrowserRouter } from "react-router-dom";
 import { HashRouter } from "react-router-dom";
 import Web3Provider from "./store/Web3Provider";
+import ThemeProvider from "./store/ThemeProvider";
 
 window.isMobile =
   /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
@@ -15,7 +15,9 @@ window.isMobile =
 ReactDOM.render(
   <HashRouter>
     <Web3Provider>
-      <App />
+      <ThemeProvider>
+        <App />
+      </ThemeProvider>
     </Web3Provider>
   </HashRouter>,
   document.getElementById("root")

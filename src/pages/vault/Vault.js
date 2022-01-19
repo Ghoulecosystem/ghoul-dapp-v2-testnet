@@ -20,6 +20,8 @@ import Button from "@mui/material/Button";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import Fade from "@mui/material/Fade";
+import ThemeContext from "../../store/Theme-context";
+import chevronDark from "../../assets/arrow-darkmode.svg";
 
 const axios = require("axios");
 
@@ -186,6 +188,25 @@ const Vault = () => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [anchorElMobile, setAnchorElMobile] = useState(null);
   const [vaultDisplayType, setVaultDisplayType] = useState("All Vaults");
+
+  const themeCtx = useContext(ThemeContext);
+
+  let bgColor;
+  let bgColor2;
+  let bgColorBox;
+  let txtColor;
+  let txtColor2;
+  let inputColor;
+  let imgSrc = allVaultArrow;
+  if (!themeCtx.darkMode) {
+    bgColor = "#FFFFFF";
+    bgColorBox = "rgba(0, 0, 0, 0.03)";
+    txtColor = "#000000";
+    inputColor = "rgba(0, 0, 0, 0.1)";
+    txtColor2 = "rgba(0, 0, 0, 0.3)";
+    bgColor2 = "rgba(0, 0, 0, 0.5)";
+    imgSrc = chevronDark;
+  }
 
   const open = Boolean(anchorEl);
   const openMobile = Boolean(anchorElMobile);
@@ -971,7 +992,10 @@ const Vault = () => {
 
   return (
     <>
-      <div className={classes["vault-container"]}>
+      <div
+        className={classes["vault-container"]}
+        style={{ background: !themeCtx.darkMode ? bgColor : undefined }}
+      >
         <Header title="Vaults"></Header>
         <div className={classes["vault-navigation"]}>
           <div
@@ -979,7 +1003,12 @@ const Vault = () => {
             onClick={() => {
               setVaultManager(true);
             }}
-            style={{ backgroundColor: !vaultManager && "#090a10" }}
+            style={{
+              backgroundColor:
+                !vaultManager &&
+                (themeCtx.darkMode ? "#090a10" : "rgba(0, 0, 0, 0.05)"),
+              color: !themeCtx.darkMode ? txtColor : undefined,
+            }}
           >
             Vault Manager
           </div>
@@ -988,14 +1017,27 @@ const Vault = () => {
             onClick={() => {
               setVaultManager(false);
             }}
-            style={{ backgroundColor: vaultManager && "#090a10" }}
+            style={{
+              backgroundColor:
+                vaultManager &&
+                (themeCtx.darkMode ? "#090a10" : "rgba(0, 0, 0, 0.05)"),
+              color: !themeCtx.darkMode ? txtColor : undefined,
+            }}
           >
             Vault Monitor
           </div>
         </div>
-        <div className={classes["vault-line"]}></div>
+        <div
+          className={classes["vault-line"]}
+          style={{
+            background: !themeCtx.darkMode ? bgColor2 : undefined,
+          }}
+        ></div>
         <div className={classes["all-vaults"]}>
-          <div id={classes["all-vaults-text"]}>
+          <div
+            id={classes["all-vaults-text"]}
+            style={{ color: !themeCtx.darkMode ? txtColor : undefined }}
+          >
             {vaultDisplayType}
             <div className={classes["menu-container"]}>
               <Button
@@ -1009,7 +1051,7 @@ const Vault = () => {
                 }}
               >
                 <img
-                  src={allVaultArrow}
+                  src={imgSrc}
                   alt="arrow"
                   width={15}
                   height={20}
@@ -1046,7 +1088,10 @@ const Vault = () => {
             </div>
           </div>
           {!vaultManager && (
-            <div id={classes["liquidation-text"]}>
+            <div
+              id={classes["liquidation-text"]}
+              style={{ color: !themeCtx.darkMode ? txtColor : undefined }}
+            >
               Showing vaults close to liquidation
             </div>
           )}
@@ -1132,7 +1177,10 @@ const Vault = () => {
             </div>
           )}
         </div>
-        <div className={classes["all-vault-header"]}>
+        <div
+          className={classes["all-vault-header"]}
+          style={{ color: !themeCtx.darkMode ? txtColor2 : undefined }}
+        >
           {vaultManager && !window.isMobile && (
             <>
               <div>VAULT ID</div>
@@ -1150,7 +1198,12 @@ const Vault = () => {
             </>
           )}
         </div>
-        <div id={classes["vault-line-2"]}></div>
+        <div
+          id={classes["vault-line-2"]}
+          style={{
+            background: !themeCtx.darkMode ? bgColor2 : undefined,
+          }}
+        ></div>
         <div className={classes.vaults}>
           {vaultManager && (
             <>

@@ -6,6 +6,7 @@ import daiLogo from "../../assets/dai_logo.svg";
 import busdLogo from "../../assets/Currency226.png";
 import usdtLogo from "../../assets/Currency=Tether.png";
 import swapArrows from "../../assets/swap-arrows.svg";
+import swapArrowsLm from "../../assets/swap-lm.png";
 import {
   swapAddress,
   busdSwapAddress,
@@ -21,6 +22,7 @@ import Button from "@mui/material/Button";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import Fade from "@mui/material/Fade";
+import ThemeContext from "../../store/Theme-context";
 
 const Swap = () => {
   const web3Ctx = useContext(Web3Context);
@@ -48,6 +50,23 @@ const Swap = () => {
   const [coin, setCoin] = useState("DAI");
   const [coinBalance, setCoinBalance] = useState(0);
   const [coinReserve, setCoinReserve] = useState(0);
+
+  const themeCtx = useContext(ThemeContext);
+
+  let bgColor;
+  let bgColor2;
+  let bgColorBox;
+  let txtColor;
+  let inputColor;
+  let imgSrc = swapArrows;
+  if (!themeCtx.darkMode) {
+    bgColor = "#FFFFFF";
+    bgColorBox = "rgba(0, 0, 0, 0.03)";
+    txtColor = "#000000";
+    inputColor = "rgba(0, 0, 0, 0.1)";
+    bgColor2 = "rgba(0, 0, 0, 0.5)";
+    imgSrc = swapArrowsLm;
+  }
 
   let anchorLocation = "translateX(-200px) translateY(-120px)";
   const { innerWidth: width, innerHeight: height } = window;
@@ -935,27 +954,50 @@ const Swap = () => {
 
   return (
     <>
-      <div className={classes["swap-container"]}>
+      <div
+        className={classes["swap-container"]}
+        style={{ background: !themeCtx.darkMode ? bgColor : undefined }}
+      >
         <Header title="Swap"></Header>
-        <div id={classes["vault-line"]}></div>
+        <div
+          id={classes["vault-line"]}
+          style={{ background: !themeCtx.darkMode ? bgColor2 : undefined }}
+        ></div>
         {isLoadingReserves ? (
           <LoadingImg />
         ) : (
-          <div className={classes["swap-box"]}>
+          <div
+            className={classes["swap-box"]}
+            style={{ background: !themeCtx.darkMode ? bgColorBox : undefined }}
+          >
             <>
-              <h1 id={classes["mint-gdai"]}>
+              <h1
+                id={classes["mint-gdai"]}
+                style={{ color: !themeCtx.darkMode ? txtColor : undefined }}
+              >
                 {" "}
                 {togDai
                   ? "Mint gDAI with Stablecoins"
                   : "Mint Stablecoins with gDAI"}
               </h1>
               <div className={classes["swap-line"]}></div>
-              <div className={classes["swap-box-header"]}>
-                <span className={classes["col-one"]}>
+              <div
+                className={classes["swap-box-header"]}
+                style={{
+                  background: !themeCtx.darkMode ? bgColorBox : undefined,
+                }}
+              >
+                <span
+                  className={classes["col-one"]}
+                  style={{ color: !themeCtx.darkMode ? txtColor : undefined }}
+                >
                   Deposit <span id={classes.dai}>{togDai ? coin : "gDAI"}</span>
                   <div id={classes["dai-2"]}></div>
                 </span>
-                <span className={classes["col-two"]}>
+                <span
+                  className={classes["col-two"]}
+                  style={{ color: !themeCtx.darkMode ? txtColor : undefined }}
+                >
                   {togDai ? coin : "gDAI"}
                   {" Balance: "}
                   <span id={classes.balance}>{renderBalances()}</span>
@@ -981,7 +1023,10 @@ const Swap = () => {
                     width={34}
                     height={30}
                   />
-                  <div className={classes["coin-menu"]}>
+                  <div
+                    className={classes["coin-menu"]}
+                    style={{ color: !themeCtx.darkMode ? txtColor : undefined }}
+                  >
                     {togDai ? coin : "gDai"}
                     {togDai && <KeyboardArrowDownIcon />}
                   </div>
@@ -1025,19 +1070,28 @@ const Swap = () => {
                   onChange={(e) => {
                     inputOneHandler(e.target.value);
                   }}
+                  style={{
+                    background: !themeCtx.darkMode ? inputColor : undefined,
+                  }}
                 />
                 <span id={classes.max} onClick={maxHandlerOne}>
                   MAX
                 </span>
               </div>
               <div className={classes["swap-arrow"]}>
-                <img src={swapArrows} alt="" onClick={flipHandler} />
+                <img src={imgSrc} alt="" onClick={flipHandler} />
               </div>
               <div className={classes["swap-box-header"]}>
-                <span className={classes["col-one"]}>
+                <span
+                  className={classes["col-one"]}
+                  style={{ color: !themeCtx.darkMode ? txtColor : undefined }}
+                >
                   Recieve <span id={classes.dai}>{togDai ? "gDAI" : coin}</span>
                 </span>
-                <span className={classes["col-two"]}>
+                <span
+                  className={classes["col-two"]}
+                  style={{ color: !themeCtx.darkMode ? txtColor : undefined }}
+                >
                   Availble {togDai ? "gDAI: " : `${coin}: `}
                   <span id={classes.balance}>{renderReserves()}</span>
                 </span>
@@ -1052,11 +1106,16 @@ const Swap = () => {
                   onChange={(e) => {
                     inputTwoHandler(e.target.value);
                   }}
+                  style={{
+                    background: !themeCtx.darkMode ? inputColor : undefined,
+                  }}
                 />
               </div>
               <div id={classes["swap-btn-div"]}>{renderButtons()}</div>
               <div id={classes["footer-text"]}>
-                <p>Static fee of 1%</p>
+                <p style={{ color: !themeCtx.darkMode ? txtColor : undefined }}>
+                  Static fee of 1%
+                </p>
               </div>
             </>
           </div>

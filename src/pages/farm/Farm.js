@@ -10,6 +10,7 @@ import { lpAbi, farmAddress } from "../../utils/contract_test_abis_repo";
 import { parseEther } from "ethers/lib/utils";
 import LoadingImg from "../../components/loading-img-component/LoadingImg";
 import SnackbarUI from "../../components/snackbar/SnackbarUI";
+import ThemeContext from "../../store/Theme-context";
 
 const modalStyle = {
   overlay: {
@@ -67,6 +68,22 @@ const Farm = () => {
     open: false,
     error: false,
   });
+
+  const themeCtx = useContext(ThemeContext);
+  let bgColor;
+  let bgColor2;
+  let bgColorBox;
+  let txtColor;
+  let txtColor2;
+  let inputColor;
+  if (!themeCtx.darkMode) {
+    bgColor = "#FFFFFF";
+    bgColorBox = "rgba(0, 0, 0, 0.03)";
+    txtColor = "#000000";
+    inputColor = "rgba(0, 0, 0, 0.1)";
+    txtColor2 = "rgba(0, 0, 0, 0.3)";
+    bgColor2 = "rgba(0, 0, 0, 0.5)";
+  }
 
   const modalStyleLP = window.isMobile ? modalStyleMobile : modalStyle;
 
@@ -265,13 +282,35 @@ const Farm = () => {
   }
 
   return (
-    <div className={classes["farm-container"]}>
+    <div
+      className={classes["farm-container"]}
+      style={{ background: !themeCtx.darkMode ? bgColor : undefined }}
+    >
       <Header title="Farms"></Header>
       <div className={classes["farm-navigation"]}>
-        <div id={classes["farm-navigation-1"]}>All Farms</div>
-        <div id={classes["farm-navigation-2"]}>My LPs</div>
+        <div
+          id={classes["farm-navigation-1"]}
+          style={{
+            color: !themeCtx.darkMode ? txtColor : undefined,
+            background: !themeCtx.darkMode ? bgColor2 : undefined,
+          }}
+        >
+          All Farms
+        </div>
+        <div
+          id={classes["farm-navigation-2"]}
+          style={{
+            color: !themeCtx.darkMode ? txtColor : undefined,
+            background: !themeCtx.darkMode ? bgColor2 : undefined,
+          }}
+        >
+          My LPs
+        </div>
       </div>
-      <div className={classes["farm-line"]}></div>
+      <div
+        className={classes["farm-line"]}
+        style={{ background: !themeCtx.darkMode ? bgColor2 : undefined }}
+      ></div>
       <h1 id={classes["all-farms"]}> All Farms Require a 0.5% deposit fee </h1>
       <div className={classes["accordion-container"]}>
         {pools.length > 0 && !isLoadingPools ? (

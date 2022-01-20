@@ -8,9 +8,11 @@ import Swap from "./pages/swap/Swap";
 import Exchange from "./pages/exchange/Exchange";
 import Farm from "./pages/farm/Farm";
 import Web3Context from "./store/Web3-context";
+import ThemeContext from "./store/Theme-context";
 
 function App() {
   const web3Ctx = useContext(Web3Context);
+  const themeCtx = useContext(ThemeContext);
   const [isLoading, setIsLoading] = useState(false);
   useEffect(() => {
     setIsLoading(true);
@@ -19,13 +21,23 @@ function App() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  let txtColor;
+  if (!themeCtx.darkMode) {
+    txtColor = "#000000";
+  }
+
   return (
     <Layout>
       {!web3Ctx.walletAddress || web3Ctx.chainId !== 97 ? (
         <div className="disconnected-container">
           <div className="header-img"></div>
           {!web3Ctx.validChain && web3Ctx.walletAddress && (
-            <h1>Wrong Chain, Please Connect to Binance Smart Chain</h1>
+            <>
+              <h1 style={{ color: !themeCtx.darkMode ? txtColor : undefined }}>
+                Wrong Network.
+              </h1>
+              <h1>Please change to BSC</h1>
+            </>
           )}
           {!web3Ctx.walletAddress && <h1>Connect Your Wallet</h1>}
           {!web3Ctx.walletAddress && (

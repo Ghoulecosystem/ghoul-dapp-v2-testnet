@@ -365,7 +365,6 @@ const Vault = () => {
   }, [wethVaultContract]);
 
   const getBalances = useCallback(async () => {
-    console.log("getting balances");
     const gdaiBalance = await tokenContract.balanceOf(walletAddress);
     const gdaiBalanceFormat = parseFloat(
       ethers.utils.formatEther(gdaiBalance)

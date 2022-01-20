@@ -142,7 +142,9 @@ const NavbarHamburger = (props) => {
         <div className={classes["row-nav"]}>
           <div
             className={classes["row-elem-2-1"]}
-            onClick={web3Ctx.walletAddress ? () => {} : web3Ctx.connectWallet}
+            onClick={
+              web3Ctx.walletAddress ? web3Ctx.disconnect : web3Ctx.connectWallet
+            }
           >
             {web3Ctx.walletAddress ? (
               <p>{shortenAddress(web3Ctx.walletAddress)}</p>

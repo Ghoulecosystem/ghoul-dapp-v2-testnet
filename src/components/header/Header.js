@@ -12,6 +12,7 @@ const Header = (props) => {
   const web3Ctx = useContext(Web3Context);
   const themeCtx = useContext(ThemeContext);
   const [showHamburger, setShowHamburger] = useState(false);
+  const [showLogout, setShowLogout] = useState(false);
 
   const shortenAddress = (str) => {
     return str.substring(0, 6) + "..." + str.substring(str.length - 4);
@@ -46,6 +47,14 @@ const Header = (props) => {
   const hideHamburgerHandler = () => {
     setShowHamburger(false);
     themeCtx.toggleHamburger();
+  };
+
+  const enterHandler = () => {
+    setShowLogout(true);
+  };
+
+  const outHandler = () => {
+    setShowLogout(false);
   };
 
   return (
@@ -96,17 +105,28 @@ const Header = (props) => {
 
           {web3Ctx.walletAddress ? (
             <div
-              onClick={() => {}}
+              onClick={web3Ctx.disconnect}
               id={classes.connected}
               style={{
                 background: !themeCtx.darkMode ? bgColorBox : undefined,
               }}
+              onMouseOver={enterHandler}
+              onMouseOut={outHandler}
             >
               <p
-                style={{ color: !themeCtx.darkMode ? txtColor : undefined }}
-                onClick={web3Ctx.disconnect}
+                style={{
+                  color: !themeCtx.darkMode ? txtColor : undefined,
+                  borderColor: showLogout ? "red" : undefined,
+                  zIndex: 0,
+                }}
+                onMouseOver={enterHandler}
+                onMouseOut={outHandler}
               >
-                {shortenAddress(web3Ctx.walletAddress)}
+                {showLogout ? (
+                  <span style={{ color: "red" }}>Disconnect</span>
+                ) : (
+                  shortenAddress(web3Ctx.walletAddress)
+                )}
               </p>
             </div>
           ) : (

@@ -40,10 +40,12 @@ const Header = (props) => {
 
   const showHamburgerHandler = () => {
     setShowHamburger(true);
+    themeCtx.toggleHamburger();
   };
 
   const hideHamburgerHandler = () => {
     setShowHamburger(false);
+    themeCtx.toggleHamburger();
   };
 
   return (

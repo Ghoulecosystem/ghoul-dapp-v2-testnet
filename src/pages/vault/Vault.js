@@ -190,7 +190,6 @@ const Vault = () => {
   const [vaultDisplayType, setVaultDisplayType] = useState("All Vaults");
 
   const themeCtx = useContext(ThemeContext);
-
   let bgColor;
   let bgColor2;
   let bgColorBox;
@@ -469,7 +468,6 @@ const Vault = () => {
       let gDaiPriceFormat = ethers.utils.formatEther(gDaiPrice);
       let ethPrice = await tokenContract.getEthPriceSource();
       let ethPriceFormat = ethers.utils.formatUnits(ethPrice, "gwei");
-      console.log(ethPriceFormat);
       const userVaultData = res.data.data.users[0].vaults;
       let userVaultArray = [];
       for (let i = 0; i < userVaultData.length; i++) {
@@ -479,6 +477,7 @@ const Vault = () => {
 
         let vaultCollateral = await wethVaultContract.vaultCollateral(vaultId);
         let vaultCollateralFormat = ethers.utils.formatEther(vaultCollateral);
+
         let availableBorrow =
           ((parseFloat(vaultCollateralFormat) * parseFloat(ethPriceFormat)) /
             (150 * parseFloat(gDaiPriceFormat))) *
@@ -1006,7 +1005,10 @@ const Vault = () => {
     <>
       <div
         className={classes["vault-container"]}
-        style={{ background: !themeCtx.darkMode ? bgColor : undefined }}
+        style={{
+          background: !themeCtx.darkMode ? bgColor : undefined,
+          overflowY: themeCtx.hamburgerToggled ? "hidden" : undefined,
+        }}
       >
         <Header title="Vaults"></Header>
         <div className={classes["vault-navigation"]}>
@@ -1222,6 +1224,7 @@ const Vault = () => {
             background: !themeCtx.darkMode ? bgColor2 : undefined,
           }}
         ></div>
+
         <div className={classes.vaults}>
           {vaultManager && (
             <>

@@ -39,6 +39,10 @@
   color: rgba(255, 255, 255, 0.95);
 }
 
+.outer-vault-container {
+  max-height: 900px;
+}
+
 #vaults {
   padding-top: 0.9rem;
 }

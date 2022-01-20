@@ -135,7 +135,6 @@ span > img {
 }
 
 .feature-elem:hover {
-  color: #001f3f;
   background-color: rgba(179, 218, 191, 0.564);
 }
 

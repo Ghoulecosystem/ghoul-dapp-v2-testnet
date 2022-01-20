@@ -468,8 +468,8 @@ const Vault = () => {
       let gDaiPrice = await tokenContract.getTokenPriceSource();
       let gDaiPriceFormat = ethers.utils.formatEther(gDaiPrice);
       let ethPrice = await tokenContract.getEthPriceSource();
-      let ethPriceFormat = ethers.utils.formatUnits(ethPrice, "gwei") * 10;
-
+      let ethPriceFormat = ethers.utils.formatUnits(ethPrice, "gwei");
+      console.log(ethPriceFormat);
       const userVaultData = res.data.data.users[0].vaults;
       let userVaultArray = [];
       for (let i = 0; i < userVaultData.length; i++) {

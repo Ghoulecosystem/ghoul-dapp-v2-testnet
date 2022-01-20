@@ -387,7 +387,7 @@ const NavbarHamburger = (props) => {
               width="20"
               height="20"
             />
-            Socials{" "}
+            Telegram{" "}
           </a>
         </div>
         <div className={classes["feature-elem"]}>

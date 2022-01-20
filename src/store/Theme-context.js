@@ -5,6 +5,7 @@ const ThemeContext = React.createContext({
   darkMode: true,
   hamburgerToggled: false,
   toggleHamburger: () => {},
+  toggleHamburgerFalse: () => {},
 });
 
 export default ThemeContext;

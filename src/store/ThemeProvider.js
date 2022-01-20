@@ -10,7 +10,11 @@ const ThemeProvider = (props) => {
   };
 
   const toggleHamburger = () => {
-    isHamburger(!hamburger);
+    isHamburger(true);
+  };
+
+  const toggleHamburgerFalse = () => {
+    isHamburger(false);
   };
 
   const themeContext = {
@@ -18,6 +22,7 @@ const ThemeProvider = (props) => {
     darkMode: darkMode,
     hamburgerToggled: hamburger,
     toggleHamburger: toggleHamburger,
+    toggleHamburgerFalse: toggleHamburgerFalse,
   };
 
   return (

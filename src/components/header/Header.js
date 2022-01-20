@@ -35,7 +35,7 @@ const Header = (props) => {
     if (!web3Ctx.walletAddress) {
       web3Ctx.manualConnect();
     }
-
+    themeCtx.toggleHamburgerFalse();
     web3Ctx.checkIfWalletConnected();
   }, []);
 
@@ -46,7 +46,7 @@ const Header = (props) => {
 
   const hideHamburgerHandler = () => {
     setShowHamburger(false);
-    themeCtx.toggleHamburger();
+    themeCtx.toggleHamburgerFalse();
   };
 
   const enterHandler = () => {

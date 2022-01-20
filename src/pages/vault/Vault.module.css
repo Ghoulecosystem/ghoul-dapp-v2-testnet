@@ -585,3 +585,11 @@
     width: 38vw;
   }
 }
+
+@media (min-height: 800px) and (min-width: 360px) {
+  .all-vaults-mobile-container {
+    position: absolute;
+    left: 23%;
+    top: 22.5%;
+  }
+}

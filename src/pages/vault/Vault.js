@@ -230,6 +230,17 @@ const Vault = () => {
     setAnchorEl(null);
   };
 
+  const handleCloseMobile = (event) => {
+    const { myValue } = event.currentTarget.dataset;
+    if (!myValue) {
+      setAnchorElMobile(null);
+      return;
+    }
+
+    setVaultDisplayType(myValue);
+    setAnchorElMobile(null);
+  };
+
   useEffect(() => {
     const loadBNBVaultsLiquidation = async () => {
       setIsLoadingLiquidatorBNB(true);
@@ -1141,7 +1152,7 @@ const Vault = () => {
                 }}
                 anchorEl={anchorElMobile}
                 open={openMobile}
-                onClose={handleClose}
+                onClose={handleCloseMobile}
                 TransitionComponent={Fade}
                 PaperProps={{
                   style: {
@@ -1151,13 +1162,16 @@ const Vault = () => {
                   },
                 }}
               >
-                <MenuItem data-my-value={"All Vaults"} onClick={handleClose}>
+                <MenuItem
+                  data-my-value={"All Vaults"}
+                  onClick={handleCloseMobile}
+                >
                   All Vaults
                 </MenuItem>
-                <MenuItem data-my-value={"BNB"} onClick={handleClose}>
+                <MenuItem data-my-value={"BNB"} onClick={handleCloseMobile}>
                   BNB
                 </MenuItem>
-                <MenuItem data-my-value={"wETH"} onClick={handleClose}>
+                <MenuItem data-my-value={"wETH"} onClick={handleCloseMobile}>
                   wETH
                 </MenuItem>
               </Menu>

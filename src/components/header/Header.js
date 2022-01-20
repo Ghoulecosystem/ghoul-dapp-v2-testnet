@@ -110,7 +110,7 @@ const Header = (props) => {
               style={{
                 background: !themeCtx.darkMode ? bgColorBox : undefined,
               }}
-              onMouseOver={enterHandler}
+              onMouseEnter={enterHandler}
               onMouseOut={outHandler}
             >
               <p
@@ -119,7 +119,7 @@ const Header = (props) => {
                   borderColor: showLogout ? "red" : undefined,
                   zIndex: 0,
                 }}
-                onMouseOver={enterHandler}
+                onMouseEnter={enterHandler}
                 onMouseOut={outHandler}
               >
                 {showLogout ? (

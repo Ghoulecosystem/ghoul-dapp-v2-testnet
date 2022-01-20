@@ -571,7 +571,7 @@ const Swap = () => {
             100
           ).toFixed(2);
 
-          recieveValue = recieveValue - recieveValue * 0.1;
+          recieveValue = recieveValue - recieveValue * 0.01;
 
           if (recieveValue > parseFloat(reserves.gDaiReserve)) {
             setExceedingBalance(true);
@@ -592,7 +592,7 @@ const Swap = () => {
             100
           ).toFixed(2);
 
-          recieveValue = recieveValue - recieveValue * 0.1;
+          recieveValue = recieveValue - recieveValue * 0.01;
 
           if (recieveValue > parseFloat(reserves.gdaiReserveBusd)) {
             setExceedingBalance(true);
@@ -615,7 +615,7 @@ const Swap = () => {
             100
           ).toFixed(2);
 
-          recieveValue = recieveValue - recieveValue * 0.1;
+          recieveValue = recieveValue - recieveValue * 0.01;
 
           if (recieveValue > parseFloat(reserves.gdaiReserveUsdt)) {
             setExceedingBalance(true);

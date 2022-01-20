@@ -1,5 +1,5 @@
 import Web3Context from "./Web3-context";
-import React, { useReducer } from "react";
+import React, { useReducer, useState } from "react";
 import * as contracts from "../utils/contract_test_abis_repo";
 import WalletConnectProvider from "@walletconnect/web3-provider";
 import Web3Modal from "web3modal";
@@ -51,14 +51,17 @@ const defaultWeb3State = {
   usdtSwapContract: "",
   busdTokenContract: "",
   usdtTokenContract: "",
+  chainId: "",
 };
 
 const web3Reducer = (state, action) => {
   if (action.type === "WALLET_CONNECT") {
+    console.log("WALLET CONNECT action");
     const walletAddress = action.walletAddress;
     const provider = action.provider;
     const signer = action.signer;
     const ethersContracts = action.contracts;
+    const chainId = parseInt(action.chainId);
     return {
       walletAddress: walletAddress,
       provider: provider,
@@ -77,6 +80,38 @@ const web3Reducer = (state, action) => {
       usdtSwapContract: ethersContracts.usdtSwapContract,
       busdTokenContract: ethersContracts.busdTokenContract,
       usdtTokenContract: ethersContracts.usdtTokenContract,
+      chainId: chainId,
+    };
+  }
+
+  if (action.type === "WALLET_DISCONNECT") {
+    return {
+      walletAddress: null,
+      provider: null,
+      signer: null,
+      daiContract: null,
+      swapContract: null,
+      goulContract: null,
+      tokenContract: null,
+      farmContract: null,
+      wethVaultContract: null,
+      wethContract: null,
+      goulXContract: "", ///"ethersContracts.goulXContract",
+      liquidatorContract: null,
+      busdSwapContract: null,
+      usdcSwapContract: null,
+      usdtSwapContract: null,
+      busdTokenContract: null,
+      usdtTokenContract: null,
+      chainId: null,
+    };
+  }
+
+  if (action.type === "CHAIN_SWITCH") {
+    const chainId = action.chainId;
+    return {
+      ...state,
+      chainId: chainId,
     };
   }
 
@@ -88,6 +123,7 @@ const Web3Provider = (props) => {
     web3Reducer,
     defaultWeb3State
   );
+  const [validChain, setIsValidChain] = useState(false);
 
   const changeNetwork = async ({ networkName, setError }) => {
     console.log("Attempting to change network");
@@ -198,7 +234,6 @@ const Web3Provider = (props) => {
 
   const manualConnectHandler = async () => {
     try {
-      const { ethereum } = window;
       const providerOptions = {
         walletconnect: {
           package: WalletConnectProvider,
@@ -228,8 +263,39 @@ const Web3Provider = (props) => {
       // Get list of accounts of the connected wallet
       const accounts = await web3.eth.getAccounts();
 
-      const providerEthers = new ethers.providers.Web3Provider(ethereum); // Allows for interaction with ethereum nodes - read/write
+      const providerEthers = new ethers.providers.Web3Provider(provider); // Allows for interaction with ethereum nodes - read/write
       const signer = providerEthers.getSigner(); // Abstraction of the Ethereum Account which can be used to sign messages and transactions and send signed transactions
+
+      // if (window.ethereum.networkVersion !== 97) {
+      //   // changeNetwork("bsc");
+      //   console.log("Invalid Chain");
+      //   setIsValidChain(true);
+      // } else {
+      //   setIsValidChain(true);
+      // }
+
+      // Subscribe to accounts change
+      provider.on("accountsChanged", (accounts) => {
+        console.log(accounts);
+      });
+
+      // // Subscribe to chainId change
+      // provider.on("chainChanged", (chainId) => {
+      //   console.log(chainId);
+      //   if (chainId !== 97) {
+      //     setIsValidChain(false);
+      //   } else {
+      //     setIsValidChain(true);
+      //   }
+      // });
+
+      // Subscribe to networkId change
+      provider.on("networkChanged", (networkId) => {
+        dispatchWeb3Action({
+          type: "CHAIN_SWITCH",
+          chainId: parseInt(networkId),
+        });
+      });
 
       dispatchWeb3Action({
         type: "WALLET_CONNECT",
@@ -237,6 +303,7 @@ const Web3Provider = (props) => {
         provider: providerEthers,
         signer: signer,
         contracts: instantiateContracts(signer),
+        chainId: window.ethereum.networkVersion,
       });
       // const web3Provider = new providers.Web3Provider(provider);
       // console.log(web3Provider.getA);
@@ -260,9 +327,13 @@ const Web3Provider = (props) => {
         method: "eth_requestAccounts",
       });
 
-      // if (window.ethereum.networkVersion !== 56) {
-      //   changeNetwork("bsc");
-      // }
+      if (window.ethereum.networkVersion !== 97) {
+        // changeNetwork("bsc");
+        console.log("Invalid Chain");
+        setIsValidChain(false);
+      } else {
+        setIsValidChain(true);
+      }
 
       const provider = new ethers.providers.Web3Provider(ethereum); // Allows for interaction with ethereum nodes - read/write
       const signer = provider.getSigner(); // Abstraction of the Ethereum Account which can be used to sign messages and transactions and send signed transactions
@@ -292,13 +363,23 @@ const Web3Provider = (props) => {
        */
       const accounts = await ethereum.request({ method: "eth_accounts" });
 
-      // if (window.ethereum.networkVersion !== 56) {
-      //   changeNetwork("bsc");
+      // if (window.ethereum.networkVersion !== 97) {
+      //   // changeNetwork("bsc");
+      //   setIsValidChain(false);
+      // } else {
+      //   setIsValidChain(true);
       // }
-
       if (accounts.length !== 0) {
         const provider = new ethers.providers.Web3Provider(ethereum); // Allows for interaction with ethereum nodes - read/write
         const signer = provider.getSigner(); // Abstraction of the Ethereum Account which can be used to sign messages and transactions and send signed transactions
+
+        // Subscribe to networkId change
+        provider.on("networkChanged", (networkId) => {
+          dispatchWeb3Action({
+            type: "CHAIN_SWITCH",
+            chainId: parseInt(networkId),
+          });
+        });
 
         dispatchWeb3Action({
           type: "WALLET_CONNECT",
@@ -306,6 +387,7 @@ const Web3Provider = (props) => {
           provider: provider,
           signer: signer,
           contracts: instantiateContracts(signer),
+          chainId: window.ethereum.networkVersion,
         });
       } else {
         console.log("No authorized account found");
@@ -313,6 +395,18 @@ const Web3Provider = (props) => {
     } catch (error) {
       console.log(error);
     }
+  };
+
+  const disconnectHandler = async () => {
+    if (web3State.provider.close) {
+      await web3State.provider.close();
+    }
+
+    // web3Modal.clearCachedProvider();
+
+    dispatchWeb3Action({
+      type: "WALLET_DISCONNECT",
+    });
   };
 
   const web3Context = {
@@ -336,6 +430,8 @@ const Web3Provider = (props) => {
     connectWallet: connectWalletHandler,
     checkIfWalletConnected: checkIfWalletIsConnectedHandler,
     manualConnect: manualConnectHandler,
+    disconnect: disconnectHandler,
+    chainId: web3State.chainId,
   };
 
   return (

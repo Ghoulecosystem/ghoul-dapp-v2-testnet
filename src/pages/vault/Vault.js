@@ -450,7 +450,6 @@ const Vault = () => {
       );
 
       if (!res.data.data.users.length) {
-        console.log(`No vaults found for user: ${address}`);
         setIsLoadingWeth(false);
         return;
       }
@@ -535,7 +534,6 @@ const Vault = () => {
         )
         .then(async (res) => {
           if (!res.data.data.users.length) {
-            console.log(`No vaults found for user: ${address}`);
             setIsLoading(false);
             return;
           }

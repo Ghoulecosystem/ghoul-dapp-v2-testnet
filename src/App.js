@@ -12,11 +12,6 @@ import Web3Context from "./store/Web3-context";
 function App() {
   const web3Ctx = useContext(Web3Context);
   const [isLoading, setIsLoading] = useState(false);
-  const [theme, setTheme] = useState("light");
-  const themeToggler = () => {
-    theme === "light" ? setTheme("dark") : setTheme("light");
-  };
-
   useEffect(() => {
     setIsLoading(true);
     web3Ctx.checkIfWalletConnected();
@@ -26,25 +21,42 @@ function App() {
 
   return (
     <Layout>
-      <Navbar />
-      <Switch>
-        <Route path="/" exact>
-          <Redirect to="/swap" />
-        </Route>
-        <Route path="/vaults">
-          <Vault />
-        </Route>
-        <Route path="/swap">
-          <Swap />
-        </Route>
-        <Route path="/exchange">
-          <Exchange />
-        </Route>
-        <Route path="/farm">
-          <Farm />
-        </Route>
-        <Redirect from="*" to="/" />
-      </Switch>
+      {!web3Ctx.walletAddress || web3Ctx.chainId !== 97 ? (
+        <div className="disconnected-container">
+          <div className="header-img"></div>
+          {!web3Ctx.validChain && web3Ctx.walletAddress && (
+            <h1>Wrong Chain, Please Connect to Binance Smart Chain</h1>
+          )}
+          {!web3Ctx.walletAddress && <h1>Connect Your Wallet</h1>}
+          {!web3Ctx.walletAddress && (
+            <div className="connect-wallet-app" onClick={web3Ctx.manualConnect}>
+              Connect Wallet
+            </div>
+          )}
+        </div>
+      ) : (
+        <>
+          <Navbar />
+          <Switch>
+            <Route path="/" exact>
+              <Redirect to="/swap" />
+            </Route>
+            <Route path="/vaults">
+              <Vault />
+            </Route>
+            <Route path="/swap">
+              <Swap />
+            </Route>
+            <Route path="/exchange">
+              <Exchange />
+            </Route>
+            <Route path="/farm">
+              <Farm />
+            </Route>
+            <Redirect from="*" to="/" />
+          </Switch>
+        </>
+      )}
     </Layout>
   );
 }

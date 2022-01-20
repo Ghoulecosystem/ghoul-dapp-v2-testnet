@@ -100,7 +100,10 @@ const Header = (props) => {
                 background: !themeCtx.darkMode ? bgColorBox : undefined,
               }}
             >
-              <p style={{ color: !themeCtx.darkMode ? txtColor : undefined }}>
+              <p
+                style={{ color: !themeCtx.darkMode ? txtColor : undefined }}
+                onClick={web3Ctx.disconnect}
+              >
                 {shortenAddress(web3Ctx.walletAddress)}
               </p>
             </div>

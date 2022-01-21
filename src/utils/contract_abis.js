@@ -3051,6 +3051,7 @@ const wethVaultAbi = [
     type: "function",
   },
 ];
+
 const liquidatorAddress = "0x93FA9a37EfcbD8f88f35498c60F05faFFec8A9Be";
 const daiAddress = "0x1af3f329e8be154074d8769d1ffa4ee058b1dbc3";
 const swapAddress = "0x748Af5C37dB1796c814bd3e2742A37Dc34Db5Abe";

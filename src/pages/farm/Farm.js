@@ -104,18 +104,20 @@ const Farm = () => {
           i,
           web3Ctx.walletAddress
         );
-        pool.despositedAmount = ethers.utils.formatEther(pool.despositedAmount);
+        pool.despositedAmount = parseFloat(ethers.utils.formatEther(pool.despositedAmount)).toFixed(4);
 
         pool.pendingAmount = await web3Ctx.farmContract.pending(
           i,
           web3Ctx.walletAddress
         );
-        pool.pendingAmount = ethers.utils.formatEther(pool.pendingAmount);
+        pool.pendingAmount = parseFloat(ethers.utils.formatEther(pool.pendingAmount)).toFixed(4);
 
         const userInfo = await web3Ctx.farmContract.userInfo(
           i,
           web3Ctx.walletAddress
         );
+
+
 
         pool.amount = userInfo[0].toNumber().toString();
         pool.rewardDept = userInfo[1].toNumber();
@@ -124,6 +126,10 @@ const Farm = () => {
         pool.lastRewardBlock = poolInfo[2].toNumber();
         pool.accERC20PerShare = poolInfo[3].toNumber();
         pool.depositFeeBP = parseInt(poolInfo[4]) / 100;
+
+
+
+
         pool.totalAllocation = await web3Ctx.farmContract.totalAllocPoint();
         pool.totalAllocation = pool.totalAllocation.toNumber();
         pool.pullAllocationPercentage = parseInt(
@@ -146,6 +152,9 @@ const Farm = () => {
         );
         pool.lpAllowance = ethers.utils.formatEther(pool.lpAllowance);
         pool.lpApproved = parseInt(pool.lpAllowance) > 0;
+        pool.lpBalanceContract = lpContract.balanceOf(farmAddress)
+        pool.lpBalanceContract = parseFloat(ethers.utils.formatEther(pool.lpBalanceContract)).toFixed(4)
+        pool.weight = (parseFloat( pool.despositedAmount))
 
         pools.push(pool);
       }

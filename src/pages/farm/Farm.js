@@ -6,7 +6,7 @@ import StakeLpModal from "../../components/stake-lp-modal/StakeLpModal";
 import Accordion from "../../components/farm-accordion/FarmAccordion";
 import Web3Context from "../../store/Web3-context";
 import { ethers } from "ethers";
-import { lpAbi, farmAddress } from "../../utils/contract_test_abis_repo";
+import { lpAbi, farmAddress } from "../../utils/contract_abis_mainnet";
 import { parseEther } from "ethers/lib/utils";
 import LoadingImg from "../../components/loading-img-component/LoadingImg";
 import SnackbarUI from "../../components/snackbar/SnackbarUI";

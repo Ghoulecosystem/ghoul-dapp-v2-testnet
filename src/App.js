@@ -28,7 +28,7 @@ function App() {
 
   return (
     <Layout>
-      {!web3Ctx.walletAddress || web3Ctx.chainId !== 97 ? (
+      {!web3Ctx.walletAddress || web3Ctx.chainId !== 56 ? (
         <div className="disconnected-container">
           <div className="header-img"></div>
           {!web3Ctx.validChain && web3Ctx.walletAddress && (

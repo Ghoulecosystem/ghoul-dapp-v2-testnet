@@ -12,7 +12,7 @@ import {
   busdSwapAddress,
   usdcSwapAddress,
   usdtSwapAddress,
-} from "../../utils/contract_test_abis_repo";
+} from "../../utils/contract_abis_mainnet";
 import Web3Context from "../../store/Web3-context";
 import LoadingImg from "../../components/loading-img-component/LoadingImg";
 import { ethers } from "ethers";
@@ -26,6 +26,7 @@ import ThemeContext from "../../store/Theme-context";
 
 const Swap = () => {
   const web3Ctx = useContext(Web3Context);
+  console.log(web3Ctx);
   const [isLoadingReserves, setIsLoadingReserves] = useState(false);
   const [reserves, setReserves] = useState({});
   const [togDai, setTogDai] = useState(true);
@@ -173,15 +174,15 @@ const Swap = () => {
       );
       const busdBalanceFormat = ethers.utils.formatEther(busdBalance);
 
-      const usdtBalanace = await web3Ctx.usdtTokenContract.balanceOf(
-        web3Ctx.walletAddress
-      );
-      const usdtBalanceformat = ethers.utils.formatEther(usdtBalanace);
-
-      // const usdcBalance = await web3Ctx.usdcSwapContract.balanceOf(
+      // const usdtBalanace = await web3Ctx.usdtTokenContract.balanceOf(
       //   web3Ctx.walletAddress
       // );
-      // const usdcBalanceFormat = ethers.utils.formatEther(usdcBalance);
+      // const usdtBalanceformat = ethers.utils.formatEther(usdtBalanace);
+
+      const usdcBalance = await web3Ctx.usdcTokenContract.balanceOf(
+        web3Ctx.walletAddress
+      );
+      const usdcBalanceFormat = ethers.utils.formatEther(usdcBalance);
 
       // const usdtBalance = await web3Ctx.usdtSwapContract.balanceOf(
       //   web3Ctx.walletAddress
@@ -320,24 +321,26 @@ const Swap = () => {
       //   ethers.utils.formatEther(usdcReserves[1].toString())
       // ).toFixed(2);
 
-      const usdtReserves = await web3Ctx.usdtSwapContract.getReserves();
-      const usdtRate = await web3Ctx.usdtSwapContract.usdtRate();
-      const usdtRateFormat = parseInt(usdtRate._hex, 16);
+      // const usdtReserves = await web3Ctx.usdtSwapContract.getReserves();
+      // const usdtRate = await web3Ctx.usdtSwapContract.usdtRate();
+      // const usdtRateFormat = parseInt(usdtRate._hex, 16);
+
       const gDaiRateUsdt = await web3Ctx.usdtSwapContract.ghostdaiRate();
       const gDaiRateUsdtFormat = parseInt(gDaiRateUsdt._hex, 16);
 
-      const gdaiReserveFormatUsdt = parseFloat(
-        ethers.utils.formatEther(usdtReserves[0].toString())
-      ).toFixed(2);
-      const usdtReserveFormat = parseFloat(
-        ethers.utils.formatEther(usdtReserves[1].toString())
-      ).toFixed(2);
+      // const gdaiReserveFormatUsdt = parseFloat(
+      //   ethers.utils.formatEther(usdtReserves[0].toString())
+      // ).toFixed(2);
+      // const usdtReserveFormat = parseFloat(
+      //   ethers.utils.formatEther(usdtReserves[1].toString())
+      // ).toFixed(2);
 
       setReserves({
         gDaiBalance: parseFloat(gDaiBalanceFormat).toFixed(2),
         daiBalance: daiBalanceFormat,
         busdBalance: busdBalanceFormat,
-        usdtBalance: usdtBalanceformat,
+        // usdtBalance: usdtBalanceformat,
+        usdcBalance: usdcBalanceFormat,
         gDaiAllowance: gDaiAllowanceFormat,
         daiAllowance: daiAllowanceFormat,
         daiRate: daiRateFormat,
@@ -348,10 +351,10 @@ const Swap = () => {
         gdaiRateBusd: gDaiRateBusdFormat,
         gdaiReserveBusd: gdaiReserveFormatBusd,
         busdReserve: busdReserveFormat,
-        usdtRate: usdtRateFormat,
+        // usdtRate: usdtRateFormat,
         gdaiRateUsdt: gDaiRateUsdtFormat,
-        gdaiReserveUsdt: gdaiReserveFormatUsdt,
-        usdtReserve: usdtReserveFormat,
+        // gdaiReserveUsdt: gdaiReserveFormatUsdt,
+        // usdtReserve: usdtReserveFormat,
       });
 
       // setReserves({

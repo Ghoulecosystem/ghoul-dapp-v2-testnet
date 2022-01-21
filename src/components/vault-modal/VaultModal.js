@@ -4,7 +4,7 @@ import cancelIcon from "../../assets/cancel.svg";
 import { makeStyles, withStyles } from "@material-ui/core/styles";
 import Slider from "@material-ui/core/Slider";
 import { ethers } from "ethers";
-import { wethVaultAddress } from "../../utils/contract_abis";
+import { wethVaultAddress } from "../../utils/contract_abis_mainnet";
 import SnackbarUI from "../../components/snackbar/SnackbarUI";
 import ThemeContext from "../../store/Theme-context";
 import blackCross from "../../assets/fi_x.svg";

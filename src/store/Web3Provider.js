@@ -1,6 +1,6 @@
 import Web3Context from "./Web3-context";
 import React, { useReducer, useState } from "react";
-import * as contracts from "../utils/contract_test_abis_repo";
+import * as contracts from "../utils/contract_abis_mainnet";
 import WalletConnectProvider from "@walletconnect/web3-provider";
 import Web3Modal from "web3modal";
 import Web3 from "web3";
@@ -51,6 +51,7 @@ const defaultWeb3State = {
   usdtSwapContract: "",
   busdTokenContract: "",
   usdtTokenContract: "",
+  usdcTokenContract: "",
   chainId: "",
 };
 
@@ -73,13 +74,14 @@ const web3Reducer = (state, action) => {
       farmContract: ethersContracts.farmContract,
       wethVaultContract: ethersContracts.wethVaultContract,
       wethContract: ethersContracts.wethContract,
-      goulXContract: "", ///"ethersContracts.goulXContract",
+      goulXContract: ethersContracts.ghoulXContract, ///"ethersContracts.goulXContract",
       liquidatorContract: ethersContracts.liquidatorContract,
       busdSwapContract: ethersContracts.busdSwapContract,
       usdcSwapContract: ethersContracts.usdcSwapContract,
       usdtSwapContract: ethersContracts.usdtSwapContract,
       busdTokenContract: ethersContracts.busdTokenContract,
       usdtTokenContract: ethersContracts.usdtTokenContract,
+      usdcTokenContract: ethersContracts.usdcTokenContract,
       chainId: chainId,
     };
   }
@@ -96,7 +98,7 @@ const web3Reducer = (state, action) => {
       farmContract: null,
       wethVaultContract: null,
       wethContract: null,
-      goulXContract: "", ///"ethersContracts.goulXContract",
+      goulXContract: null, ///"ethersContracts.goulXContract",
       liquidatorContract: null,
       busdSwapContract: null,
       usdcSwapContract: null,
@@ -143,6 +145,11 @@ const Web3Provider = (props) => {
   };
 
   const instantiateContracts = (signer) => {
+    const ghoulXContract = new ethers.Contract(
+      contracts.ghoulxAddress,
+      contracts.ghoulXAbi,
+      signer
+    );
     const daiContract = new ethers.Contract(
       contracts.daiAddress,
       contracts.daiAbi,
@@ -213,6 +220,11 @@ const Web3Provider = (props) => {
       contracts.usdtTokenAbi,
       signer
     );
+    const usdcTokenContract = new ethers.Contract(
+      contracts.usdcTokenAddress,
+      contracts.usdcAbi,
+      signer
+    );
 
     return {
       daiContract: daiContract,
@@ -229,6 +241,8 @@ const Web3Provider = (props) => {
       usdtSwapContract: usdtSwap,
       busdTokenContract: busdTokenContract,
       usdtTokenContract: usdtTokenContract,
+      ghoulXContract: ghoulXContract,
+      usdcTokenContract: usdcTokenContract,
     };
   };
 
@@ -427,6 +441,7 @@ const Web3Provider = (props) => {
     usdtSwapContract: web3State.usdtSwapContract,
     busdTokenContract: web3State.busdTokenContract,
     usdtTokenContract: web3State.usdtTokenContract,
+    usdcTokenContract: web3State.usdcTokenContract,
     connectWallet: connectWalletHandler,
     checkIfWalletConnected: checkIfWalletIsConnectedHandler,
     manualConnect: manualConnectHandler,

@@ -3,7 +3,7 @@ import classes from "./LiqiduidateVaultModal.module.css";
 import cancelIcon from "../../assets/cancel.svg";
 import SnackbarUI from "../snackbar/SnackbarUI";
 import Web3Context from "../../store/Web3-context";
-import { liquidatorAddress } from "../../utils/contract_abis";
+import { liquidatorAddress } from "../../utils/contract_abis_mainnet";
 import ThemeContext from "../../store/Theme-context";
 import blackCross from "../../assets/fi_x.svg";
 

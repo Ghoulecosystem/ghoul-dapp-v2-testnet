@@ -14,7 +14,7 @@ import {
   wethVaultAddress,
   tokenAddress,
   liquidatorAddress,
-} from "../../utils/contract_abis";
+} from "../../utils/contract_abis_mainnet";
 import SnackbarUI from "../../components/snackbar/SnackbarUI";
 import Button from "@mui/material/Button";
 import Menu from "@mui/material/Menu";
@@ -481,7 +481,7 @@ const Vault = () => {
       };
 
       const res = await axios.post(
-        "https://api.thegraph.com/subgraphs/name/blockifi/bsctetnetwethvault",
+        "https://api.thegraph.com/subgraphs/name/blockifi/bscwainnetwethvault",
         body
       );
 
@@ -564,11 +564,10 @@ const Vault = () => {
         `,
         variables: {},
       };
-      // https://api.thegraph.com/subgraphs/name/blockifi/ghoulfinancebscmainnet1 MAINNET
 
       const result = await axios
         .post(
-          "https://api.thegraph.com/subgraphs/name/blockifi/ghoulfinancebsc",
+          "https://api.thegraph.com/subgraphs/name/blockifi/ghoulfinancebscmainnet1",
           body
         )
         .then(async (res) => {

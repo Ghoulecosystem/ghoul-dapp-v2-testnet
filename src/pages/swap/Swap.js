@@ -130,222 +130,222 @@ const Swap = () => {
     try {
       setIsLoadingReserves(true);
       // BALANCES;
-      // const gDaiBalance = await web3Ctx.tokenContract.balanceOf(
+      const gDaiBalance = await web3Ctx.tokenContract.balanceOf(
+        web3Ctx.walletAddress
+      );
+      const gDaiBalanceFormat = ethers.utils.formatEther(gDaiBalance);
+
+      const daiBalance = await web3Ctx.daiContract.balanceOf(
+        web3Ctx.walletAddress
+      );
+      const daiBalanceFormat = ethers.utils.formatEther(daiBalance);
+
+      const busdBalance = await web3Ctx.busdTokenContract.balanceOf(
+        web3Ctx.walletAddress
+      );
+      const busdBalanceFormat = ethers.utils.formatEther(busdBalance);
+
+      const usdtBalanace = await web3Ctx.usdtTokenContract.balanceOf(
+        web3Ctx.walletAddress
+      );
+      const usdtBalanceformat = ethers.utils.formatEther(usdtBalanace);
+
+      // const usdcBalance = await web3Ctx.usdcSwapContract.balanceOf(
       //   web3Ctx.walletAddress
       // );
-      // const gDaiBalanceFormat = ethers.utils.formatEther(gDaiBalance);
+      // const usdcBalanceFormat = ethers.utils.formatEther(usdcBalance);
 
-      // const daiBalance = await web3Ctx.daiContract.balanceOf(
+      // const usdtBalance = await web3Ctx.usdtSwapContract.balanceOf(
       //   web3Ctx.walletAddress
       // );
-      // const daiBalanceFormat = ethers.utils.formatEther(daiBalance);
+      // const usdtBalanceFormat = ethers.utils.formatEther(usdtBalance);
 
-      // const busdBalance = await web3Ctx.busdTokenContract.balanceOf(
-      //   web3Ctx.walletAddress
-      // );
-      // const busdBalanceFormat = ethers.utils.formatEther(busdBalance);
+      // ALLOWANCES
+      const gDaiAllowance = await web3Ctx.tokenContract.allowance(
+        web3Ctx.walletAddress,
+        swapAddress
+      );
 
-      // const usdtBalanace = await web3Ctx.usdtTokenContract.balanceOf(
-      //   web3Ctx.walletAddress
-      // );
-      // const usdtBalanceformat = ethers.utils.formatEther(usdtBalanace);
+      const gDaiAllowanceFormat = ethers.utils.formatEther(gDaiAllowance);
 
-      // // const usdcBalance = await web3Ctx.usdcSwapContract.balanceOf(
-      // //   web3Ctx.walletAddress
-      // // );
-      // // const usdcBalanceFormat = ethers.utils.formatEther(usdcBalance);
+      const daiAllowance = await web3Ctx.daiContract.allowance(
+        web3Ctx.walletAddress,
+        swapAddress
+      );
+      const daiAllowanceFormat = ethers.utils.formatEther(
+        daiAllowance.toString()
+      );
 
-      // // const usdtBalance = await web3Ctx.usdtSwapContract.balanceOf(
-      // //   web3Ctx.walletAddress
-      // // );
-      // // const usdtBalanceFormat = ethers.utils.formatEther(usdtBalance);
+      ////
 
-      // // ALLOWANCES
-      // const gDaiAllowance = await web3Ctx.tokenContract.allowance(
+      const gDaiAllowanceBusd = await web3Ctx.tokenContract.allowance(
+        web3Ctx.walletAddress,
+        busdSwapAddress
+      );
+      const gDaiAllowanceBusdFormat =
+        ethers.utils.formatEther(gDaiAllowanceBusd);
+
+      const busdAllowance = await web3Ctx.busdTokenContract.allowance(
+        web3Ctx.walletAddress,
+        busdSwapAddress
+      );
+
+      const busdAllowanceFormat = ethers.utils.formatEther(busdAllowance);
+
+      ////
+
+      // const gDaiAllowanceUsdc = await web3Ctx.tokenContract.allowance(
       //   web3Ctx.walletAddress,
-      //   swapAddress
+      //   usdcSwapAddress
       // );
 
-      // const gDaiAllowanceFormat = ethers.utils.formatEther(gDaiAllowance);
+      // const gDaiAllowanceUsdcFormat =
+      //   ethers.utils.formatEther(gDaiAllowanceUsdc);
 
-      // const daiAllowance = await web3Ctx.daiContract.allowance(
+      // const usdcAllowance = await web3Ctx.usdcSwapContract.allowance(
       //   web3Ctx.walletAddress,
-      //   swapAddress
+      //   usdcSwapAddress
       // );
-      // const daiAllowanceFormat = ethers.utils.formatEther(
-      //   daiAllowance.toString()
-      // );
+      // const usdcAllowanceFormat = ethers.utils.formatEther(usdcAllowance);
 
-      // ////
+      ////
+      const gDaiAllowanceUsdt = await web3Ctx.tokenContract.allowance(
+        web3Ctx.walletAddress,
+        usdtSwapAddress
+      );
+      const gDaiAllowanceUsdtFormat =
+        ethers.utils.formatEther(gDaiAllowanceUsdt);
 
-      // const gDaiAllowanceBusd = await web3Ctx.tokenContract.allowance(
-      //   web3Ctx.walletAddress,
-      //   busdSwapAddress
-      // );
-      // const gDaiAllowanceBusdFormat =
-      //   ethers.utils.formatEther(gDaiAllowanceBusd);
+      const usdtAllowance = await web3Ctx.usdtTokenContract.allowance(
+        web3Ctx.walletAddress,
+        usdtSwapAddress
+      );
 
-      // const busdAllowance = await web3Ctx.busdTokenContract.allowance(
-      //   web3Ctx.walletAddress,
-      //   busdSwapAddress
-      // );
+      const usdtAllowanceFormat = ethers.utils.formatEther(usdtAllowance);
+      ///
 
-      // const busdAllowanceFormat = ethers.utils.formatEther(busdAllowance);
+      if (parseInt(gDaiAllowanceFormat) !== 0) {
+        setgDaiApproved(true);
+      }
 
-      // ////
+      if (parseInt(daiAllowanceFormat) !== 0) {
+        setDaiApproved(true);
+      }
 
-      // // const gDaiAllowanceUsdc = await web3Ctx.tokenContract.allowance(
-      // //   web3Ctx.walletAddress,
-      // //   usdcSwapAddress
-      // // );
+      if (parseInt(gDaiAllowanceBusdFormat) !== 0) {
+        setgDaiBusdApproved(true);
+      }
 
-      // // const gDaiAllowanceUsdcFormat =
-      // //   ethers.utils.formatEther(gDaiAllowanceUsdc);
+      if (parseInt(busdAllowanceFormat !== 0)) {
+        setBusdApproved(true);
+      }
 
-      // // const usdcAllowance = await web3Ctx.usdcSwapContract.allowance(
-      // //   web3Ctx.walletAddress,
-      // //   usdcSwapAddress
-      // // );
-      // // const usdcAllowanceFormat = ethers.utils.formatEther(usdcAllowance);
+      // // if (usdcAllowanceFormat !== 0) {
+      // setUsdcApproved(true);
+      // // }
 
-      // ////
-      // const gDaiAllowanceUsdt = await web3Ctx.tokenContract.allowance(
-      //   web3Ctx.walletAddress,
-      //   usdtSwapAddress
-      // );
-      // const gDaiAllowanceUsdtFormat =
-      //   ethers.utils.formatEther(gDaiAllowanceUsdt);
+      if (parseInt(gDaiAllowanceUsdtFormat)) {
+        setgDaiUsdtApproved(true);
+      }
 
-      // const usdtAllowance = await web3Ctx.usdtTokenContract.allowance(
-      //   web3Ctx.walletAddress,
-      //   usdtSwapAddress
-      // );
+      if (usdtAllowanceFormat !== 0) {
+        setUsdtApproved(true);
+      }
 
-      // const usdtAllowanceFormat = ethers.utils.formatEther(usdtAllowance);
-      // ///
+      // RESERVES
+      const reserve = await web3Ctx.swapContract.getReserves();
+      const daiRate = await web3Ctx.swapContract.daiRate();
+      const daiRateFormat = parseInt(daiRate._hex, 16);
+      const gDaiRate = await web3Ctx.swapContract.ghostdaiRate();
+      const gDaiRateFormat = parseInt(gDaiRate._hex, 16);
 
-      // if (parseInt(gDaiAllowanceFormat) !== 0) {
-      //   setgDaiApproved(true);
-      // }
+      const gdaiReserveFormat = parseFloat(
+        ethers.utils.formatEther(reserve[0].toString())
+      ).toFixed(2);
+      const daiReserveFormat = parseFloat(
+        ethers.utils.formatEther(reserve[1].toString())
+      ).toFixed(2);
 
-      // if (parseInt(daiAllowanceFormat) !== 0) {
-      //   setDaiApproved(true);
-      // }
+      const busdReserves = await web3Ctx.busdSwapContract.getReserves();
+      const busdRate = await web3Ctx.busdSwapContract.busdRate();
+      const busdRateFormat = parseInt(busdRate._hex, 16);
+      const gDaiRateBusd = await web3Ctx.busdSwapContract.ghostdaiRate();
+      const gDaiRateBusdFormat = parseInt(gDaiRateBusd._hex, 16);
 
-      // if (parseInt(gDaiAllowanceBusdFormat) !== 0) {
-      //   setgDaiBusdApproved(true);
-      // }
+      const gdaiReserveFormatBusd = parseFloat(
+        ethers.utils.formatEther(busdReserves[0].toString())
+      ).toFixed(2);
+      const busdReserveFormat = parseFloat(
+        ethers.utils.formatEther(busdReserves[1].toString())
+      ).toFixed(2);
 
-      // if (parseInt(busdAllowanceFormat !== 0)) {
-      //   setBusdApproved(true);
-      // }
+      // const usdcReserves = await web3Ctx.usdcSwapContract.getReserves();
+      // const usdcRate = await web3Ctx.usdcSwapContract.usdcRate();
+      // const usdcRateFormat = parseInt(usdcRate._hex, 16);
+      // const gDaiRateUsdc = await web3Ctx.usdcSwapContract.ghostdaiRate();
+      // const gDaiRateUsdcFormat = parseInt(gDaiRateUsdc._hex, 16);
 
-      // // // if (usdcAllowanceFormat !== 0) {
-      // // setUsdcApproved(true);
-      // // // }
-
-      // if (parseInt(gDaiAllowanceUsdtFormat)) {
-      //   setgDaiUsdtApproved(true);
-      // }
-
-      // if (usdtAllowanceFormat !== 0) {
-      //   setUsdtApproved(true);
-      // }
-
-      // // RESERVES
-      // const reserve = await web3Ctx.swapContract.getReserves();
-      // const daiRate = await web3Ctx.swapContract.daiRate();
-      // const daiRateFormat = parseInt(daiRate._hex, 16);
-      // const gDaiRate = await web3Ctx.swapContract.ghostdaiRate();
-      // const gDaiRateFormat = parseInt(gDaiRate._hex, 16);
-
-      // const gdaiReserveFormat = parseFloat(
-      //   ethers.utils.formatEther(reserve[0].toString())
+      // const gdaiReserveFormatUsdc = parseFloat(
+      //   ethers.utils.formatEther(usdcReserves[0].toString())
       // ).toFixed(2);
-      // const daiReserveFormat = parseFloat(
-      //   ethers.utils.formatEther(reserve[1].toString())
-      // ).toFixed(2);
-
-      // const busdReserves = await web3Ctx.busdSwapContract.getReserves();
-      // const busdRate = await web3Ctx.busdSwapContract.busdRate();
-      // const busdRateFormat = parseInt(busdRate._hex, 16);
-      // const gDaiRateBusd = await web3Ctx.busdSwapContract.ghostdaiRate();
-      // const gDaiRateBusdFormat = parseInt(gDaiRateBusd._hex, 16);
-
-      // const gdaiReserveFormatBusd = parseFloat(
-      //   ethers.utils.formatEther(busdReserves[0].toString())
-      // ).toFixed(2);
-      // const busdReserveFormat = parseFloat(
-      //   ethers.utils.formatEther(busdReserves[1].toString())
+      // const usdcReserveFormat = parseFloat(
+      //   ethers.utils.formatEther(usdcReserves[1].toString())
       // ).toFixed(2);
 
-      // // const usdcReserves = await web3Ctx.usdcSwapContract.getReserves();
-      // // const usdcRate = await web3Ctx.usdcSwapContract.usdcRate();
-      // // const usdcRateFormat = parseInt(usdcRate._hex, 16);
-      // // const gDaiRateUsdc = await web3Ctx.usdcSwapContract.ghostdaiRate();
-      // // const gDaiRateUsdcFormat = parseInt(gDaiRateUsdc._hex, 16);
+      const usdtReserves = await web3Ctx.usdtSwapContract.getReserves();
+      const usdtRate = await web3Ctx.usdtSwapContract.usdtRate();
+      const usdtRateFormat = parseInt(usdtRate._hex, 16);
+      const gDaiRateUsdt = await web3Ctx.usdtSwapContract.ghostdaiRate();
+      const gDaiRateUsdtFormat = parseInt(gDaiRateUsdt._hex, 16);
 
-      // // const gdaiReserveFormatUsdc = parseFloat(
-      // //   ethers.utils.formatEther(usdcReserves[0].toString())
-      // // ).toFixed(2);
-      // // const usdcReserveFormat = parseFloat(
-      // //   ethers.utils.formatEther(usdcReserves[1].toString())
-      // // ).toFixed(2);
-
-      // const usdtReserves = await web3Ctx.usdtSwapContract.getReserves();
-      // const usdtRate = await web3Ctx.usdtSwapContract.usdtRate();
-      // const usdtRateFormat = parseInt(usdtRate._hex, 16);
-      // const gDaiRateUsdt = await web3Ctx.usdtSwapContract.ghostdaiRate();
-      // const gDaiRateUsdtFormat = parseInt(gDaiRateUsdt._hex, 16);
-
-      // const gdaiReserveFormatUsdt = parseFloat(
-      //   ethers.utils.formatEther(usdtReserves[0].toString())
-      // ).toFixed(2);
-      // const usdtReserveFormat = parseFloat(
-      //   ethers.utils.formatEther(usdtReserves[1].toString())
-      // ).toFixed(2);
-
-      // setReserves({
-      //   gDaiBalance: parseFloat(gDaiBalanceFormat).toFixed(2),
-      //   daiBalance: daiBalanceFormat,
-      //   busdBalance: busdBalanceFormat,
-      //   usdtBalance: usdtBalanceformat,
-      //   gDaiAllowance: gDaiAllowanceFormat,
-      //   daiAllowance: daiAllowanceFormat,
-      //   daiRate: daiRateFormat,
-      //   gDaiRate: gDaiRateFormat,
-      //   gDaiReserve: gdaiReserveFormat,
-      //   daiReserve: daiReserveFormat,
-      //   busdRate: busdRateFormat,
-      //   gdaiRateBusd: gDaiRateBusdFormat,
-      //   gdaiReserveBusd: gdaiReserveFormatBusd,
-      //   busdReserve: busdReserveFormat,
-      //   usdtRate: usdtRateFormat,
-      //   gdaiRateUsdt: gDaiRateUsdtFormat,
-      //   gdaiReserveUsdt: gdaiReserveFormatUsdt,
-      //   usdtReserve: usdtReserveFormat,
-      // });
+      const gdaiReserveFormatUsdt = parseFloat(
+        ethers.utils.formatEther(usdtReserves[0].toString())
+      ).toFixed(2);
+      const usdtReserveFormat = parseFloat(
+        ethers.utils.formatEther(usdtReserves[1].toString())
+      ).toFixed(2);
 
       setReserves({
-        gDaiBalance: parseFloat(71.77).toFixed(2),
-        daiBalance: 28.2,
-        busdBalance: 10,
-        usdtBalance: 0,
-        gDaiAllowance: 9999999999,
-        daiAllowance: 9999999999,
-        daiRate: 101,
-        gDaiRate: 99,
-        gDaiReserve: 124.39,
-        daiReserve: 174.2,
-        busdRate: 101,
-        gdaiRateBusd: 99,
-        gdaiReserveBusd: 0.0,
-        busdReserve: 0.0,
-        usdtRate: 101,
-        gdaiRateUsdt: 99,
-        gdaiReserveUsdt: 0.0,
-        usdtReserve: 0.0,
+        gDaiBalance: parseFloat(gDaiBalanceFormat).toFixed(2),
+        daiBalance: daiBalanceFormat,
+        busdBalance: busdBalanceFormat,
+        usdtBalance: usdtBalanceformat,
+        gDaiAllowance: gDaiAllowanceFormat,
+        daiAllowance: daiAllowanceFormat,
+        daiRate: daiRateFormat,
+        gDaiRate: gDaiRateFormat,
+        gDaiReserve: gdaiReserveFormat,
+        daiReserve: daiReserveFormat,
+        busdRate: busdRateFormat,
+        gdaiRateBusd: gDaiRateBusdFormat,
+        gdaiReserveBusd: gdaiReserveFormatBusd,
+        busdReserve: busdReserveFormat,
+        usdtRate: usdtRateFormat,
+        gdaiRateUsdt: gDaiRateUsdtFormat,
+        gdaiReserveUsdt: gdaiReserveFormatUsdt,
+        usdtReserve: usdtReserveFormat,
       });
+
+      // setReserves({
+      //   gDaiBalance: parseFloat(71.77).toFixed(2),
+      //   daiBalance: 28.2,
+      //   busdBalance: 10,
+      //   usdtBalance: 0,
+      //   gDaiAllowance: 9999999999,
+      //   daiAllowance: 9999999999,
+      //   daiRate: 101,
+      //   gDaiRate: 99,
+      //   gDaiReserve: 124.39,
+      //   daiReserve: 174.2,
+      //   busdRate: 101,
+      //   gdaiRateBusd: 99,
+      //   gdaiReserveBusd: 0.0,
+      //   busdReserve: 0.0,
+      //   usdtRate: 101,
+      //   gdaiRateUsdt: 99,
+      //   gdaiReserveUsdt: 0.0,
+      //   usdtReserve: 0.0,
+      // });
 
       setIsLoadingReserves(false);
     } catch (error) {

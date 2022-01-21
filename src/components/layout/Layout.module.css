@@ -8,6 +8,19 @@
   left: 50%;
   /* bring your own prefixes */
   transform: translate(-50%, -50%);
+  overflow: auto;
+}
+
+.main::-webkit-scrollbar {
+  width: 0.25rem;
+  height: 0.25rem;
+}
+
+.main::-webkit-scrollbar-track {
+  background: #090a10;
+}
+.main::-webkit-scrollbar-thumb {
+  background: #253e2a;
 }
 
 @media screen and (max-width: 2000px) {
@@ -31,6 +44,12 @@
 @media screen and (max-width: 1024px) {
   .main {
     zoom: 0.6;
+  }
+}
+
+@media screen and (max-height: 780px) {
+  .main {
+    zoom: 0.7;
   }
 }
 

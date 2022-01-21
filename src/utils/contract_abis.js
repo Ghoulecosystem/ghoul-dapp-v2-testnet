@@ -3051,15 +3051,15 @@ const wethVaultAbi = [
     type: "function",
   },
 ];
-const liquidatorAddress = "0x0Fa9407b3D0bA59395bB7Fc2442BaabcD20AE253";
+const liquidatorAddress = "0x93FA9a37EfcbD8f88f35498c60F05faFFec8A9Be";
 const daiAddress = "0x1af3f329e8be154074d8769d1ffa4ee058b1dbc3";
 const swapAddress = "0x748Af5C37dB1796c814bd3e2742A37Dc34Db5Abe";
-const guolAddress = "0x025A522EbF4eAA663D717d917d6833d6B0Ea3946";
-const tokenAddress = "0xC9F654d481E79d01448030b08516b7f9fCF71E13"; // Testnet GDAI
+const guolAddress = "0x171cE6141E7a5980222bc6B757ee2F1f95b3264e";
+const tokenAddress = "0xF92b9A2B34efe45a8280629a7DFa404aeE18849f";
 const farmAddress = "0x29E28ac262c2ecAb788857eD0f51872ae213Acd7";
 const ghoulxAddress = "0xcfc5cf2a73e97401c218b7ce1c594524bd8ba4bf";
 
-const wethVaultAddress = "0x5069FA2330B8Ca3ba1838F05E2Fffe432A120141"; // Testnet
+const wethVaultAddress = "0xc522c7a2c66a2f1281cc3ff36c20ef142d9246e8";
 const wethAddress = "0x2170Ed0880ac9A755fd29B2688956BD959F933F8";
 export {
   tokenAbi,

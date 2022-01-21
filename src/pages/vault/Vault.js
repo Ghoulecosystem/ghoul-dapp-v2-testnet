@@ -22,6 +22,9 @@ import MenuItem from "@mui/material/MenuItem";
 import Fade from "@mui/material/Fade";
 import ThemeContext from "../../store/Theme-context";
 import chevronDark from "../../assets/arrow-darkmode.svg";
+import InputLabel from "@mui/material/InputLabel";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
 
 const axios = require("axios");
 
@@ -206,6 +209,12 @@ const Vault = () => {
     bgColor2 = "rgba(0, 0, 0, 0.5)";
     imgSrc = chevronDark;
   }
+
+  const [age, setAge] = React.useState("");
+
+  const handleChange = (event) => {
+    setAge(event.target.value);
+  };
 
   const open = Boolean(anchorEl);
   const openMobile = Boolean(anchorElMobile);

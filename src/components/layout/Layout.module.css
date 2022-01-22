@@ -47,9 +47,15 @@
   }
 }
 
-@media screen and (max-height: 780px) {
+@media screen and (max-height: 920px) {
   .main {
-    zoom: 0.7;
+    zoom: 0.9;
+  }
+}
+
+@media screen and (max-height: 805px) {
+  .main {
+    zoom: 0.75;
   }
 }
 

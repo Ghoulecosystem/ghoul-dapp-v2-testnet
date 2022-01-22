@@ -192,6 +192,21 @@ const Vault = () => {
   const [anchorElMobile, setAnchorElMobile] = useState(null);
   const [vaultDisplayType, setVaultDisplayType] = useState("All Vaults");
 
+  const { innerWidth: width, innerHeight: height } = window;
+  let anchorLocation = "translateX(-200px) translateY(-65px)";
+
+  if (height > 920) {
+    anchorLocation = "translateX(-20px) translateY(-10px)";
+  } else if (height > 805) {
+    anchorLocation = "translateX(-100px) translateY(-20px)";
+  } else {
+    anchorLocation = "translateX(-310px) translateY(-70px)";
+  }
+
+  if (width < 450) {
+    anchorLocation = "translateX(-0px) translateY(-0px)";
+  }
+
   const themeCtx = useContext(ThemeContext);
   let bgColor;
   let bgColor2;
@@ -1091,7 +1106,7 @@ const Vault = () => {
                 TransitionComponent={Fade}
                 PaperProps={{
                   style: {
-                    transform: "translateX(-220px) translateY(-65px)",
+                    transform: anchorLocation,
                     backgroundColor: "#090a10ba",
                     color: "white",
                   },

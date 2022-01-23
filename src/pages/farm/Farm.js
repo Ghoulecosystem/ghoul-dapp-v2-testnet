@@ -95,7 +95,6 @@ const Farm = () => {
     let pools = [];
     try {
       for (let i = 1; i < poolCountFormat; i++) {
-        //CHANGE THIS LATER
         let pool = {};
         pool.id = i;
         const poolInfo = await web3Ctx.farmContract.poolInfo(i);
@@ -104,20 +103,22 @@ const Farm = () => {
           i,
           web3Ctx.walletAddress
         );
-        pool.despositedAmount = parseFloat(ethers.utils.formatEther(pool.despositedAmount)).toFixed(4);
+        pool.despositedAmount = parseFloat(
+          ethers.utils.formatEther(pool.despositedAmount)
+        ).toFixed(4);
 
         pool.pendingAmount = await web3Ctx.farmContract.pending(
           i,
           web3Ctx.walletAddress
         );
-        pool.pendingAmount = parseFloat(ethers.utils.formatEther(pool.pendingAmount)).toFixed(4);
+        pool.pendingAmount = parseFloat(
+          ethers.utils.formatEther(pool.pendingAmount)
+        ).toFixed(4);
 
         const userInfo = await web3Ctx.farmContract.userInfo(
           i,
           web3Ctx.walletAddress
         );
-
-
 
         pool.amount = userInfo[0].toNumber().toString();
         pool.rewardDept = userInfo[1].toNumber();
@@ -126,9 +127,6 @@ const Farm = () => {
         pool.lastRewardBlock = poolInfo[2].toNumber();
         pool.accERC20PerShare = poolInfo[3].toNumber();
         pool.depositFeeBP = parseInt(poolInfo[4]) / 100;
-
-
-
 
         pool.totalAllocation = await web3Ctx.farmContract.totalAllocPoint();
         pool.totalAllocation = pool.totalAllocation.toNumber();
@@ -141,7 +139,6 @@ const Farm = () => {
           lpAbi,
           web3Ctx.signer
         );
-
         pool.lpName = await lpContract.name();
         pool.lpSymbol = await lpContract.symbol();
         pool.lpBalance = await lpContract.balanceOf(web3Ctx.walletAddress);
@@ -152,9 +149,13 @@ const Farm = () => {
         );
         pool.lpAllowance = ethers.utils.formatEther(pool.lpAllowance);
         pool.lpApproved = parseInt(pool.lpAllowance) > 0;
-        pool.lpBalanceContract = lpContract.balanceOf(farmAddress)
-        pool.lpBalanceContract = parseFloat(ethers.utils.formatEther(pool.lpBalanceContract)).toFixed(4)
-        pool.weight = (parseFloat( pool.despositedAmount))
+        pool.lpBalanceContract = await lpContract.balanceOf(farmAddress);
+        console.log(pool.lpBalanceContract);
+        pool.lpBalanceContract = parseFloat(
+          ethers.utils.formatEther(pool.lpBalanceContract)
+        ).toFixed(4);
+
+        pool.weight = parseFloat(pool.despositedAmount);
 
         pools.push(pool);
       }

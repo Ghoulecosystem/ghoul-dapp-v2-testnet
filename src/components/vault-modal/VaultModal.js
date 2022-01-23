@@ -216,10 +216,10 @@ const VaultModal = (props) => {
       console.log(txValue);
       const tx = await props.wethVaultContract.depositCollateral(
         props.id,
-        ethers.utils.parseEther(txValue),
-        {
-          gasLimit: 60000,
-        }
+        ethers.utils.parseEther(txValue)
+        // {
+        //   gasLimit: 60000,
+        // }
       );
 
       await tx.wait();

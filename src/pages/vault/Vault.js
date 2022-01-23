@@ -195,12 +195,20 @@ const Vault = () => {
   const { innerWidth: width, innerHeight: height } = window;
   let anchorLocation = "translateX(-200px) translateY(-65px)";
 
-  if (height > 920) {
-    anchorLocation = "translateX(-20px) translateY(-10px)";
-  } else if (height > 805) {
-    anchorLocation = "translateX(-100px) translateY(-20px)";
-  } else {
-    anchorLocation = "translateX(-310px) translateY(-70px)";
+  // if (height > 920) {
+  //   anchorLocation = "translateX(-20px) translateY(-10px)";
+  // } else if (height > 805) {
+  //   anchorLocation = "translateX(-100px) translateY(-20px)";
+  // } else {
+  //   anchorLocation = "translateX(-310px) translateY(-70px)";
+  // }
+
+  if (width > 1999 && height > 1000) {
+    anchorLocation = "translateX(-20px) translateY(-0px)";
+  }
+
+  if (width < 1504) {
+    anchorLocation = "translateX(-550px) translateY(-300px)";
   }
 
   if (width < 450) {
@@ -488,9 +496,9 @@ const Vault = () => {
       }
 
       let gDaiPrice = await tokenContract.getTokenPriceSource();
-      let gDaiPriceFormat = ethers.utils.formatEther(gDaiPrice);
-      let ethPrice = await tokenContract.getEthPriceSource();
-      let ethPriceFormat = ethers.utils.formatUnits(ethPrice, "gwei");
+      let gDaiPriceFormat = ethers.utils.formatUnits(gDaiPrice, "gwei") * 10;
+      let ethPrice = await wethVaultContract.getEthPriceSource();
+      let ethPriceFormat = ethers.utils.formatUnits(ethPrice, "gwei") * 10;
       const userVaultData = res.data.data.users[0].vaults;
       let userVaultArray = [];
       for (let i = 0; i < userVaultData.length; i++) {
@@ -513,6 +521,12 @@ const Vault = () => {
             ((parseFloat(vaultCollateralFormat) * parseFloat(ethPriceFormat)) /
               (parseFloat(vaultDebtFormat) * parseFloat(gDaiPriceFormat))) *
             100;
+
+          console.log(parseFloat(vaultCollateralFormat));
+          console.log(parseFloat(ethPriceFormat));
+          console.log(parseFloat(vaultDebtFormat));
+          console.log(parseFloat(gDaiPriceFormat));
+          console.log(vaultRatio);
         } else {
           vaultRatio = 0;
         }
@@ -808,9 +822,9 @@ const Vault = () => {
     );
 
     let gDaiPrice = await tokenContract.getTokenPriceSource();
-    let gDaiPriceFormat = ethers.utils.formatEther(gDaiPrice);
-    let ethPrice = await tokenContract.getEthPriceSource();
-    let ethPriceFormat = ethers.utils.formatEther(ethPrice);
+    let gDaiPriceFormat = ethers.utils.formatUnits(gDaiPrice, "gwei") * 10;
+    let ethPrice = await wethVaultContract.getEthPriceSource();
+    let ethPriceFormat = ethers.utils.formatUnits(ethPrice, "gwei") * 10;
 
     let vaultDebt = await wethVaultContract.vaultDebt(vaultId);
     let vaultDebtFormat = ethers.utils.formatEther(vaultDebt);

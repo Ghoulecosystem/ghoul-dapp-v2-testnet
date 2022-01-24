@@ -30,6 +30,9 @@ import bondsLogoLm from "../../assets/bonds-lm.png";
 import prifiLogoLm from "../../assets/prifi-lm.png";
 import governanceLogoLm from "../../assets/governance-lm.svg";
 import Switch from "@mui/material/Switch";
+import ghoulXDarkMode from "../../assets/GhoulXDARKMODE.png";
+import ghoulDarkMode from "../../assets/GHOULDARKMODE.png";
+import gDaiDarkMode from "../../assets/gDAIDARKMODE.png";
 
 const label = { inputProps: { "aria-label": "Switch demo" } };
 
@@ -59,6 +62,9 @@ const Navbar = () => {
   let bondsIm = bondLogo;
   let prifiIm = prifiLogo;
   let governanceIm = governance;
+  let ghoulxIm = ghoulXLogo;
+  let ghoulIm = logo;
+  let gdaiIm = ghoulTokenLogo;
   if (!themeCtx.darkMode) {
     bgColor =
       "linear-gradient(170.43deg, #FFFFFF 0%, rgba(234, 234, 234, 0) 99.52%)";
@@ -73,6 +79,9 @@ const Navbar = () => {
     bondsIm = bondsLogoLm;
     prifiIm = prifiLogoLm;
     governanceIm = governanceLogoLm;
+    ghoulxIm = ghoulXDarkMode;
+    ghoulIm = ghoulDarkMode;
+    gdaiIm = gDaiDarkMode;
   }
 
   const darkModeHandler = () => {
@@ -125,7 +134,7 @@ const Navbar = () => {
             }}
           >
             <span>
-              <img src={logo} alt="" />
+              <img src={ghoulIm} alt="" />
             </span>
             <h3
               style={{
@@ -142,7 +151,7 @@ const Navbar = () => {
             }}
           >
             <span>
-              <img src={ghoulTokenLogo} alt="gl" width="24.72" height="16.41" />
+              <img src={gdaiIm} alt="gl" width="24.72" height="16.41" />
             </span>
             <h3
               style={{
@@ -161,7 +170,7 @@ const Navbar = () => {
             }}
           >
             <span>
-              <img src={ghoulXLogo} alt="gxl" width="24.72" height="16.41" />
+              <img src={ghoulxIm} alt="gxl" width="24.72" height="16.41" />
             </span>
             <h3
               style={{

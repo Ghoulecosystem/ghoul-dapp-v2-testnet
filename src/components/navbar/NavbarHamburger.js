@@ -33,6 +33,9 @@ import prifiLogoLm from "../../assets/prifi-lm.png";
 import governanceLogoLm from "../../assets/governance-lm.svg";
 import blackCancelIcon from "../../assets/fi_x.svg";
 import Switch from "@mui/material/Switch";
+import ghoulXDarkMode from "../../assets/GhoulXDARKMODE.png";
+import ghoulDarkMode from "../../assets/GHOULDARKMODE.png";
+import gDaiDarkMode from "../../assets/gDAIDARKMODE.png";
 
 const label = { inputProps: { "aria-label": "Switch demo" } };
 
@@ -63,6 +66,9 @@ const NavbarHamburger = (props) => {
   let prifiIm = prifiLogo;
   let governanceIm = governance;
   let cancelIm = cancelIcon;
+  let ghoulxIm = ghoulXLogo;
+  let ghoulIm = logo;
+  let gdaiIm = ghoulLogoFinal;
   if (!themeCtx.darkMode) {
     bgColor = "#FFFFFF";
     // "linear-gradient(170.43deg, #FFFFFF 0%, rgba(234, 234, 234, 0) 100%)";
@@ -78,6 +84,9 @@ const NavbarHamburger = (props) => {
     prifiIm = prifiLogoLm;
     governanceIm = governanceLogoLm;
     cancelIm = blackCancelIcon;
+    ghoulxIm = ghoulXDarkMode;
+    ghoulIm = ghoulDarkMode;
+    gdaiIm = gDaiDarkMode;
   }
 
   const darkModeHandler = () => {
@@ -193,7 +202,7 @@ const NavbarHamburger = (props) => {
                 color: !themeCtx.darkMode ? txtColor : undefined,
               }}
             >
-              <img src={logo} alt="" />
+              <img src={ghoulIm} alt="" />
             </span>
             <h3
               style={{
@@ -214,7 +223,7 @@ const NavbarHamburger = (props) => {
                 color: !themeCtx.darkMode ? txtColor : undefined,
               }}
             >
-              <img src={ghoulLogoFinal} alt="" />
+              <img src={gdaiIm} alt="" />
             </span>
             <h3
               style={{
@@ -233,7 +242,7 @@ const NavbarHamburger = (props) => {
             }}
           >
             <span>
-              <img src={ghoulXLogo} alt="" />
+              <img src={ghoulxIm} alt="" />
             </span>
             <h3
               style={{

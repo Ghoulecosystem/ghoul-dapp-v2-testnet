@@ -48,12 +48,8 @@ const VaultModal = (props) => {
   }
 
   const classes_slider = useStyles();
-  const [value, setValue] = useState(99);
-  const [collateralValue, setCollateralValue] = useState(
-    props.isBNB
-      ? parseFloat(props.balances.bnbBalance).toFixed(5)
-      : parseFloat(props.balances.wethBalance).toFixed(5)
-  );
+  const [value, setValue] = useState(0);
+  const [collateralValue, setCollateralValue] = useState(0);
   const [withdrawValue, setWithdrawValue] = useState(props.collateral);
   const [repayValue, setRepayValue] = useState(props.balances.gdaiBalance);
   const [borrowValue, setBorrowValue] = useState(props.availableBorrow);
@@ -372,7 +368,7 @@ const VaultModal = (props) => {
             style={{ color: !themeCtx.darkMode ? txtColor : undefined }}
           >
             {" "}
-            $0.00
+            ${props.collateralValue}
           </span>
         </div>
         <div className={classes["vault-modal-content-item"]}>
@@ -393,7 +389,7 @@ const VaultModal = (props) => {
             style={{ color: !themeCtx.darkMode ? txtColor : undefined }}
           >
             {" "}
-            $0.00
+            ${props.debt}
           </span>
         </div>
         <div className={classes["vault-modal-content-item"]}>

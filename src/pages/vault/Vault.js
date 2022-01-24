@@ -28,7 +28,7 @@ import Select from "@mui/material/Select";
 
 const axios = require("axios");
 
-const BNBPrice = 529.75;
+const BNBPrice = 373.21947555;
 const gDaiPrice = 1;
 
 const modalStyle = {
@@ -233,12 +233,6 @@ const Vault = () => {
     imgSrc = chevronDark;
   }
 
-  const [age, setAge] = React.useState("");
-
-  const handleChange = (event) => {
-    setAge(event.target.value);
-  };
-
   const open = Boolean(anchorEl);
   const openMobile = Boolean(anchorElMobile);
 
@@ -279,6 +273,7 @@ const Vault = () => {
       const vaultCount = parseInt(vaultCountHex._hex, 16);
       let ethPrice = await tokenContract.getEthPriceSource();
       let ethPriceFormat = ethers.utils.formatEther(ethPrice);
+      let bnbPrice = ethers.utils.formatUnits(ethPrice, "gwei") * 10;
       let liqVaults = [];
       for (let i = 0; i < vaultCount; i++) {
         let vaultCollateral = await tokenContract.vaultCollateral(i);
@@ -291,7 +286,7 @@ const Vault = () => {
         let debtFormat = ethers.utils.formatEther(debt);
         let vaultCollateralFormat = ethers.utils.formatEther(vaultCollateral);
         let vaultCollateralFinal =
-          parseFloat(BNBPrice) * parseFloat(vaultCollateralFormat);
+          parseFloat(bnbPrice) * parseFloat(vaultCollateralFormat);
         let debtMonitor = parseFloat(gDaiPrice) * debtFormat;
         let debtRatio = (
           (parseFloat(vaultCollateralFinal) / parseFloat(debtMonitor)) *
@@ -521,12 +516,6 @@ const Vault = () => {
             ((parseFloat(vaultCollateralFormat) * parseFloat(ethPriceFormat)) /
               (parseFloat(vaultDebtFormat) * parseFloat(gDaiPriceFormat))) *
             100;
-
-          console.log(parseFloat(vaultCollateralFormat));
-          console.log(parseFloat(ethPriceFormat));
-          console.log(parseFloat(vaultDebtFormat));
-          console.log(parseFloat(gDaiPriceFormat));
-          console.log(vaultRatio);
         } else {
           vaultRatio = 0;
         }
@@ -534,9 +523,12 @@ const Vault = () => {
         const vaultObj = {
           id: vaultId,
           debt: vaultDebtFormat,
-          collateral: parseFloat(vaultCollateralFormat).toFixed(2),
+          collateral: parseFloat(vaultCollateralFormat).toFixed(4),
           availableBorrow: parseFloat(availableBorrow).toFixed(2),
           ratio: vaultRatio,
+          vaultCollateralValue: (
+            parseFloat(vaultCollateralFormat).toFixed(4) * ethPriceFormat
+          ).toFixed(2),
         };
 
         userVaultArray.push(vaultObj);
@@ -589,6 +581,7 @@ const Vault = () => {
           let gDaiPriceFormat = ethers.utils.formatEther(gDaiPrice);
           let ethPrice = await tokenContract.getEthPriceSource();
           let ethPriceFormat = ethers.utils.formatEther(ethPrice);
+          let bnbPrice = ethers.utils.formatUnits(ethPrice, "gwei") * 10;
           const userVaultData = res.data.data.users[0].vaults;
           let userVaultArray = [];
           for (let i = 0; i < userVaultData.length; i++) {
@@ -624,6 +617,9 @@ const Vault = () => {
               collateral: parseFloat(vaultCollateralFormat).toFixed(2),
               availableBorrow: parseFloat(availableBorrow).toFixed(2),
               ratio: vaultRatio,
+              vaultCollateralValue: (
+                parseFloat(vaultCollateralFormat).toFixed(4) * bnbPrice
+              ).toFixed(2),
             };
 
             userVaultArray.push(vaultObj);
@@ -895,6 +891,7 @@ const Vault = () => {
         );
 
         await tx.wait();
+        getBalances();
       } else {
         const tx = await web3Ctx.tokenContract.approve(
           wethVaultAddress,
@@ -902,10 +899,10 @@ const Vault = () => {
         );
 
         await tx.wait();
+        getBalances();
       }
 
       setSnackbarOpen({ open: true, error: false });
-      getBalances();
     } catch (e) {
       setSnackbarOpen({ open: true, error: true });
     }
@@ -996,7 +993,7 @@ const Vault = () => {
           isLiq={false}
           data-id={vault.id}
           id={vault.id}
-          collateral={vault.collateral}
+          collateral={parseFloat(vault.collateral).toFixed(4)}
           debt={vault.debt}
           ratio={parseFloat(vault.ratio).toFixed(2)}
           availableBorrow={vault.availableBorrow}
@@ -1012,7 +1009,7 @@ const Vault = () => {
         isLiq={true}
         data-id={vault.id}
         id={vault.id}
-        collateral={parseFloat(vault.collateral).toFixed(2)}
+        collateral={parseFloat(vault.collateral).toFixed(4)}
         debt={parseFloat(vault.debt).toFixed(2)}
         ratio={parseFloat(vault.ratio).toFixed(2)}
         availableBorrow={parseFloat(vault.availableBorrow).toFixed(2)}
@@ -1028,7 +1025,7 @@ const Vault = () => {
         isLiq={true}
         data-id={vault.id}
         id={vault.id}
-        collateral={parseFloat(vault.collateral).toFixed(2)}
+        collateral={parseFloat(vault.collateral).toFixed(4)}
         debt={parseFloat(vault.debt).toFixed(2)}
         ratio={parseFloat(vault.ratio).toFixed(2)}
         availableBorrow={parseFloat(vault.availableBorrow).toFixed(2)}
@@ -1251,7 +1248,7 @@ const Vault = () => {
               <div>VAULT ID</div>
               <div>COLLATERAL ($)</div>
               <div>DEBT (gDai)</div>
-              <div>RATIO (%)</div>
+              <div>RATIO</div>
             </>
           )}
         </div>
@@ -1326,7 +1323,7 @@ const Vault = () => {
             <VaultModal
               closeHandler={closeModal}
               id={vaultModalData.id}
-              collateral={vaultModalData.collateral}
+              collateral={parseFloat(vaultModalData.collateral).toFixed(4)}
               debt={vaultModalData.debt}
               ratio={vaultModalData.ratio}
               availableBorrow={vaultModalData.availableBorrow}
@@ -1339,6 +1336,7 @@ const Vault = () => {
               collateralWeth={depositCollateralWethVault}
               allowances={allowances}
               approveWethHandler={approveWeth}
+              collateralValue={vaultModalData.vaultCollateralValue}
             />
           </Modal>
           <Modal
@@ -1376,8 +1374,8 @@ const Vault = () => {
               isBNB={isBNBModal}
               collateralRaw={parseFloat(
                 vaultModalDataLiq.collateralRaw
-              ).toFixed(2)}
-              collateral={parseFloat(vaultModalDataLiq.collateral).toFixed(2)}
+              ).toFixed(4)}
+              collateral={parseFloat(vaultModalDataLiq.collateral).toFixed(4)}
               debt={parseFloat(vaultModalDataLiq.debt).toFixed(2)}
               ratio={parseFloat(vaultModalDataLiq.ratio).toFixed(2)}
               availableBorrow={parseFloat(

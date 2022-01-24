@@ -39,9 +39,11 @@ const VaultEntry = (props) => {
           <div id={classes["one"]}>{props.collateral}</div>
           <div id={classes["two"]}>{props.debt}</div>
           {props.isLiq ? (
-            <div id={classes["three-liq"]}>{props.ratio}</div>
+            <div id={classes["three-liq"]}>{props.ratio}%</div>
+          ) : props.ratio > 1 && props.ratio <= 150 ? (
+            <div id={classes["three-liq"]}>{props.ratio}%</div>
           ) : (
-            <div id={classes["three"]}>{props.ratio}</div>
+            <div id={classes["three"]}>{props.ratio}%</div>
           )}
 
           <span id={classes.arrow}>&gt;</span>
@@ -102,10 +104,10 @@ const VaultEntry = (props) => {
           </span>
 
           {props.isLiq ? (
-            <div id={classes["yellow-ratio"]}>{props.ratio}</div>
+            <div id={classes["yellow-ratio"]}>{props.ratio}%</div>
           ) : (
             <div style={{ color: !themeCtx.darkMode ? txtColor : undefined }}>
-              {props.ratio}
+              {props.ratio}%
             </div>
           )}
         </div>

@@ -9,6 +9,7 @@
   /* bring your own prefixes */
   transform: translate(-50%, -50%);
   overflow: auto;
+  overflow-x: hidden;
 }
 
 .main::-webkit-scrollbar {

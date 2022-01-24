@@ -973,7 +973,7 @@ const Vault = () => {
           isLiq={false}
           data-id={vault.id}
           id={vault.id}
-          collateral={vault.collateral}
+          collateral={parseFloat(vault.collateral).toFixed(4)}
           debt={vault.debt}
           ratio={parseFloat(vault.ratio).toFixed(2)}
           availableBorrow={vault.availableBorrow}

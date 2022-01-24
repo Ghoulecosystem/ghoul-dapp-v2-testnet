@@ -43,7 +43,7 @@ const VaultEntry = (props) => {
           ) : props.ratio > 1 && props.ratio <= 150 ? (
             <div id={classes["three-liq"]}>{props.ratio}%</div>
           ) : (
-            <div id={classes["three"]}>{props.ratio}%</div>
+            <div id={classes["three-liq"]}>{props.ratio}%</div>
           )}
 
           <span id={classes.arrow}>&gt;</span>
@@ -103,13 +103,7 @@ const VaultEntry = (props) => {
             RATIO{" "}
           </span>
 
-          {props.isLiq ? (
-            <div id={classes["yellow-ratio"]}>{props.ratio}%</div>
-          ) : (
-            <div style={{ color: !themeCtx.darkMode ? txtColor : undefined }}>
-              {props.ratio}%
-            </div>
-          )}
+          <div id={classes["yellow-ratio"]}>{props.ratio}%</div>
         </div>
         <img src={vaultArrow} alt="vArrow" id={classes["vault-arrow"]} />
       </div>

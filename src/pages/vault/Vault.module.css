@@ -75,6 +75,7 @@
 }
 
 .vault-navigation {
+  margin-top: 3rem;
   display: flex;
   gap: 1.18rem;
   padding-left: 2.3rem;
@@ -123,7 +124,7 @@
 
 .menu-container {
   position: absolute;
-  top: 17.5%;
+  top: 23%;
   left: 11%;
 }
 

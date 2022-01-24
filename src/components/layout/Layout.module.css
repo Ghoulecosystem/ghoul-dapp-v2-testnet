@@ -42,11 +42,11 @@
   }
 }
 
-@media screen and (max-width: 1024px) {
+/* @media screen and (max-width: 1024px) {
   .main {
     zoom: 0.6;
   }
-}
+} */
 
 @media screen and (max-height: 920px) {
   .main {
@@ -54,11 +54,11 @@
   }
 }
 
-@media screen and (max-height: 805px) {
+/* @media screen and (max-height: 805px) {
   .main {
     zoom: 0.75;
   }
-}
+} */
 
 @media screen and (max-width: 688px) {
   .main {

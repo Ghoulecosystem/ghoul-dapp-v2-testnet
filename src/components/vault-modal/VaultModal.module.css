@@ -84,6 +84,19 @@
   padding-left: -1rem;
 }
 
+.col-two-two {
+  color: #ffffff;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 22px;
+  float: right;
+  text-align: right;
+  padding-left: -1rem;
+  display: flex;
+  flex-direction: column;
+}
+
 #manage {
   width: 90%;
   float: left;
@@ -204,9 +217,6 @@
 }
 
 #collateral-value {
-  position: absolute;
-  left: 85%;
-  top: 16.5%;
   font-style: normal;
   font-weight: 500;
   font-size: 14px;
@@ -218,9 +228,6 @@
 }
 
 #debt-value {
-  position: absolute;
-  left: 85%;
-  top: 23%;
   font-style: normal;
   font-weight: 500;
   font-size: 14px;
@@ -228,7 +235,7 @@
   /* identical to box height, or 157% */
 
   color: rgba(255, 255, 255, 0.3);
-  float: left;
+  float: right;
 }
 
 .snackbar-container-vault-modal {
@@ -291,12 +298,23 @@
     text-align: right;
   }
 
+  .col-two-two {
+    color: #ffffff;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 5px;
+    float: right;
+    text-align: right;
+  }
+
   #collateral-value {
     left: 75%;
     top: 16%;
   }
 
   #debt-value {
+    padding-top: 0.2rem;
     left: 75%;
     top: 22%;
   }

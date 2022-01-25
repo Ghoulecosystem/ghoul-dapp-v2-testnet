@@ -356,20 +356,20 @@ const VaultModal = (props) => {
           >
             Collateral
           </span>
-          <span
-            className={classes["col-two"]}
+          <div
+            className={classes["col-two-two"]}
             style={{ color: !themeCtx.darkMode ? txtColor : undefined }}
           >
             {props.collateral}
             {props.isBNB ? " BNB" : " wETH"}
-          </span>
-          <span
-            id={classes["collateral-value"]}
-            style={{ color: !themeCtx.darkMode ? txtColor : undefined }}
-          >
-            {" "}
-            ${props.collateralValue}
-          </span>
+            <span
+              id={classes["collateral-value"]}
+              style={{ color: !themeCtx.darkMode ? txtColor : undefined }}
+            >
+              {" "}
+              ${props.collateralValue}
+            </span>
+          </div>
         </div>
         <div className={classes["vault-modal-content-item"]}>
           <span
@@ -378,19 +378,19 @@ const VaultModal = (props) => {
           >
             Debt
           </span>
-          <span
-            className={classes["col-two"]}
+          <div
+            className={classes["col-two-two"]}
             style={{ color: !themeCtx.darkMode ? txtColor : undefined }}
           >
             {props.debt} gDAI
-          </span>
-          <span
-            id={classes["debt-value"]}
-            style={{ color: !themeCtx.darkMode ? txtColor : undefined }}
-          >
-            {" "}
-            ${props.debt}
-          </span>
+            <span
+              id={classes["debt-value"]}
+              style={{ color: !themeCtx.darkMode ? txtColor : undefined }}
+            >
+              {" "}
+              ${props.debt}
+            </span>
+          </div>
         </div>
         <div className={classes["vault-modal-content-item"]}>
           <span

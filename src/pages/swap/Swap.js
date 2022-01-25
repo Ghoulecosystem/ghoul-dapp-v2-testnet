@@ -5,6 +5,7 @@ import ghoulLogo from "../../assets/ghoul_logo_final.svg";
 import daiLogo from "../../assets/dai_logo.svg";
 import busdLogo from "../../assets/Currency226.png";
 import usdtLogo from "../../assets/Currency=Tether.png";
+import usdcLogo from "../../assets/USDC logo.png";
 import swapArrows from "../../assets/swap-arrows.svg";
 import swapArrowsLm from "../../assets/swap-lm.png";
 import {
@@ -173,20 +174,15 @@ const Swap = () => {
       );
       const busdBalanceFormat = ethers.utils.formatEther(busdBalance);
 
-      // const usdtBalanace = await web3Ctx.usdtTokenContract.balanceOf(
-      //   web3Ctx.walletAddress
-      // );
-      // const usdtBalanceformat = ethers.utils.formatEther(usdtBalanace);
+      const usdtBalanace = await web3Ctx.usdtTokenContract.balanceOf(
+        web3Ctx.walletAddress
+      );
+      const usdtBalanceformat = ethers.utils.formatEther(usdtBalanace);
 
       const usdcBalance = await web3Ctx.usdcTokenContract.balanceOf(
         web3Ctx.walletAddress
       );
       const usdcBalanceFormat = ethers.utils.formatEther(usdcBalance);
-
-      // const usdtBalance = await web3Ctx.usdtSwapContract.balanceOf(
-      //   web3Ctx.walletAddress
-      // );
-      // const usdtBalanceFormat = ethers.utils.formatEther(usdtBalance);
 
       // ALLOWANCES
       const gDaiAllowance = await web3Ctx.tokenContract.allowance(
@@ -222,19 +218,19 @@ const Swap = () => {
 
       ////
 
-      // const gDaiAllowanceUsdc = await web3Ctx.tokenContract.allowance(
-      //   web3Ctx.walletAddress,
-      //   usdcSwapAddress
-      // );
+      const gDaiAllowanceUsdc = await web3Ctx.tokenContract.allowance(
+        web3Ctx.walletAddress,
+        usdcSwapAddress
+      );
 
-      // const gDaiAllowanceUsdcFormat =
-      //   ethers.utils.formatEther(gDaiAllowanceUsdc);
+      const gDaiAllowanceUsdcFormat =
+        ethers.utils.formatEther(gDaiAllowanceUsdc);
 
-      // const usdcAllowance = await web3Ctx.usdcSwapContract.allowance(
-      //   web3Ctx.walletAddress,
-      //   usdcSwapAddress
-      // );
-      // const usdcAllowanceFormat = ethers.utils.formatEther(usdcAllowance);
+      const usdcAllowance = await web3Ctx.usdcTokenContract.allowance(
+        web3Ctx.walletAddress,
+        usdcSwapAddress
+      );
+      const usdcAllowanceFormat = ethers.utils.formatEther(usdcAllowance);
 
       ////
       const gDaiAllowanceUsdt = await web3Ctx.tokenContract.allowance(
@@ -268,9 +264,9 @@ const Swap = () => {
         setBusdApproved(true);
       }
 
-      // // if (usdcAllowanceFormat !== 0) {
-      // setUsdcApproved(true);
-      // // }
+      if (usdcAllowanceFormat !== 0) {
+        setUsdcApproved(true);
+      }
 
       if (parseInt(gDaiAllowanceUsdtFormat)) {
         setgDaiUsdtApproved(true);
@@ -307,38 +303,38 @@ const Swap = () => {
         ethers.utils.formatEther(busdReserves[1].toString())
       ).toFixed(2);
 
-      // const usdcReserves = await web3Ctx.usdcSwapContract.getReserves();
-      // const usdcRate = await web3Ctx.usdcSwapContract.usdcRate();
-      // const usdcRateFormat = parseInt(usdcRate._hex, 16);
-      // const gDaiRateUsdc = await web3Ctx.usdcSwapContract.ghostdaiRate();
-      // const gDaiRateUsdcFormat = parseInt(gDaiRateUsdc._hex, 16);
+      const usdcReserves = await web3Ctx.usdcSwapContract.getReserves();
+      const usdcRate = await web3Ctx.usdcSwapContract.usdcRate();
+      const usdcRateFormat = parseInt(usdcRate._hex, 16);
+      const gDaiRateUsdc = await web3Ctx.usdcSwapContract.ghostdaiRate();
+      const gDaiRateUsdcFormat = parseInt(gDaiRateUsdc._hex, 16);
 
-      // const gdaiReserveFormatUsdc = parseFloat(
-      //   ethers.utils.formatEther(usdcReserves[0].toString())
-      // ).toFixed(2);
-      // const usdcReserveFormat = parseFloat(
-      //   ethers.utils.formatEther(usdcReserves[1].toString())
-      // ).toFixed(2);
+      const gdaiReserveFormatUsdc = parseFloat(
+        ethers.utils.formatEther(usdcReserves[0].toString())
+      ).toFixed(2);
+      const usdcReserveFormat = parseFloat(
+        ethers.utils.formatEther(usdcReserves[1].toString())
+      ).toFixed(2);
 
-      // const usdtReserves = await web3Ctx.usdtSwapContract.getReserves();
-      // const usdtRate = await web3Ctx.usdtSwapContract.usdtRate();
-      // const usdtRateFormat = parseInt(usdtRate._hex, 16);
+      const usdtReserves = await web3Ctx.usdtSwapContract.getReserves();
+      const usdtRate = await web3Ctx.usdtSwapContract.usdtRate();
+      const usdtRateFormat = parseInt(usdtRate._hex, 16);
 
       const gDaiRateUsdt = await web3Ctx.usdtSwapContract.ghostdaiRate();
       const gDaiRateUsdtFormat = parseInt(gDaiRateUsdt._hex, 16);
 
-      // const gdaiReserveFormatUsdt = parseFloat(
-      //   ethers.utils.formatEther(usdtReserves[0].toString())
-      // ).toFixed(2);
-      // const usdtReserveFormat = parseFloat(
-      //   ethers.utils.formatEther(usdtReserves[1].toString())
-      // ).toFixed(2);
+      const gdaiReserveFormatUsdt = parseFloat(
+        ethers.utils.formatEther(usdtReserves[0].toString())
+      ).toFixed(2);
+      const usdtReserveFormat = parseFloat(
+        ethers.utils.formatEther(usdtReserves[1].toString())
+      ).toFixed(2);
 
       setReserves({
         gDaiBalance: parseFloat(gDaiBalanceFormat).toFixed(2),
         daiBalance: daiBalanceFormat,
         busdBalance: busdBalanceFormat,
-        // usdtBalance: usdtBalanceformat,
+        usdtBalance: usdtBalanceformat,
         usdcBalance: usdcBalanceFormat,
         gDaiAllowance: gDaiAllowanceFormat,
         daiAllowance: daiAllowanceFormat,
@@ -350,10 +346,12 @@ const Swap = () => {
         gdaiRateBusd: gDaiRateBusdFormat,
         gdaiReserveBusd: gdaiReserveFormatBusd,
         busdReserve: busdReserveFormat,
-        // usdtRate: usdtRateFormat,
+        usdtRate: usdtRateFormat,
         gdaiRateUsdt: gDaiRateUsdtFormat,
-        // gdaiReserveUsdt: gdaiReserveFormatUsdt,
-        // usdtReserve: usdtReserveFormat,
+        gdaiReserveUsdt: gdaiReserveFormatUsdt,
+        usdtReserve: usdtReserveFormat,
+        gdaiReserveUsdc: gdaiReserveFormatUsdc,
+        usdcReserve: usdcReserveFormat,
       });
 
       // setReserves({
@@ -447,6 +445,15 @@ const Swap = () => {
             await tx.wait();
             setSnackbarOpen({ open: true, error: false });
             break;
+          case "USDC":
+            tx = await web3Ctx.usdcTokenContract.approve(
+              usdtSwapAddress,
+              ethers.utils.parseEther("1000000000000000")
+            );
+
+            await tx.wait();
+            setSnackbarOpen({ open: true, error: false });
+            break;
           default:
             break;
         }
@@ -502,6 +509,14 @@ const Swap = () => {
             await tx.wait();
             setSnackbarOpen({ open: true, error: false });
             break;
+          case "USDC":
+            tx = await web3Ctx.usdcSwapContract.swapFrom(
+              ethers.utils.parseEther(inputOneValue.toString())
+            );
+
+            await tx.wait();
+            setSnackbarOpen({ open: true, error: false });
+            break;
           default:
             break;
         }
@@ -528,6 +543,13 @@ const Swap = () => {
             break;
           case "USDT":
             tx = await web3Ctx.usdtSwapContract.swapTo(
+              ethers.utils.parseEther(inputOneValue.toString())
+            );
+            await tx.wait();
+            setSnackbarOpen({ open: true, error: false });
+            break;
+          case "USDC":
+            tx = await web3Ctx.usdcSwapContract.swapTo(
               ethers.utils.parseEther(inputOneValue.toString())
             );
             await tx.wait();
@@ -593,6 +615,22 @@ const Swap = () => {
           }
           break;
         case "USDC":
+          recieveValue = (
+            (parseFloat(value) * parseFloat(reserves.gdaiRateUsdc)) /
+            100
+          ).toFixed(2);
+
+          if (recieveValue > parseFloat(reserves.usdcReserve)) {
+            setExceedingBalance(true);
+          } else {
+            setExceedingBalance(false);
+          }
+
+          if (value > reserves.usdcBalance) {
+            setExceedingBalance(true);
+          } else {
+            setExceedingBalance(false);
+          }
           break;
         case "USDT":
           recieveValue = (
@@ -664,6 +702,25 @@ const Swap = () => {
           }
           break;
         case "USDC":
+          value = reserves.usdcBalance;
+          recieveValue = (
+            (parseFloat(value) * parseFloat(reserves.usdcRate)) /
+            100
+          ).toFixed(2);
+
+          recieveValue = recieveValue - recieveValue * 0.01;
+
+          if (recieveValue > parseFloat(reserves.gdaiReserveUsdc)) {
+            setExceedingBalance(true);
+          } else {
+            setExceedingBalance(false);
+          }
+
+          if (value > reserves.usdcBalance) {
+            setExceedingBalanceWallet(true);
+          } else {
+            setExceedingBalanceWallet(false);
+          }
           break;
         case "USDT":
           value = reserves.usdtBalance;
@@ -680,7 +737,7 @@ const Swap = () => {
             setExceedingBalance(false);
           }
 
-          if (value > reserves.busdBalance) {
+          if (value > reserves.usdtBalance) {
             setExceedingBalanceWallet(true);
           } else {
             setExceedingBalanceWallet(false);
@@ -763,6 +820,24 @@ const Swap = () => {
           }
           break;
         case "USDC":
+          recieveValue = (
+            (parseFloat(value) * parseFloat(reserves.usdcRate)) /
+            100
+          ).toFixed(2);
+          recieveValue = recieveValue - (recieveValue - value);
+          recieveValue = recieveValue - recieveValue * 0.01;
+
+          if (recieveValue > parseFloat(reserves.gdaiReserveUsdc)) {
+            setExceedingBalance(true);
+          } else {
+            setExceedingBalance(false);
+          }
+
+          if (value > reserves.usdcBalance) {
+            setExceedingBalance(true);
+          } else {
+            setExceedingBalance(false);
+          }
           break;
         case "USDT":
           recieveValue = (
@@ -778,7 +853,7 @@ const Swap = () => {
             setExceedingBalance(false);
           }
 
-          if (value > reserves.busdBalance) {
+          if (value > reserves.usdtBalance) {
             setExceedingBalance(true);
           } else {
             setExceedingBalance(false);
@@ -827,6 +902,22 @@ const Swap = () => {
           }
           break;
         case "USDC":
+          recieveValue = (
+            (parseFloat(value) * parseFloat(reserves.gDaiRateUsdc)) /
+            100
+          ).toFixed(2);
+
+          if (recieveValue > parseFloat(reserves.usdcReserve)) {
+            setExceedingBalance(true);
+          } else {
+            setExceedingBalance(false);
+          }
+
+          if (value > reserves.usdcBalance) {
+            setExceedingBalance(true);
+          } else {
+            setExceedingBalance(false);
+          }
           break;
         case "USDT":
           recieveValue = (
@@ -865,6 +956,8 @@ const Swap = () => {
         return togDai ? reserves.busdBalance : reserves.gDaiBalance;
       case "USDT":
         return togDai ? reserves.usdtBalance : reserves.gDaiBalance;
+      case "USDC":
+        return togDai ? reserves.usdcBalance : reserves.gDaiBalance;
       default:
         break;
     }
@@ -873,11 +966,13 @@ const Swap = () => {
   const renderReserves = () => {
     switch (coin) {
       case "DAI":
-        return togDai ? reserves.gDaiBalance : reserves.daiReserve;
+        return togDai ? reserves.gDaiReserve : reserves.daiReserve;
       case "BUSD":
         return togDai ? reserves.gdaiReserveBusd : reserves.busdReserve;
       case "USDT":
         return togDai ? reserves.gdaiReserveUsdt : reserves.usdtReserve;
+      case "USDC":
+        return togDai ? reserves.gdaiReserveUsdc : reserves.usdcReserve;
       default:
         break;
     }
@@ -891,10 +986,14 @@ const Swap = () => {
         return busdLogo;
       case "USDT":
         return usdtLogo;
+      case "USDC":
+        return usdcLogo;
       default:
         break;
     }
   };
+
+  console.log(reserves);
 
   const renderButtons = () => {
     if (togDai) {
@@ -952,7 +1051,7 @@ const Swap = () => {
 
           break;
         case "USDT":
-          if (daiApproved && !exceedingBalance) {
+          if (usdtApproved && !exceedingBalance) {
             return (
               <button id={classes["swap-btn"]} onClick={swapHandler}>
                 Swap
@@ -972,6 +1071,32 @@ const Swap = () => {
             return (
               <button id={classes["approve-btn"]} onClick={approveHandler}>
                 Approve USDT
+              </button>
+            );
+          }
+
+          break;
+        case "USDC":
+          if (usdcApproved && !exceedingBalance) {
+            return (
+              <button id={classes["swap-btn"]} onClick={swapHandler}>
+                Swap
+              </button>
+            );
+          }
+
+          if (exceedingBalance) {
+            return (
+              <button id={classes["approve-btn"]}>
+                Deposit Exceeds Available Reserves or User Balance
+              </button>
+            );
+          }
+
+          if (!usdcApproved) {
+            return (
+              <button id={classes["approve-btn"]} onClick={approveHandler}>
+                Approve USDC
               </button>
             );
           }
@@ -1109,9 +1234,9 @@ const Swap = () => {
                   <MenuItem data-my-value={"BUSD"} onClick={handleClose}>
                     BUSD
                   </MenuItem>
-                  {/* <MenuItem data-my-value={"USDC"} onClick={handleClose}>
-              USDC
-            </MenuItem> */}
+                  <MenuItem data-my-value={"USDC"} onClick={handleClose}>
+                    USDC
+                  </MenuItem>
                   <MenuItem data-my-value={"USDT"} onClick={handleClose}>
                     USDT
                   </MenuItem>

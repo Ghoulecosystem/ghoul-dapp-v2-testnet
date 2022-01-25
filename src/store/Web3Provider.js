@@ -217,7 +217,7 @@ const Web3Provider = (props) => {
     );
     const usdcTokenContract = new ethers.Contract(
       contracts.usdcTokenAddress,
-      contracts.usdcAbi,
+      contracts.usdcTokenAbi,
       signer
     );
 

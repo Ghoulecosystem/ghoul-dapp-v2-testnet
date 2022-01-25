@@ -23,7 +23,7 @@ export default function SnackbarUI(props) {
     <div className="snackbar-container">
       <Snackbar
         open={open}
-        autoHideDuration={5000}
+        autoHideDuration={50000000000000000000000000000000}
         onClose={handleClose}
         className={props.className}
         sx={{ position: "relative" }}

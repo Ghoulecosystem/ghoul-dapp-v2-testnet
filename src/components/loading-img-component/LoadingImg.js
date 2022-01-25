@@ -1,6 +1,6 @@
 import React from "react";
 import classes from "./LoadingImg.module.css";
-import ghoulLogo from "../../assets/ghoul_logo.svg";
+import ghoulLogo from "../../assets/ghoul_logo_final.svg";
 
 const LoadingImg = (props) => {
   return (

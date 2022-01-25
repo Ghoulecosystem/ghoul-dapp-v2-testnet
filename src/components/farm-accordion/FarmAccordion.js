@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef, useContext } from "react";
 import "./Accordion.css";
 import Chevron from "../../assets/chevron.svg";
 import chevronDark from "../../assets/arrow-darkmode.png";
-import ghoulLogo from "../../assets/ghoul_logo.svg";
+import ghoulLogo from "../../assets/ghoul_logo_final.svg";
 import daiLogo from "../../assets/dai_logo.svg";
 import ThemeContext from "../../store/Theme-context";
 import bnbGhoul from "../../assets/BNB - GHOUL.svg";

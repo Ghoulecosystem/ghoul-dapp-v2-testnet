@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useContext, useCallback } from "react";
 import classes from "./Swap.module.css";
 import Header from "../../components/header/Header";
-import ghoulLogo from "../../assets/ghoul_logo.svg";
+import ghoulLogo from "../../assets/ghoul_logo_final.svg";
 import daiLogo from "../../assets/dai_logo.svg";
 import busdLogo from "../../assets/Currency226.png";
 import usdtLogo from "../../assets/Currency=Tether.png";

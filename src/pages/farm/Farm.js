@@ -71,11 +71,10 @@ const Farm = () => {
   const [isLoadingPools, setIsLoadingPools] = useState(false);
   const [modalData, setModalData] = useState({});
   const [snackbarOpen, setSnackbarOpen] = useState({
-    open: false,
+    open: true,
     error: false,
   });
   const [accordionOpen, setAccordionOpen] = useState(false);
-
 
   const themeCtx = useContext(ThemeContext);
   let bgColor;
@@ -106,7 +105,6 @@ const Farm = () => {
         let pool = {};
         pool.id = i;
         const poolInfo = await web3Ctx.farmContract.poolInfo(i);
-
         pool.despositedAmount = await web3Ctx.farmContract.deposited(
           i,
           web3Ctx.walletAddress
@@ -123,13 +121,6 @@ const Farm = () => {
           ethers.utils.formatEther(pool.pendingAmount)
         ).toFixed(4);
 
-        const userInfo = await web3Ctx.farmContract.userInfo(
-          i,
-          web3Ctx.walletAddress
-        );
-
-        pool.amount = userInfo[0].toNumber().toString();
-        pool.rewardDept = userInfo[1].toNumber();
         pool.lpToken = poolInfo[0];
         pool.allocPoint = poolInfo[1].toNumber();
         pool.lastRewardBlock = poolInfo[2].toNumber();
@@ -353,12 +344,11 @@ const Farm = () => {
 
   const depositLp = async (id, amount) => {
     try {
-      setIsLoadingPools(true);
       const tx = await web3Ctx.farmContract.deposit(
         id,
         ethers.utils.parseEther(amount.toString())
       );
-
+      setIsLoadingPools(true);
       await tx.wait();
       setSnackbarOpen({ open: true, error: false });
       loadPools();
@@ -406,7 +396,6 @@ const Farm = () => {
     }
   };
 
-
   const renderPools = pools.map((pool, index) => (
     <li key={Math.random(100)}>
       <Accordion
@@ -453,69 +442,73 @@ const Farm = () => {
   }
 
   return (
-    <div
-      className={classes["farm-container"]}
-      style={{ background: !themeCtx.darkMode ? bgColor : undefined }}
-    >
-      <Header title="Farms"></Header>
-      <div className={classes["farm-navigation"]}>
-        <div
-          id={classes["farm-navigation-1"]}
-          style={{
-            color: !themeCtx.darkMode ? txtColor : undefined,
-            background: !themeCtx.darkMode ? bgColor2 : undefined,
-          }}
-        >
-          All Farms
-        </div>
-        <div
-          id={classes["farm-navigation-2"]}
-          style={{
-            color: !themeCtx.darkMode ? txtColor : undefined,
-            background: !themeCtx.darkMode ? bgColor2 : undefined,
-          }}
-        >
-          My LPs
-        </div>
-      </div>
+    <>
       <div
-        className={classes["farm-line"]}
-        style={{ background: !themeCtx.darkMode ? bgColor2 : undefined }}
-      ></div>
-      <h1 id={classes["all-farms"]}> All Farms Require a 0.5% deposit fee </h1>
-      <div className={classes["accordion-container"]}>
-        {pools.length > 0 && !isLoadingPools ? (
-          renderPools
-        ) : (
-          <LoadingImg></LoadingImg>
-        )}
+        className={classes["farm-container"]}
+        style={{ background: !themeCtx.darkMode ? bgColor : undefined }}
+      >
+        <Header title="Farms"></Header>
+        <div className={classes["farm-navigation"]}>
+          <div
+            id={classes["farm-navigation-1"]}
+            style={{
+              color: !themeCtx.darkMode ? txtColor : undefined,
+              background: !themeCtx.darkMode ? bgColor2 : undefined,
+            }}
+          >
+            All Farms
+          </div>
+          <div
+            id={classes["farm-navigation-2"]}
+            style={{
+              color: !themeCtx.darkMode ? txtColor : undefined,
+              background: !themeCtx.darkMode ? bgColor2 : undefined,
+            }}
+          >
+            My LPs
+          </div>
+        </div>
+        <div
+          className={classes["farm-line"]}
+          style={{ background: !themeCtx.darkMode ? bgColor2 : undefined }}
+        ></div>
+        <h1 id={classes["all-farms"]}>
+          {" "}
+          All Farms Require a 0.5% deposit fee{" "}
+        </h1>
+        <div className={classes["accordion-container"]}>
+          {pools.length > 0 && !isLoadingPools ? (
+            renderPools
+          ) : (
+            <LoadingImg></LoadingImg>
+          )}
+        </div>
+        <> {snackbarOpen.open && <SnackbarUI error={snackbarOpen.error} />}</>
+        <div className={classes["modal-container"]}>
+          <Modal
+            isOpen={modalIsOpen}
+            onAfterOpen={afterOpenModal}
+            onRequestClose={closeModal}
+            ariaHideApp={false}
+            style={modalStyleLP}
+            closeTimeoutMS={500}
+            contentLabel="Vault Modal"
+          >
+            <StakeLpModal
+              closeModalHandler={closeModal}
+              depositLpHandler={depositLp}
+              id={modalData.id}
+              balance={modalData.balance}
+              asset={modalData.asset}
+              isWithdraw={modalData.isWithdraw}
+              deposited={modalData.deposited}
+              withdrawHandler={withdraw}
+            />
+          </Modal>
+        </div>
+        <div></div>
       </div>
-      <div className={classes["modal-container"]}>
-        <Modal
-          isOpen={modalIsOpen}
-          onAfterOpen={afterOpenModal}
-          onRequestClose={closeModal}
-          ariaHideApp={false}
-          style={modalStyleLP}
-          closeTimeoutMS={500}
-          contentLabel="Vault Modal"
-        >
-          <StakeLpModal
-            closeModalHandler={closeModal}
-            depositLpHandler={depositLp}
-            id={modalData.id}
-            balance={modalData.balance}
-            asset={modalData.asset}
-            isWithdraw={modalData.isWithdraw}
-            deposited={modalData.deposited}
-            withdrawHandler={withdraw}
-          />
-        </Modal>
-      </div>
-      <div>
-        {snackbarOpen.open && <SnackbarUI error={snackbarOpen.error} />}
-      </div>
-    </div>
+    </>
   );
 };
 

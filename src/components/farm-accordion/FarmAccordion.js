@@ -8,6 +8,8 @@ import ThemeContext from "../../store/Theme-context";
 import bnbGhoul from "../../assets/BNB - GHOUL.svg";
 import bnbGhoulX from "../../assets/BNB- GHOULX.svg";
 import ghoulDai from "../../assets/GHOUL- XDAI.svg";
+import ghoulLogoFinal from "../../assets/ghoultoken-logo.png";
+import ghoulXlogo from "../../assets/GhoulX-trans-big 1.svg";
 
 export default function Accordion(props) {
   const [toggle, setToggle] = useState(false);
@@ -39,22 +41,31 @@ export default function Accordion(props) {
 
   let img;
   let asset;
+  let anchorLink;
   switch (props.asset) {
     case "GHOUL":
-      img = ghoulLogo;
+      img = ghoulLogoFinal;
       asset = "GHOUL";
+      anchorLink =
+        "https://pancakeswap.finance/add/BNB/0x171ce6141e7a5980222bc6b757ee2f1f95b3264e";
       break;
     case "GHOULX/DAI":
       img = ghoulDai;
       asset = "GHOULX/DAI";
+      anchorLink =
+        "https://pancakeswap.finance/add/0x1AF3F329e8BE154074D8769D1FFa4eE058B1DBc3/0xCFC5cf2a73E97401C218b7Ce1c594524bd8Ba4BF";
       break;
     case "BNB/GHOULX":
       img = bnbGhoulX;
       asset = "BNB/GHOULX";
+      anchorLink =
+        "https://pancakeswap.finance/add/BNB/0xCFC5cf2a73E97401C218b7Ce1c594524bd8Ba4BF";
       break;
     case "BNB/GHOUL":
       img = bnbGhoul;
       asset = "BNB/GHOUL";
+      anchorLink =
+        "https://pancakeswap.finance/add/BNB/0x171ce6141e7a5980222bc6b757ee2f1f95b3264e";
       break;
     default:
       break;
@@ -71,7 +82,6 @@ export default function Accordion(props) {
 
   const toggleState = () => {
     setToggle(!toggle);
-    props.toggleAccordion(props.index);
   };
 
   const openModalHandler = (isWithdraw) => {
@@ -93,6 +103,11 @@ export default function Accordion(props) {
     props.harvest(props.id);
   };
 
+  const getMore = () => {
+    const newWindow = window.open(anchorLink, "_blank", "noopener,noreferrer");
+    if (newWindow) newWindow.opener = null;
+  };
+
   return (
     <div
       className="accordion"
@@ -108,7 +123,7 @@ export default function Accordion(props) {
             id="accordion-title"
             style={{ color: !themeCtx.darkMode ? txtColor : undefined }}
           >
-            {props.asset === "GHOUL" ? "GHOUL" : props.asset}
+            {props.asset}
           </div>
         </div>
         <div className="accordion-content">
@@ -190,7 +205,7 @@ export default function Accordion(props) {
             style={{ background: !themeCtx.darkMode ? txtColor2 : undefined }}
           >
             <div className="accordion-elem-col-1">
-              <img src={ghoulLogo} alt="" id="ghoul-img" />
+              <img src={ghoulXlogo} alt="" id="ghoul-img" />
               <div>
                 <div
                   className="accordion-top-text"
@@ -223,7 +238,10 @@ export default function Accordion(props) {
                   className="accordion-top-text"
                   style={{ color: !themeCtx.darkMode ? txtColor : undefined }}
                 >
-                  BALANCE <span id="get-more">Get more</span>
+                  BALANCE{" "}
+                  <span id="get-more" onClick={getMore}>
+                    Get more
+                  </span>
                 </div>
                 <div
                   className="accordion-bottom-text"

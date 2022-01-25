@@ -1,13 +1,11 @@
 .main {
   width: 1440px;
   height: 934px;
-  z-index: -1000;
+  z-index: 0;
   background: #090a10;
-  position: fixed;
-  top: 50%;
+  position: relative;
   left: 50%;
-  /* bring your own prefixes */
-  transform: translate(-50%, -50%);
+  transform: translateX(-50%) translateY(20%);
   overflow: auto;
   overflow-x: hidden;
 }
@@ -23,42 +21,6 @@
 .main::-webkit-scrollbar-thumb {
   background: #253e2a;
 }
-
-/* @media screen and (max-width: 2000px) {
-  .main {
-    zoom: 0.8;
-  }
-}
-
-@media screen and (max-width: 1888px) {
-  .main {
-    zoom: 0.8;
-  }
-}
-
-@media screen and (max-width: 1504px) {
-  .main {
-    zoom: 0.55;
-  }
-} */
-
-/* @media screen and (max-width: 1024px) {
-  .main {
-    zoom: 0.6;
-  }
-} */
-
-/* @media screen and (max-height: 920px) {
-  .main {
-    zoom: 0.9;
-  }
-} */
-
-/* @media screen and (max-height: 805px) {
-  .main {
-    zoom: 0.75;
-  }
-} */
 
 @media screen and (max-width: 688px) {
   .main {

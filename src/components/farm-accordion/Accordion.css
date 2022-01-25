@@ -252,6 +252,7 @@
   padding-left: 0.2rem;
   color: #74ec65;
   text-decoration: underline;
+  cursor: pointer;
 }
 
 #staked {

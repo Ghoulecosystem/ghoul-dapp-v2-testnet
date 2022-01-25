@@ -3,6 +3,7 @@
   height: 72px;
   background: rgba(255, 255, 255, 0.03);
   border-radius: 8px;
+  position: relative;
 }
 
 .accordion-visible {
@@ -62,12 +63,25 @@
 .accordion-title-container {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   gap: 0.5rem;
+  min-width: 150px;
+  max-width: 150px;
+  width: 150px;
+  height: 70px;
+}
+
+.accordion-title-container > img {
+  width: 30%;
+  height: 60%;
+  transform: rotate(360deg);
+
+  margin: 10px 0px;
 }
 
 #accordion-title {
   padding-right: 0.1rem;
+  float: left;
 }
 
 .accordion-content {
@@ -240,6 +254,30 @@
   text-decoration: underline;
 }
 
+#staked {
+  position: absolute;
+  top: 20%;
+  left: 30%;
+}
+
+#earned {
+  position: absolute;
+  top: 20%;
+  left: 45%;
+}
+
+#deposit-fee {
+  position: absolute;
+  top: 20%;
+  left: 60%;
+}
+
+#pool-allocation {
+  position: absolute;
+  top: 20%;
+  left: 75%;
+}
+
 @media screen and (max-width: 688px) {
   .accordion {
     position: relative;
@@ -263,33 +301,41 @@
 
   .accordion-title-container {
     position: absolute;
-    top: 9%;
+    top: -5%;
+    left: 3%;
   }
 
   .accordion-title-container > img {
     padding: 0;
+    height: 20px;
   }
 
   #staked {
     position: absolute;
-    top: 25%;
+    top: 70%;
+    left: 8%;
+    float: left;
+    text-align: left;
   }
 
   #earned {
     position: absolute;
-    top: 25%;
-    left: 45%;
+    top: 70%;
+    left: 55%;
+    float: left;
+    text-align: left;
   }
 
   #deposit-fee {
     position: absolute;
-    top: 65%;
-    left: 45%;
+    top: 30%;
+    left: 8%;
   }
 
   #pool-allocation {
     position: absolute;
-    top: 65%;
+    top: 30%;
+    left: 55%;
   }
 
   .accordion-elem-container {

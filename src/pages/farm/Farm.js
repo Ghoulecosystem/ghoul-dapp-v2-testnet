@@ -15,6 +15,7 @@ import { parseEther } from "ethers/lib/utils";
 import LoadingImg from "../../components/loading-img-component/LoadingImg";
 import SnackbarUI from "../../components/snackbar/SnackbarUI";
 import ThemeContext from "../../store/Theme-context";
+
 const axios = require("axios");
 
 const modalStyle = {
@@ -168,18 +169,18 @@ const Farm = () => {
         const totalSupply = await lpContract.totalSupply();
         const totalSupplyFormat = ethers.utils.formatEther(totalSupply);
         let farmSupply = 0;
-        if (pool.lpSymbol == "Cake-LP") {
+        if (pool.lpSymbol === "Cake-LP") {
           pool.isLp = true;
           pool.token0 = await lpContract.token0();
           pool.token1 = await lpContract.token1();
 
           const token1 = new ethers.Contract(
-            pool.token0,
+            pool.token1,
             lpAbi,
             web3Ctx.signer
           );
           const token2 = new ethers.Contract(
-            pool.token1,
+            pool.token0,
             lpAbi,
             web3Ctx.signer
           );
@@ -235,13 +236,18 @@ const Farm = () => {
           balance0 = ethers.utils.formatEther(balance0);
           let balance1 = await token1.balanceOf(pool.lpToken);
           balance1 = ethers.utils.formatEther(balance1);
-
+          console.log("TOTAL SUPPLY");
           console.log(balance0);
           console.log(balance1);
+
+          console.log(pool.token0price);
+          console.log(pool.token1price);
           console.log(totalSupplyFormat);
+          console.log(pool.token0);
+          console.log(pool.token1);
           pool.lpPrice =
-            (parseFloat(pool.token0price) * parseFloat(balance1) +
-              parseFloat(pool.token1price) * parseFloat(balance0)) /
+            (parseFloat(pool.token0price) * parseFloat(balance0) +
+              parseFloat(pool.token1price) * parseFloat(balance1)) /
             parseFloat(totalSupplyFormat);
 
           pool.poolValue = pool.lpPrice * parseFloat(farmSupply);
@@ -270,14 +276,14 @@ const Farm = () => {
         }
 
         let result = {};
-        let ghouxPrice = 0;
+        let ghoulxPrice = 0;
 
         try {
           result = await axios.get(
             "https://api.pancakeswap.info/api/v2/tokens/" + ghoulxAddress
           );
           if (result.data) {
-            ghouxPrice = result.data.data.price;
+            ghoulxPrice = result.data.data.price;
           }
         } catch (error) {
           console.log(error);
@@ -287,7 +293,7 @@ const Farm = () => {
           ((31536000 * parseInt(pool.pullAllocationPercentage)) /
             100 /
             parseFloat(pool.poolValue)) *
-          parseFloat(ghouxPrice) *
+          parseFloat(ghoulxPrice) *
           100;
 
         if (
@@ -398,10 +404,17 @@ const Farm = () => {
     }
   };
 
-  const renderPools = pools.map((pool) => (
+  const toggleAccordion = (index) => {
+    console.log(index);
+  };
+
+  const renderPools = pools.map((pool, index) => (
     <li key={Math.random(100)}>
       <Accordion
         asset={pool.lpSymbol}
+        index={index}
+        apy={parseFloat(pool.apy).toFixed(2)}
+        tvl={parseFloat(pool.poolValue).toFixed(4)}
         earned={pool.pendingAmount}
         staked={pool.despositedAmount}
         lpBalance={pool.lpBalance}
@@ -414,6 +427,8 @@ const Farm = () => {
         approveLp={approveLp}
         harvest={harvest}
         deposited={pool.despositedAmount}
+        weight={pool.weight}
+        toggleAccordion={toggleAccordion}
       />
     </li>
   ));

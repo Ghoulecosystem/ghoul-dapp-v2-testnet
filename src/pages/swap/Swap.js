@@ -26,7 +26,6 @@ import ThemeContext from "../../store/Theme-context";
 
 const Swap = () => {
   const web3Ctx = useContext(Web3Context);
-  console.log(web3Ctx);
   const [isLoadingReserves, setIsLoadingReserves] = useState(false);
   const [reserves, setReserves] = useState({});
   const [togDai, setTogDai] = useState(true);

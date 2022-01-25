@@ -215,6 +215,9 @@ const Vault = () => {
     anchorLocation = "translateX(-0px) translateY(-0px)";
   }
 
+  if (width > 1300 && height < 920) {
+    anchorLocation = "translateX(-100px) translateY(-30px)";
+  }
   const themeCtx = useContext(ThemeContext);
   let bgColor;
   let bgColor2;

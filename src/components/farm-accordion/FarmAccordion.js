@@ -5,6 +5,9 @@ import chevronDark from "../../assets/arrow-darkmode.png";
 import ghoulLogo from "../../assets/ghoul_logo.svg";
 import daiLogo from "../../assets/dai_logo.svg";
 import ThemeContext from "../../store/Theme-context";
+import bnbGhoul from "../../assets/BNB - GHOUL.svg";
+import bnbGhoulX from "../../assets/BNB- GHOULX.svg";
+import ghoulDai from "../../assets/GHOUL- XDAI.svg";
 
 export default function Accordion(props) {
   const [toggle, setToggle] = useState(false);
@@ -12,6 +15,7 @@ export default function Accordion(props) {
 
   const refHeight = useRef();
 
+  const { innerWidth: width, innerHeight: height } = window;
   const themeCtx = useContext(ThemeContext);
   let bgColor;
   let bgColor2;
@@ -36,21 +40,29 @@ export default function Accordion(props) {
   let img;
   let asset;
   switch (props.asset) {
-    case "gDAI":
+    case "GHOUL":
       img = ghoulLogo;
-      asset = "gDAI";
+      asset = "GHOUL";
       break;
-    case "DAI":
-      img = daiLogo;
-      asset = "DAI";
+    case "GHOULX/DAI":
+      img = ghoulDai;
+      asset = "GHOULX/DAI";
+      break;
+    case "BNB/GHOULX":
+      img = bnbGhoulX;
+      asset = "BNB/GHOULX";
+      break;
+    case "BNB/GHOUL":
+      img = bnbGhoul;
+      asset = "BNB/GHOUL";
       break;
     default:
       break;
   }
 
   useEffect(() => {
-    if (window.isMobile) {
-      setHeightEl(`${345}px`);
+    if (width < 500) {
+      setHeightEl(`${390}px`);
     } else {
       setHeightEl(`${114}px`);
     }
@@ -59,6 +71,7 @@ export default function Accordion(props) {
 
   const toggleState = () => {
     setToggle(!toggle);
+    props.toggleAccordion(props.index);
   };
 
   const openModalHandler = (isWithdraw) => {
@@ -83,7 +96,10 @@ export default function Accordion(props) {
   return (
     <div
       className="accordion"
-      style={{ background: !themeCtx.darkMode ? bgColorBox : undefined }}
+      style={{
+        background: !themeCtx.darkMode ? bgColorBox : undefined,
+        marginBottom: toggle ? (width < 500 ? "20rem" : "6rem") : "0rem",
+      }}
     >
       <button onClick={toggleState} className="accordion-visible">
         <div className="accordion-title-container">
@@ -92,7 +108,7 @@ export default function Accordion(props) {
             id="accordion-title"
             style={{ color: !themeCtx.darkMode ? txtColor : undefined }}
           >
-            {asset}
+            {props.asset === "GHOUL" ? "GHOUL" : props.asset}
           </div>
         </div>
         <div className="accordion-content">
@@ -101,13 +117,13 @@ export default function Accordion(props) {
               className="accordion-top-text"
               style={{ color: !themeCtx.darkMode ? txtColor : undefined }}
             >
-              EARNED
+              TVL
             </div>
             <div
               className="accordion-bottom-text"
               style={{ color: !themeCtx.darkMode ? txtColor : undefined }}
             >
-              {props.earned} GhoulX
+              ${props.tvl}
             </div>
           </div>
           <div id="staked">
@@ -115,13 +131,13 @@ export default function Accordion(props) {
               className="accordion-top-text"
               style={{ color: !themeCtx.darkMode ? txtColor : undefined }}
             >
-              STAKED
+              APY
             </div>
             <div
               className="accordion-bottom-text"
               style={{ color: !themeCtx.darkMode ? txtColor : undefined }}
             >
-              {props.staked} {asset}
+              {props.apy}%
             </div>
           </div>
           <div id="deposit-fee">
@@ -129,13 +145,13 @@ export default function Accordion(props) {
               className="accordion-top-text"
               style={{ color: !themeCtx.darkMode ? txtColor : undefined }}
             >
-              DEPOSIT FEE
+              STAKED ({props.asset})
             </div>
             <div
               className="accordion-bottom-text"
               style={{ color: !themeCtx.darkMode ? txtColor : undefined }}
             >
-              {props.depositFee}%
+              {props.deposited}
             </div>
           </div>
           <div id="pool-allocation">
@@ -143,17 +159,19 @@ export default function Accordion(props) {
               className="accordion-top-text"
               style={{ color: !themeCtx.darkMode ? txtColor : undefined }}
             >
-              POOL ALLOCATION
+              POOL SHARE
             </div>
             <div
               className="accordion-bottom-text"
-              style={{ color: !themeCtx.darkMode ? txtColor : undefined }}
+              style={{
+                color: !themeCtx.darkMode ? txtColor : undefined,
+              }}
             >
-              {props.poolAllocation}%
+              {props.weight}%
             </div>
           </div>
         </div>
-        <img className={toggle && "active"} src={imgSrc} />
+        <img className={toggle ? "active" : undefined} src={imgSrc} />
       </button>
       <div
         className={toggle ? "accordion-toggle animated" : "accordion-toggle"}
@@ -205,7 +223,7 @@ export default function Accordion(props) {
                   className="accordion-top-text"
                   style={{ color: !themeCtx.darkMode ? txtColor : undefined }}
                 >
-                  {asset} BALANCE <span id="get-more">Get more</span>
+                  BALANCE <span id="get-more">Get more</span>
                 </div>
                 <div
                   className="accordion-bottom-text"

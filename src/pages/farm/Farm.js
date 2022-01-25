@@ -74,6 +74,8 @@ const Farm = () => {
     open: false,
     error: false,
   });
+  const [accordionOpen, setAccordionOpen] = useState(false);
+
 
   const themeCtx = useContext(ThemeContext);
   let bgColor;
@@ -404,15 +406,11 @@ const Farm = () => {
     }
   };
 
-  const toggleAccordion = (index) => {
-    console.log(index);
-  };
 
   const renderPools = pools.map((pool, index) => (
     <li key={Math.random(100)}>
       <Accordion
         asset={pool.lpSymbol}
-        index={index}
         apy={parseFloat(pool.apy).toFixed(2)}
         tvl={parseFloat(pool.poolValue).toFixed(4)}
         earned={pool.pendingAmount}
@@ -428,7 +426,6 @@ const Farm = () => {
         harvest={harvest}
         deposited={pool.despositedAmount}
         weight={pool.weight}
-        toggleAccordion={toggleAccordion}
       />
     </li>
   ));

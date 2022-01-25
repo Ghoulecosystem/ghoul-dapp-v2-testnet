@@ -758,7 +758,7 @@ const liquidatorAbi = [
   { payable: true, stateMutability: "payable", type: "fallback" },
 ];
 
-const guolAbi = [
+const ghoulAbi = [
   {
     inputs: [
       { internalType: "string", name: "name", type: "string" },
@@ -2304,7 +2304,7 @@ const wethAddress = "";
 export {
   tokenAbi,
   tokenAddress,
-  guolAbi,
+  ghoulAbi,
   ghoulAddress,
   swapAbi,
   swapAddress,

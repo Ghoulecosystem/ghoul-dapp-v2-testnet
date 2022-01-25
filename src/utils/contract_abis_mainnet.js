@@ -602,7 +602,7 @@ const tokenAbi = [
   },
 ];
 
-const guolAbi = [
+const ghoulAbi = [
   {
     inputs: [
       { internalType: "string", name: "name", type: "string" },
@@ -4343,7 +4343,7 @@ const ghoulXAbi = [
 
 const daiAddress = "0x1AF3F329e8BE154074D8769D1FFa4eE058B1DBc3"; //
 const swapAddress = "0x748Af5C37dB1796c814bd3e2742A37Dc34Db5Abe"; //
-const guolAddress = "0x171cE6141E7a5980222bc6B757ee2F1f95b3264e"; //
+const ghoulAddress = "0x171cE6141E7a5980222bc6B757ee2F1f95b3264e"; //
 const tokenAddress = "0xF92b9A2B34efe45a8280629a7DFa404aeE18849f"; //
 const farmAddress = "0x29E28ac262c2ecAb788857eD0f51872ae213Acd7"; //
 const wethVaultAddress = "0xC522C7A2C66a2f1281CC3FF36c20EF142d9246E8"; //
@@ -4360,8 +4360,8 @@ const usdtTokenAddress = "0x337610d27c682E347C9cD60BD4b3b107C9d34dDd"; // TESTNE
 export {
   tokenAbi,
   tokenAddress,
-  guolAbi,
-  guolAddress,
+  ghoulAbi,
+  ghoulAddress,
   swapAbi,
   swapAddress,
   daiAbi,

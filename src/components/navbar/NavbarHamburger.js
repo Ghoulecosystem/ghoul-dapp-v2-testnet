@@ -46,8 +46,8 @@ const NavbarHamburger = (props) => {
   const [ghoulBalance, setGhoulBalance] = useState(0);
   const [bnbBlance, setBNBBalance] = useState(0);
   const tokenContract = web3Ctx.tokenContract;
-  const ghoulContract = web3Ctx.goulContract;
-  // const ghoulXContract = web3Ctx.goulXContract;
+  const ghoulContract = web3Ctx.ghoulContract;
+  // const ghoulXContract = web3Ctx.ghoulXContract;
   // const daiContract = web3Ctx.daiContract;
   const walletAddress = web3Ctx.walletAddress;
 

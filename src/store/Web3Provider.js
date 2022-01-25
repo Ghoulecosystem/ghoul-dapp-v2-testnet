@@ -39,12 +39,12 @@ const defaultWeb3State = {
   signer: "",
   daiContract: "",
   swapContract: "",
-  goulContract: "",
+  ghoulContract: "",
   tokenContract: "",
   farmContract: "",
   wethVaultContract: "",
   wethContract: "",
-  goulXContract: "",
+  ghoulXContract: "",
   liquidatorContract: "",
   busdSwapContract: "",
   usdcSwapContract: "",
@@ -69,12 +69,12 @@ const web3Reducer = (state, action) => {
       signer: signer,
       daiContract: ethersContracts.daiContract,
       swapContract: ethersContracts.swapContract,
-      goulContract: ethersContracts.goulContract,
+      ghoulContract: ethersContracts.ghoulContract,
       tokenContract: ethersContracts.tokenContract,
       farmContract: ethersContracts.farmContract,
       wethVaultContract: ethersContracts.wethVaultContract,
       wethContract: ethersContracts.wethContract,
-      goulXContract: ethersContracts.ghoulXContract, ///"ethersContracts.goulXContract",
+      ghoulXContract: ethersContracts.ghoulXContract, ///"ethersContracts.ghoulXContract",
       liquidatorContract: ethersContracts.liquidatorContract,
       busdSwapContract: ethersContracts.busdSwapContract,
       usdcSwapContract: ethersContracts.usdcSwapContract,
@@ -93,12 +93,12 @@ const web3Reducer = (state, action) => {
       signer: null,
       daiContract: null,
       swapContract: null,
-      goulContract: null,
+      ghoulContract: null,
       tokenContract: null,
       farmContract: null,
       wethVaultContract: null,
       wethContract: null,
-      goulXContract: null, ///"ethersContracts.goulXContract",
+      ghoulXContract: null, ///"ethersContracts.ghoulXContract",
       liquidatorContract: null,
       busdSwapContract: null,
       usdcSwapContract: null,
@@ -160,9 +160,9 @@ const Web3Provider = (props) => {
       contracts.swapAbi,
       signer
     );
-    const goulContract = new ethers.Contract(
-      contracts.guolAddress,
-      contracts.guolAbi,
+    const ghoulContract = new ethers.Contract(
+      contracts.ghoulAddress,
+      contracts.ghoulAbi,
       signer
     );
     const tokenContract = new ethers.Contract(
@@ -182,12 +182,7 @@ const Web3Provider = (props) => {
     );
     const wethContract = new ethers.Contract(
       contracts.wethAddress,
-      contracts.guolAbi,
-      signer
-    );
-    const goulXContract = new ethers.Contract(
-      contracts.ghoulxAddress,
-      contracts.guolAbi,
+      contracts.ghoulAbi,
       signer
     );
     const liquidator = new ethers.Contract(
@@ -229,12 +224,12 @@ const Web3Provider = (props) => {
     return {
       daiContract: daiContract,
       swapContract: swapContract,
-      goulContract: goulContract,
+      ghoulContract: ghoulContract,
       tokenContract: tokenContract,
       farmContract: farmContract,
       wethVaultContract: wethVaultContract,
       wethContract: wethContract,
-      goulXContract: goulXContract,
+      ghoulXContract: ghoulXContract,
       liquidatorContract: liquidator,
       busdSwapContract: busdSwap,
       usdcSwapContract: usdcSwap,
@@ -429,12 +424,12 @@ const Web3Provider = (props) => {
     signer: web3State.signer,
     daiContract: web3State.daiContract,
     swapContract: web3State.swapContract,
-    goulContract: web3State.goulContract,
+    ghoulContract: web3State.ghoulContract,
     tokenContract: web3State.tokenContract,
     farmContract: web3State.farmContract,
     wethVaultContract: web3State.wethVaultContract,
     wethContract: web3State.wethContract,
-    goulXContract: web3State.goulXContract,
+    ghoulXContract: web3State.ghoulXContract,
     liquidatorContract: web3State.liquidatorContract,
     busdSwapContract: web3State.busdSwapContract,
     usdcSwapContract: web3State.usdcSwapContract,

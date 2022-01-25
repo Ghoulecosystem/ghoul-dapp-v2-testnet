@@ -59,6 +59,7 @@
   box-sizing: border-box;
   color: #74ec65;
   background: rgba(0, 0, 0, 0.078);
+  cursor: pointer;
 }
 
 #hamburger-icon {

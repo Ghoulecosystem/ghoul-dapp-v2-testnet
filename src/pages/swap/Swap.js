@@ -54,8 +54,8 @@ const Swap = () => {
 
   const themeCtx = useContext(ThemeContext);
   const { innerWidth: width, innerHeight: height } = window;
-  let anchorLocation = "translateX(-200px) translateY(-200px)";
-  let anchorLocationTwo = "translateX(-165px) translateY(-160px)";
+  let anchorLocation = "translateX(-0px) translateY(-0px)";
+  let anchorLocationTwo = "translateX(-0px) translateY(-0px)";
   // if (height > 920 && width > 2000) {
   //   anchorLocation = "translateX(20px) translateY(0px)";
   //   anchorLocationTwo = "translateX(30px) translateY(0px)";
@@ -75,20 +75,20 @@ const Swap = () => {
   //   anchorLocationTwo = "translateX(-0px) translateY(-0px)";
   // }
 
-  if (width >= 1505 && width <= 1999) {
-    anchorLocation = "translateX(-200px) translateY(-120px)";
-    anchorLocationTwo = "translateX(-200px) translateY(-150px)";
-  }
+  // if (width >= 1505 && width <= 1999) {
+  //   anchorLocation = "translateX(-200px) translateY(-120px)";
+  //   anchorLocationTwo = "translateX(-200px) translateY(-150px)";
+  // }
 
-  if (width < 1504) {
-    anchorLocation = "translateX(-520px) translateY(-380px)";
-    anchorLocationTwo = "translateX(-520px) translateY(-280px)";
-  }
+  // if (width < 1504) {
+  //   anchorLocation = "translateX(-520px) translateY(-380px)";
+  //   anchorLocationTwo = "translateX(-520px) translateY(-280px)";
+  // }
 
-  if (width < 450) {
-    anchorLocation = "translateX(-0px) translateY(-0px)";
-    anchorLocationTwo = "translateX(-0px) translateY(-0px)";
-  }
+  // if (width < 450) {
+  //   anchorLocation = "translateX(-0px) translateY(-0px)";
+  //   anchorLocationTwo = "translateX(-0px) translateY(-0px)";
+  // }
 
   let bgColor;
   let bgColor2;

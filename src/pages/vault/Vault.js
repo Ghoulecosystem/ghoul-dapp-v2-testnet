@@ -193,7 +193,7 @@ const Vault = () => {
   const [vaultDisplayType, setVaultDisplayType] = useState("All Vaults");
 
   const { innerWidth: width, innerHeight: height } = window;
-  let anchorLocation = "translateX(-20px) translateY(-10px)";
+  let anchorLocation = "translateX(-0px) translateY(-0px)";
 
   // if (height > 920) {
   //   anchorLocation = "translateX(-20px) translateY(-10px)";
@@ -203,21 +203,21 @@ const Vault = () => {
   //   anchorLocation = "translateX(-310px) translateY(-70px)";
   // }
 
-  if (width >= 1505 && width <= 1999) {
-    anchorLocation = "translateX(-230px) translateY(-80px)";
-  }
+  // if (width >= 1505 && width <= 1999) {
+  //   anchorLocation = "translateX(-230px) translateY(-80px)";
+  // }
 
-  if (width < 1504) {
-    anchorLocation = "translateX(-500px) translateY(-300px)";
-  }
+  // if (width < 1504) {
+  //   anchorLocation = "translateX(-500px) translateY(-300px)";
+  // }
 
-  if (width < 450) {
-    anchorLocation = "translateX(-0px) translateY(-0px)";
-  }
+  // if (width < 450) {
+  //   anchorLocation = "translateX(-0px) translateY(-0px)";
+  // }
 
-  if (width > 1300 && height < 920) {
-    anchorLocation = "translateX(-100px) translateY(-30px)";
-  }
+  // if (width > 1300 && height < 920) {
+  //   anchorLocation = "translateX(-100px) translateY(-30px)";
+  // }
   const themeCtx = useContext(ThemeContext);
   let bgColor;
   let bgColor2;

@@ -602,7 +602,7 @@ const tokenAbi = [
   },
 ];
 
-const guolAbi = [
+const ghoulAbi = [
   {
     inputs: [],
     payable: false,
@@ -3055,7 +3055,7 @@ const wethVaultAbi = [
 const liquidatorAddress = "0x93FA9a37EfcbD8f88f35498c60F05faFFec8A9Be";
 const daiAddress = "0x1af3f329e8be154074d8769d1ffa4ee058b1dbc3";
 const swapAddress = "0x748Af5C37dB1796c814bd3e2742A37Dc34Db5Abe";
-const guolAddress = "0x171cE6141E7a5980222bc6B757ee2F1f95b3264e";
+const ghoulAddress = "0x171cE6141E7a5980222bc6B757ee2F1f95b3264e";
 const tokenAddress = "0xF92b9A2B34efe45a8280629a7DFa404aeE18849f";
 const farmAddress = "0x29E28ac262c2ecAb788857eD0f51872ae213Acd7";
 const ghoulxAddress = "0xcfc5cf2a73e97401c218b7ce1c594524bd8ba4bf";
@@ -3065,8 +3065,8 @@ const wethAddress = "0x2170Ed0880ac9A755fd29B2688956BD959F933F8";
 export {
   tokenAbi,
   tokenAddress,
-  guolAbi,
-  guolAddress,
+  ghoulAbi,
+  ghoulAddress,
   swapAbi,
   swapAddress,
   daiAbi,

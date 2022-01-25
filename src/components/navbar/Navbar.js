@@ -2,7 +2,7 @@ import React, { useState, useContext, useEffect } from "react";
 import { ethers } from "ethers";
 import { useLocation } from "react-router-dom";
 import classes from "./Navbar.module.css";
-import logo from "../../assets/ghoul_logo.svg";
+import logo from "../../assets/ghoul_logo_final.svg";
 import bnbLogo from "../../assets/bnb_logo.svg";
 import vault from "../../assets/vault-non-active.png";
 import vaultActive from "../../assets/vaults-active.png";
@@ -42,9 +42,10 @@ const Navbar = () => {
   const [gDaiBalance, setgDaiBalance] = useState(0);
   const [ghoulBalance, setGhoulBalance] = useState(0);
   const [bnbBlance, setBNBBalance] = useState(0);
+  const [ghoulXBalance, setGhoulXBalance] = useState(0);
   const tokenContract = web3Ctx.tokenContract;
-  const ghoulContract = web3Ctx.goulContract;
-  // const ghoulXContract = web3Ctx.goulXContract;
+  const ghoulContract = web3Ctx.ghoulContract;
+  // const ghoulXContract = web3Ctx.ghoulXContract;
   // const daiContract = web3Ctx.daiContract;
   const walletAddress = web3Ctx.walletAddress;
 
@@ -100,6 +101,10 @@ const Navbar = () => {
       let ghoulBalanceFormat = parseFloat(
         ethers.utils.formatEther(ghoulBalance)
       ).toFixed(2);
+      let ghoulXbalance = await web3Ctx.ghoulXContract.balanceOf(walletAddress);
+      let ghoulXbalanceFormat = parseFloat(
+        ethers.utils.formatEther(ghoulXbalance)
+      ).toFixed(2);
 
       const provider = new ethers.providers.Web3Provider(window.ethereum);
       const balance = await provider.getBalance(walletAddress);
@@ -109,10 +114,11 @@ const Navbar = () => {
       setBNBBalance(balanceFormat);
       setgDaiBalance(gdaiBalanceFormat);
       setGhoulBalance(ghoulBalanceFormat);
+      setGhoulXBalance(ghoulXbalanceFormat);
     };
 
     loadBalances();
-  }, [ghoulContract, tokenContract, walletAddress]);
+  }, [ghoulContract, tokenContract, walletAddress, web3Ctx.ghoulXContract]);
 
   return (
     <div
@@ -123,7 +129,7 @@ const Navbar = () => {
       }}
     >
       <div className={classes["logo-container"]}>
-        <img src={logo} alt="" />
+        <img src={logo} alt="" width={46} height={46} />
       </div>
       <div className={classes["navbar-header"]}>
         <div className={classes["row-nav"]}>
@@ -177,7 +183,7 @@ const Navbar = () => {
                 color: !themeCtx.darkMode ? txtColor : undefined,
               }}
             >
-              2.00
+              {ghoulXBalance}
             </h3>
           </div>
           <div

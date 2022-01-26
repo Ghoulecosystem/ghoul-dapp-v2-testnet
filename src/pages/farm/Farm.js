@@ -74,7 +74,14 @@ const Farm = () => {
     open: false,
     error: false,
   });
-  const [accordionOpen, setAccordionOpen] = useState(false);
+  const [allFarms, setAllFarms] = useState(true);
+  const [updateRewards, setUpdateRewards] = useState(0);
+  const [accordionStates, setAccordionStates] = useState({
+    0: false,
+    1: false,
+    2: false,
+    3: false,
+  });
 
   const themeCtx = useContext(ThemeContext);
   let bgColor;
@@ -92,13 +99,44 @@ const Farm = () => {
     bgColor2 = "rgba(0, 0, 0, 0.5)";
   }
 
+  useEffect(() => {
+    let timer1 = setTimeout(() => setUpdateRewards(updateRewards + 1), 5000);
+    return () => {
+      clearTimeout(timer1);
+      setUpdateRewards(false);
+    };
+  }, [updateRewards]);
+
+  const periodicIntervalUpdates = async () => {
+    if (updateRewards && pools.length > 0) {
+      let newPools = [...pools];
+      const poolCount = await web3Ctx.farmContract.poolLength();
+      const poolCountFormat = parseInt(poolCount, 16);
+
+      for (let i = 0; i < poolCountFormat - 2; i++) {
+        const pendingAmount = await web3Ctx.farmContract.pending(
+          i,
+          web3Ctx.walletAddress
+        );
+
+        const pendingAmountFormat = parseFloat(
+          ethers.utils.formatEther(pendingAmount)
+        ).toFixed(4);
+
+        newPools[i].pendingAmount = pendingAmountFormat;
+      }
+
+      setPools(newPools);
+    }
+  };
+
+  periodicIntervalUpdates();
   const modalStyleLP = window.isMobile ? modalStyleMobile : modalStyle;
 
   const loadPools = useCallback(async () => {
     setIsLoadingPools(true);
     const poolCount = await web3Ctx.farmContract.poolLength();
     const poolCountFormat = parseInt(poolCount, 16);
-
     let pools = [];
     try {
       for (let i = 0; i < poolCountFormat; i++) {
@@ -117,6 +155,7 @@ const Farm = () => {
           i,
           web3Ctx.walletAddress
         );
+
         pool.pendingAmount = parseFloat(
           ethers.utils.formatEther(pool.pendingAmount)
         ).toFixed(4);
@@ -343,9 +382,12 @@ const Farm = () => {
       await tx.wait();
       const currAmmount = pools[modalData.index].depositedAmount;
       const newAmount = Number(currAmmount) + Number(amount);
+      const currBalance = pools[modalData.index].lpBalance;
+      const newBalance = Number(currBalance) - Number(amount);
 
       let currentPools = [...pools];
       currentPools[modalData.index].depositedAmount = newAmount;
+      currentPools[modalData.index].lpBalance = newBalance;
       setPools(currentPools);
       setSnackbarOpen({ open: true, error: false });
       setIsLoadingPools(false);
@@ -385,9 +427,14 @@ const Farm = () => {
       setIsLoadingPools(true);
 
       await tx.wait();
+      const currAmmount = pools[modalData.index].depositedAmount;
+      const newAmount = Number(currAmmount) - Number(amount);
+      const currBalance = pools[modalData.index].lpBalance;
+      const newBalance = Number(currBalance) + Number(amount);
+
       let currentPools = [...pools];
-      currentPools[modalData.index].depositedAmount =
-        currentPools[modalData.index].depositedAmount - Number(amount);
+      currentPools[modalData.index].depositedAmount = newAmount;
+      currentPools[modalData.index].lpBalance = newBalance;
       setPools(currentPools);
       setSnackbarOpen({ open: true, error: false });
 
@@ -396,6 +443,15 @@ const Farm = () => {
       setSnackbarOpen({ open: true, error: true });
       console.log(error);
       setIsLoadingPools(false);
+    }
+  };
+
+  const setAccordionState = (index, currentState) => {
+    console.log(currentState);
+    if (currentState) {
+      accordionStates[index.toString()] = false;
+    } else {
+      accordionStates[index.toString()] = true;
     }
   };
 
@@ -419,9 +475,39 @@ const Farm = () => {
         deposited={pool.depositedAmount}
         weight={pool.weight}
         index={index}
+        setAccordionState={setAccordionState}
+        openState={accordionStates[index.toString()]}
       />
     </li>
   ));
+
+  const renderPoolsMyLp = pools
+    .filter((pool) => parseFloat(pool.weight) > 0)
+    .map((pool, index) => (
+      <li key={Math.random(100)}>
+        <Accordion
+          asset={pool.lpSymbol}
+          apy={parseFloat(pool.apy).toFixed(2)}
+          tvl={parseFloat(pool.poolValue).toFixed(4)}
+          earned={pool.pendingAmount}
+          staked={pool.depositedAmount}
+          lpBalance={pool.lpBalance}
+          depositFee={pool.depositFeeBP}
+          poolAllocation={pool.pullAllocationPercentage}
+          openModalHandler={openModal}
+          id={pool.id}
+          approved={pool.lpApproved}
+          lpToken={pool.lpToken}
+          approveLp={approveLp}
+          harvest={harvest}
+          deposited={pool.depositedAmount}
+          weight={pool.weight}
+          index={index}
+          setAccordionState={setAccordionState}
+          openState={accordionStates[index.toString()]}
+        />
+      </li>
+    ));
 
   function openModal(
     balance,
@@ -469,19 +555,24 @@ const Farm = () => {
           <div
             id={classes["farm-navigation-1"]}
             style={{
+              backgroundColor:
+                allFarms &&
+                (themeCtx.darkMode ? "#090a10" : "rgba(0, 0, 0, 0.05)"),
               color: !themeCtx.darkMode ? txtColor : undefined,
-              background: !themeCtx.darkMode ? bgColor2 : undefined,
             }}
+            onClick={() => setAllFarms(false)}
           >
             All Farms
           </div>
           <div
             id={classes["farm-navigation-2"]}
             style={{
+              backgroundColor:
+                !allFarms &&
+                (themeCtx.darkMode ? "#090a10" : "rgba(0, 0, 0, 0.05)"),
               color: !themeCtx.darkMode ? txtColor : undefined,
-              background: !themeCtx.darkMode ? bgColor2 : undefined,
             }}
-            onClick={openSnackbar}
+            onClick={() => setAllFarms(true)}
           >
             My LPs
           </div>
@@ -491,13 +582,14 @@ const Farm = () => {
           className={classes["farm-line"]}
           style={{ background: !themeCtx.darkMode ? bgColor2 : undefined }}
         ></div>
-        <h1 id={classes["all-farms"]}>
-          {" "}
-          All Farms Require a 0.5% deposit fee{" "}
-        </h1>
+        <h1 id={classes["all-farms"]}> All Farms Require a 0.5% deposit</h1>
         <div className={classes["accordion-container"]}>
           {pools.length > 0 && !isLoadingPools ? (
-            renderPools
+            !allFarms ? (
+              renderPools
+            ) : (
+              renderPoolsMyLp
+            )
           ) : (
             <LoadingImg></LoadingImg>
           )}

@@ -12,7 +12,7 @@ import ghoulLogoFinal from "../../assets/Ghoul logo.svg";
 import ghoulXlogo from "../../assets/GhoulX-trans-big 1.svg";
 
 export default function Accordion(props) {
-  const [toggle, setToggle] = useState(false);
+  const [toggle, setToggle] = useState(props.openState);
   const [heightEl, setHeightEl] = useState();
 
   const refHeight = useRef();
@@ -47,7 +47,7 @@ export default function Accordion(props) {
       img = ghoulLogoFinal;
       asset = "GHOUL";
       anchorLink =
-        "https://pancakeswap.finance/add/BNB/0x171ce6141e7a5980222bc6b757ee2f1f95b3264e";
+        "https://pancakeswap.finance/swap?outputCurrency=0x171ce6141e7a5980222bc6b757ee2f1f95b3264e";
       break;
     case "GHOULX/DAI":
       img = ghoulDai;
@@ -82,6 +82,11 @@ export default function Accordion(props) {
 
   const toggleState = () => {
     setToggle(!toggle);
+    if (toggle) {
+      props.setAccordionState(props.index, true);
+    } else {
+      props.setAccordionState(props.index, false);
+    }
   };
 
   const openModalHandler = (isWithdraw) => {
@@ -233,7 +238,7 @@ export default function Accordion(props) {
             style={{ background: !themeCtx.darkMode ? txtColor2 : undefined }}
           >
             <div className="accordion-elem-col-1">
-              <img src={ghoulLogo} alt="" id="ghoul-img" />
+              <img src={img} alt="" id="ghoul-img" />
               <div>
                 <div
                   className="accordion-top-text"

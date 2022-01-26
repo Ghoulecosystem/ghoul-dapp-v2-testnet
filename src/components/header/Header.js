@@ -31,6 +31,21 @@ const Header = (props) => {
     hamburgerIm = hamburgerIconDark;
   }
 
+  let link;
+  switch (props.title) {
+    case "Farms":
+      link = "https://docs.ghoul.finance/resources/how-to/farm";
+      break;
+    case "Vaults":
+      link = "https://docs.ghoul.finance/resources/how-to/vaults";
+      break;
+    case "Swap":
+      link = "https://docs.ghoul.finance/resources/how-to/swap";
+      break;
+    default:
+      break;
+  }
+
   useEffect(() => {
     if (!web3Ctx.walletAddress) {
       web3Ctx.manualConnect();
@@ -57,6 +72,11 @@ const Header = (props) => {
     setShowLogout(false);
   };
 
+  const navigateDocs = () => {
+    const newWindow = window.open(link, "_blank", "noopener,noreferrer");
+    if (newWindow) newWindow.opener = null;
+  };
+
   return (
     <>
       {showHamburger && (
@@ -80,6 +100,7 @@ const Header = (props) => {
             style={{ color: !themeCtx.darkMode ? txtColor : undefined }}
           >
             {props.title}
+            <img src={pin} alt="" onClick={navigateDocs} />
           </div>
         </div>
         <div className={classes["chain-wallet"]}>

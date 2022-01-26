@@ -436,7 +436,7 @@ const NavbarHamburger = (props) => {
         </div>
 
         <div className={classes["feature-elem-2"]}>
-          <div className={classes["dark-mode"]}>Light Mode</div>
+          <div className={classes["dark-mode"]}>Dark Mode</div>
           <div className={classes["ios-switch"]}>
             {" "}
             <Switch {...label} color="default" onChange={darkModeHandler} />

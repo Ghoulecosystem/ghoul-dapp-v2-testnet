@@ -15,6 +15,11 @@
   font-size: 30px;
 }
 
+#vaults > img {
+  padding-left: 1rem;
+  cursor: pointer;
+}
+
 .vault-info {
   display: flex;
   gap: 0.5rem;

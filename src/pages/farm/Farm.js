@@ -71,7 +71,7 @@ const Farm = () => {
   const [isLoadingPools, setIsLoadingPools] = useState(false);
   const [modalData, setModalData] = useState({});
   const [snackbarOpen, setSnackbarOpen] = useState({
-    open: true,
+    open: false,
     error: false,
   });
   const [accordionOpen, setAccordionOpen] = useState(false);
@@ -105,12 +105,12 @@ const Farm = () => {
         let pool = {};
         pool.id = i;
         const poolInfo = await web3Ctx.farmContract.poolInfo(i);
-        pool.despositedAmount = await web3Ctx.farmContract.deposited(
+        pool.depositedAmount = await web3Ctx.farmContract.deposited(
           i,
           web3Ctx.walletAddress
         );
-        pool.despositedAmount = parseFloat(
-          ethers.utils.formatEther(pool.despositedAmount)
+        pool.depositedAmount = parseFloat(
+          ethers.utils.formatEther(pool.depositedAmount)
         ).toFixed(4);
 
         pool.pendingAmount = await web3Ctx.farmContract.pending(
@@ -154,7 +154,7 @@ const Farm = () => {
           ethers.utils.formatEther(pool.lpBalanceContract)
         ).toFixed(4);
         pool.weight = (
-          (parseFloat(pool.despositedAmount) /
+          (parseFloat(pool.depositedAmount) /
             parseFloat(pool.lpBalanceContract)) *
           100
         ).toFixed(4);
@@ -311,7 +311,7 @@ const Farm = () => {
     };
   }, [loadPools]);
 
-  const approveLp = async (lpToken) => {
+  const approveLp = async (lpToken, index) => {
     try {
       const lpContrtact = new ethers.Contract(lpToken, lpAbi, web3Ctx.signer);
       const tx = await lpContrtact.approve(
@@ -321,8 +321,10 @@ const Farm = () => {
       setIsLoadingPools(true);
 
       await tx.wait();
+      let currentPools = [...pools];
+      currentPools[index].lpApproved = true;
+      setPools(currentPools);
       setSnackbarOpen({ open: true, error: false });
-      loadPools();
       setIsLoadingPools(false);
     } catch (error) {
       setSnackbarOpen({ open: true, error: true });
@@ -339,8 +341,13 @@ const Farm = () => {
       );
       setIsLoadingPools(true);
       await tx.wait();
+      const currAmmount = pools[modalData.index].depositedAmount;
+      const newAmount = Number(currAmmount) + Number(amount);
+
+      let currentPools = [...pools];
+      currentPools[modalData.index].depositedAmount = newAmount;
+      setPools(currentPools);
       setSnackbarOpen({ open: true, error: false });
-      loadPools();
       setIsLoadingPools(false);
     } catch (error) {
       setSnackbarOpen({ open: true, error: true });
@@ -349,14 +356,17 @@ const Farm = () => {
     }
   };
 
-  const harvest = async (id) => {
+  const harvest = async (id, index) => {
     try {
       const tx = await web3Ctx.farmContract.withdraw(id, 0);
       setIsLoadingPools(true);
 
       await tx.wait();
+      let currentPools = [...pools];
+      currentPools[index].pendingAmount = 0;
+      setPools(currentPools);
+
       setSnackbarOpen({ open: true, error: false });
-      loadPools();
       setIsLoadingPools(false);
     } catch (error) {
       setSnackbarOpen({ open: true, error: true });
@@ -366,16 +376,21 @@ const Farm = () => {
   };
 
   const withdraw = async (id, amount) => {
+    console.log(modalData.index);
     try {
       const tx = await web3Ctx.farmContract.withdraw(
         id,
-        ethers.utils.formatEther(amount.toString())
+        ethers.utils.parseEther(amount.toString())
       );
       setIsLoadingPools(true);
 
       await tx.wait();
+      let currentPools = [...pools];
+      currentPools[modalData.index].depositedAmount =
+        currentPools[modalData.index].depositedAmount - Number(amount);
+      setPools(currentPools);
       setSnackbarOpen({ open: true, error: false });
-      loadPools();
+
       setIsLoadingPools(false);
     } catch (error) {
       setSnackbarOpen({ open: true, error: true });
@@ -391,7 +406,7 @@ const Farm = () => {
         apy={parseFloat(pool.apy).toFixed(2)}
         tvl={parseFloat(pool.poolValue).toFixed(4)}
         earned={pool.pendingAmount}
-        staked={pool.despositedAmount}
+        staked={pool.depositedAmount}
         lpBalance={pool.lpBalance}
         depositFee={pool.depositFeeBP}
         poolAllocation={pool.pullAllocationPercentage}
@@ -401,14 +416,22 @@ const Farm = () => {
         lpToken={pool.lpToken}
         approveLp={approveLp}
         harvest={harvest}
-        deposited={pool.despositedAmount}
+        deposited={pool.depositedAmount}
         weight={pool.weight}
+        index={index}
       />
     </li>
   ));
 
-  function openModal(balance, asset, id, lpToken, isWithdraw, deposited) {
-    console.log(isWithdraw);
+  function openModal(
+    balance,
+    asset,
+    id,
+    lpToken,
+    isWithdraw,
+    deposited,
+    index
+  ) {
     setModalData({
       balance: balance,
       asset: asset,
@@ -416,6 +439,7 @@ const Farm = () => {
       lpToken: lpToken,
       isWithdraw: isWithdraw,
       deposited: deposited,
+      index: index,
     });
     setIsOpen(true);
   }
@@ -428,6 +452,11 @@ const Farm = () => {
   function closeModal() {
     setIsOpen(false);
   }
+
+  const openSnackbar = () => {
+    console.log("Opening Snackbar");
+    setSnackbarOpen(true, false);
+  };
 
   return (
     <>
@@ -452,10 +481,12 @@ const Farm = () => {
               color: !themeCtx.darkMode ? txtColor : undefined,
               background: !themeCtx.darkMode ? bgColor2 : undefined,
             }}
+            onClick={openSnackbar}
           >
             My LPs
           </div>
         </div>
+
         <div
           className={classes["farm-line"]}
           style={{ background: !themeCtx.darkMode ? bgColor2 : undefined }}
@@ -471,7 +502,7 @@ const Farm = () => {
             <LoadingImg></LoadingImg>
           )}
         </div>
-        <> {snackbarOpen.open && <SnackbarUI error={snackbarOpen.error} />}</>
+
         <div className={classes["modal-container"]}>
           <Modal
             isOpen={modalIsOpen}
@@ -494,7 +525,10 @@ const Farm = () => {
             />
           </Modal>
         </div>
-        <div></div>
+        <div className={classes["snackbar-container-farms"]}>
+          {" "}
+          {snackbarOpen.open && <SnackbarUI error={snackbarOpen.error} />}
+        </div>
       </div>
     </>
   );

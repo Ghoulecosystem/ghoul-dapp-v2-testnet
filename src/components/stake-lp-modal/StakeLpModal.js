@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import classes from "./StakeLpModal.module.css";
 import cancelIcon from "../../assets/cancel.svg";
 import ThemeContext from "../../store/Theme-context";
@@ -8,6 +8,12 @@ const StakeLpModal = (props) => {
   const [inputValue, setInputValue] = useState(0);
 
   const themeCtx = useContext(ThemeContext);
+
+  useEffect(() => {
+    return () => {
+      setInputValue([]);
+    };
+  }, []);
 
   let bgColor;
   let bgColor2;

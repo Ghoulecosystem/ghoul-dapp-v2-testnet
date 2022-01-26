@@ -8,7 +8,7 @@ import ThemeContext from "../../store/Theme-context";
 import bnbGhoul from "../../assets/BNB - GHOUL.svg";
 import bnbGhoulX from "../../assets/BNB- GHOULX.svg";
 import ghoulDai from "../../assets/GHOUL- XDAI.svg";
-import ghoulLogoFinal from "../../assets/ghoultoken-logo.png";
+import ghoulLogoFinal from "../../assets/Ghoul logo.svg";
 import ghoulXlogo from "../../assets/GhoulX-trans-big 1.svg";
 
 export default function Accordion(props) {
@@ -91,16 +91,17 @@ export default function Accordion(props) {
       props.id,
       props.lpToken,
       isWithdraw,
-      props.deposited
+      props.deposited,
+      props.index
     );
   };
 
   const approveLpHandler = () => {
-    props.approveLp(props.lpToken);
+    props.approveLp(props.lpToken, props.index);
   };
 
   const harvestHandler = () => {
-    props.harvest(props.id);
+    props.harvest(props.id, props.index);
   };
 
   const getMore = () => {

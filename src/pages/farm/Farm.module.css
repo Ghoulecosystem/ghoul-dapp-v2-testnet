@@ -41,6 +41,13 @@
   border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
+.snackbar-container-farms {
+  position: absolute;
+  width: 250px;
+  left: 35%;
+  top: 90%;
+}
+
 #all-farms {
   margin-top: 2.375rem;
   margin-left: 2.375rem;
@@ -98,6 +105,13 @@
 
   #all-farms {
     margin-left: 13rem;
+  }
+
+  .snackbar-container-farms {
+    position: absolute;
+    width: 250px;
+    left: 15%;
+    top: 90%;
   }
 }
 

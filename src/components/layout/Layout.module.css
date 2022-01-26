@@ -5,7 +5,7 @@
   background: #090a10;
   position: relative;
   left: 50%;
-  transform: translateX(-50%) translateY(20%);
+  transform: translateX(-50%);
   overflow: auto;
   overflow-x: hidden;
 }

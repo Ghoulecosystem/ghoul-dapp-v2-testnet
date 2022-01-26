@@ -1,5 +1,4 @@
 import React from "react";
-import Button from "@mui/material/Button";
 import Slide from "@material-ui/core/Slide";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
@@ -23,7 +22,7 @@ export default function SnackbarUI(props) {
     <div className="snackbar-container">
       <Snackbar
         open={open}
-        autoHideDuration={50000000000000000000000000000000}
+        autoHideDuration={5000}
         onClose={handleClose}
         className={props.className}
         sx={{ position: "relative" }}

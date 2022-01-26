@@ -57,7 +57,6 @@ const defaultWeb3State = {
 
 const web3Reducer = (state, action) => {
   if (action.type === "WALLET_CONNECT") {
-    console.log("WALLET CONNECT action");
     const walletAddress = action.walletAddress;
     const provider = action.provider;
     const signer = action.signer;
@@ -110,6 +109,7 @@ const web3Reducer = (state, action) => {
   }
 
   if (action.type === "CHAIN_SWITCH") {
+    console.log("CHAIN_SWITCH");
     const chainId = action.chainId;
     return {
       ...state,
@@ -236,7 +236,6 @@ const Web3Provider = (props) => {
       usdtSwapContract: usdtSwap,
       busdTokenContract: busdTokenContract,
       usdtTokenContract: usdtTokenContract,
-      ghoulXContract: ghoulXContract,
       usdcTokenContract: usdcTokenContract,
     };
   };
@@ -252,6 +251,8 @@ const Web3Provider = (props) => {
           },
         },
       };
+
+      const { ethereum } = window;
 
       const web3Modal = new Web3Modal({
         cacheProvider: false, // optional
@@ -272,34 +273,17 @@ const Web3Provider = (props) => {
       // Get list of accounts of the connected wallet
       const accounts = await web3.eth.getAccounts();
 
-      const providerEthers = new ethers.providers.Web3Provider(provider); // Allows for interaction with ethereum nodes - read/write
+      const providerEthers = new ethers.providers.Web3Provider(ethereum); // Allows for interaction with ethereum nodes - read/write
       const signer = providerEthers.getSigner(); // Abstraction of the Ethereum Account which can be used to sign messages and transactions and send signed transactions
-
-      // if (window.ethereum.networkVersion !== 97) {
-      //   // changeNetwork("bsc");
-      //   console.log("Invalid Chain");
-      //   setIsValidChain(true);
-      // } else {
-      //   setIsValidChain(true);
-      // }
 
       // Subscribe to accounts change
       provider.on("accountsChanged", (accounts) => {
         console.log(accounts);
       });
 
-      // // Subscribe to chainId change
-      // provider.on("chainChanged", (chainId) => {
-      //   console.log(chainId);
-      //   if (chainId !== 97) {
-      //     setIsValidChain(false);
-      //   } else {
-      //     setIsValidChain(true);
-      //   }
-      // });
-
       // Subscribe to networkId change
       provider.on("networkChanged", (networkId) => {
+        console.log(networkId);
         dispatchWeb3Action({
           type: "CHAIN_SWITCH",
           chainId: parseInt(networkId),
@@ -346,6 +330,15 @@ const Web3Provider = (props) => {
 
       const provider = new ethers.providers.Web3Provider(ethereum); // Allows for interaction with ethereum nodes - read/write
       const signer = provider.getSigner(); // Abstraction of the Ethereum Account which can be used to sign messages and transactions and send signed transactions
+
+      // Subscribe to networkId change
+      provider.on("networkChanged", (networkId) => {
+        console.log(networkId);
+        dispatchWeb3Action({
+          type: "CHAIN_SWITCH",
+          chainId: parseInt(networkId),
+        });
+      });
 
       dispatchWeb3Action({
         type: "WALLET_CONNECT",

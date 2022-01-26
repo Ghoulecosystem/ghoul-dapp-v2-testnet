@@ -993,8 +993,6 @@ const Swap = () => {
     }
   };
 
-  console.log(reserves);
-
   const renderButtons = () => {
     if (togDai) {
       switch (coin) {

@@ -3,7 +3,7 @@ import { ethers } from "ethers";
 import bscLogo from "../../assets/bsc_logo.png";
 import { useLocation } from "react-router-dom";
 import classes from "./NavbarHamburger.module.css";
-import logo from "../../assets/ghoul_logo.svg";
+import logo from "../../assets/ghoul_logo_final.svg";
 import bnbLogo from "../../assets/bnb_logo.svg";
 import vault from "../../assets/vault-non-active.png";
 import governance from "../../assets/governance.svg";
@@ -145,7 +145,7 @@ const NavbarHamburger = (props) => {
         onClick={onCloseHamburger}
       />
       <div className={classes["logo-container"]}>
-        <img src={logo} alt="" />
+        <img src={logo} alt="" width={30} height={30} />
       </div>
       <div className={classes["navbar-header"]}>
         <div className={classes["row-nav"]}>
@@ -325,9 +325,9 @@ const NavbarHamburger = (props) => {
           </div>
         </NavLink>
 
-        <NavLink
-          activeClassName={classes["feature-elem-active"]}
-          to="/exchange"
+        <a
+          target="_blank"
+          href="https://swap.ghoul.finance/"
           style={{ textDecoration: "none" }}
         >
           <div className={classes["feature-elem"]}>
@@ -338,7 +338,7 @@ const NavbarHamburger = (props) => {
             />
             <h4>Exchange</h4>
           </div>
-        </NavLink>
+        </a>
 
         <div className={classes["feature-elem"]}>
           <img

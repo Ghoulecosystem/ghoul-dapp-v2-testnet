@@ -209,7 +209,6 @@ const VaultModal = (props) => {
   const collateralWethHandler = async () => {
     try {
       const txValue = collateralValue.toString();
-      console.log(txValue);
       const tx = await props.wethVaultContract.depositCollateral(
         props.id,
         ethers.utils.parseEther(txValue)

@@ -59,9 +59,6 @@ function App() {
             <Route path="/swap">
               <Swap />
             </Route>
-            <Route path="/exchange">
-              <Exchange />
-            </Route>
             <Route path="/farm">
               <Farm />
             </Route>

@@ -259,9 +259,9 @@ const Navbar = () => {
           </div>
         </NavLink>
 
-        <NavLink
-          activeClassName={classes["feature-elem-active"]}
-          to="/exchange"
+        <a
+          target="_blank"
+          href="https://swap.ghoul.finance/"
           style={{ textDecoration: "none" }}
         >
           <div className={classes["feature-elem"]}>
@@ -272,7 +272,7 @@ const Navbar = () => {
             />
             <h4>Exchange</h4>
           </div>
-        </NavLink>
+        </a>
 
         <div className={classes["feature-elem"]}>
           <img

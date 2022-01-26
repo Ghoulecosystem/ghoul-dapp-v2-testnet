@@ -41,6 +41,11 @@
     left: 77.8%;
     top: 50%;
     height: 100%;
+    position: fixed;
+    top: 50%;
+    /* bring your own prefixes */
+    transform: translate(-50%, -50%);
+    overflow: auto;
   }
 }
 

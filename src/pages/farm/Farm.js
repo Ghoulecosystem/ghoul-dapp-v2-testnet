@@ -229,15 +229,6 @@ const Farm = () => {
           balance0 = ethers.utils.formatEther(balance0);
           let balance1 = await token1.balanceOf(pool.lpToken);
           balance1 = ethers.utils.formatEther(balance1);
-          console.log("TOTAL SUPPLY");
-          console.log(balance0);
-          console.log(balance1);
-
-          console.log(pool.token0price);
-          console.log(pool.token1price);
-          console.log(totalSupplyFormat);
-          console.log(pool.token0);
-          console.log(pool.token1);
           pool.lpPrice =
             (parseFloat(pool.token0price) * parseFloat(balance0) +
               parseFloat(pool.token1price) * parseFloat(balance1)) /
@@ -305,8 +296,6 @@ const Farm = () => {
           pools.push(pool);
         }
       }
-
-      console.log(pools);
       setPools(pools);
       setIsLoadingPools(false);
     } catch (error) {
@@ -378,7 +367,6 @@ const Farm = () => {
 
   const withdraw = async (id, amount) => {
     try {
-      console.log(amount);
       const tx = await web3Ctx.farmContract.withdraw(
         id,
         ethers.utils.formatEther(amount.toString())

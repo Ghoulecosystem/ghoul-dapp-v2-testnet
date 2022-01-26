@@ -92,6 +92,7 @@
   .farm-navigation {
     margin-top: 3rem;
     margin-left: 8rem;
+    gap: 0.5rem;
   }
 
   .farm-container {

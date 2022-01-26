@@ -192,7 +192,11 @@ export default function Accordion(props) {
             </div>
           </div>
         </div>
-        <img className={toggle ? "active" : undefined} src={imgSrc} />
+        <img
+          className={toggle ? "active" : undefined}
+          src={imgSrc}
+          id="chevron"
+        />
       </button>
       <div
         className={toggle ? "accordion-toggle animated" : "accordion-toggle"}

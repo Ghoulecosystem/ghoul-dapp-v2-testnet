@@ -591,7 +591,7 @@
   }
 }
 
-@media (min-height: 800px) and (min-width: 360px) and (max-height: 800px) and (max-width: 360px) {
+@media (min-height: 790px) and (min-width: 350px) and (max-height: 810px) and (max-width: 370px) {
   .all-vaults-mobile-container {
     position: absolute;
     left: 23%;

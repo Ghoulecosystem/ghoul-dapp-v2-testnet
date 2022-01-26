@@ -74,7 +74,7 @@ const Farm = () => {
     open: false,
     error: false,
   });
-  const [allFarms, setAllFarms] = useState(true);
+  const [allFarms, setAllFarms] = useState(false);
   const [updateRewards, setUpdateRewards] = useState(0);
   const [accordionStates, setAccordionStates] = useState({
     0: false,

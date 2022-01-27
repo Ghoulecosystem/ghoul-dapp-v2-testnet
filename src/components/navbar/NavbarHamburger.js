@@ -118,8 +118,7 @@ const NavbarHamburger = (props) => {
   };
 
   if (themeCtx.balanceUpdate) {
-    // loadBalances();
-    console.log("Balance update");
+    loadBalances();
     themeCtx.toggleBalanceFalse();
   }
 
@@ -133,6 +132,10 @@ const NavbarHamburger = (props) => {
       let ghoulBalanceFormat = parseFloat(
         ethers.utils.formatEther(ghoulBalance)
       ).toFixed(2);
+      let ghoulXbalance = await web3Ctx.ghoulXContract.balanceOf(walletAddress);
+      let ghoulXbalanceFormat = parseFloat(
+        ethers.utils.formatEther(ghoulXbalance)
+      ).toFixed(2);
 
       const provider = new ethers.providers.Web3Provider(window.ethereum);
       const balance = await provider.getBalance(walletAddress);
@@ -142,6 +145,7 @@ const NavbarHamburger = (props) => {
       setBNBBalance(balanceFormat);
       setgDaiBalance(gdaiBalanceFormat);
       setGhoulBalance(ghoulBalanceFormat);
+      setGhoulXBalance(ghoulXbalanceFormat);
     };
 
     loadBalances();

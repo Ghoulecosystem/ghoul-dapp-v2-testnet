@@ -10,6 +10,7 @@ import bnbGhoulX from "../../assets/BNB- GHOULX.svg";
 import ghoulDai from "../../assets/GHOUL- XDAI.svg";
 import ghoulLogoFinal from "../../assets/Ghoul logo.svg";
 import ghoulXlogo from "../../assets/GhoulX-trans-big 1.svg";
+import ghoulXDarkMode from "../../assets/GhoulXDARKMODE.png";
 
 export default function Accordion(props) {
   const [toggle, setToggle] = useState(props.openState);
@@ -25,6 +26,7 @@ export default function Accordion(props) {
   let txtColor;
   let txtColor2;
   let inputColor;
+  let pendingRewardsIm = ghoulXlogo;
   if (!themeCtx.darkMode) {
     bgColor = "#FFFFFF";
     bgColorBox = "rgba(0, 0, 0, 0.03)";
@@ -42,6 +44,7 @@ export default function Accordion(props) {
   let img;
   let asset;
   let anchorLink;
+
   switch (props.asset) {
     case "GHOUL":
       img = ghoulLogoFinal;

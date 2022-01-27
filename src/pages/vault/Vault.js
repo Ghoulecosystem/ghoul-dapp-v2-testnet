@@ -690,9 +690,9 @@ const Vault = () => {
   const createWethVault = async (vaultId) => {
     closeModalTwo();
     let gDaiPrice = await tokenContract.getTokenPriceSource();
-    let gDaiPriceFormat = ethers.utils.formatEther(gDaiPrice);
-    let ethPrice = await tokenContract.getEthPriceSource();
-    let ethPriceFormat = ethers.utils.formatEther(ethPrice);
+    let gDaiPriceFormat = ethers.utils.formatUnits(gDaiPrice, "gwei") * 10;
+    let ethPrice = await wethVaultContract.getEthPriceSource();
+    let ethPriceFormat = ethers.utils.formatUnits(ethPrice, "gwei") * 10;
 
     let vaultDebt = await wethVaultContract.vaultDebt(vaultId);
     let vaultDebtFormat = ethers.utils.formatEther(vaultDebt);
@@ -721,6 +721,9 @@ const Vault = () => {
       collateral: parseFloat(vaultCollateralFormat).toFixed(2),
       availableBorrow: parseFloat(availableBorrow).toFixed(2),
       ratio: vaultRatio,
+      vaultCollateralValue: (
+        parseFloat(vaultCollateralFormat).toFixed(4) * ethPriceFormat
+      ).toFixed(2),
     };
 
     setSnackbarOpen({ open: true, error: false });
@@ -733,6 +736,7 @@ const Vault = () => {
     let gDaiPriceFormat = ethers.utils.formatEther(gDaiPrice);
     let ethPrice = await tokenContract.getEthPriceSource();
     let ethPriceFormat = ethers.utils.formatEther(ethPrice);
+    let bnbPrice = ethers.utils.formatUnits(ethPrice, "gwei") * 10;
 
     let vaultDebt = await tokenContract.vaultDebt(vaultId);
     let vaultDebtFormat = ethers.utils.formatEther(vaultDebt);
@@ -761,6 +765,9 @@ const Vault = () => {
       collateral: parseFloat(vaultCollateralFormat).toFixed(2),
       availableBorrow: parseFloat(availableBorrow).toFixed(2),
       ratio: vaultRatio,
+      vaultCollateralValue: (
+        parseFloat(vaultCollateralFormat).toFixed(4) * bnbPrice
+      ).toFixed(2),
     };
 
     setSnackbarOpen({ open: true, error: false });

@@ -172,7 +172,7 @@ export default function Accordion(props) {
               className="accordion-bottom-text"
               style={{ color: !themeCtx.darkMode ? txtColor : undefined }}
             >
-              {props.deposited}
+              {Number(props.deposited).toFixed(4)}
             </div>
           </div>
           <div id="pool-allocation">

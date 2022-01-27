@@ -109,13 +109,12 @@ const Farm = () => {
 
   const periodicIntervalUpdates = async () => {
     if (updateRewards && pools.length > 0) {
+      const poolIds = [0, 3, 4, 5];
       let newPools = [...pools];
-      const poolCount = await web3Ctx.farmContract.poolLength();
-      const poolCountFormat = parseInt(poolCount, 16);
 
-      for (let i = 0; i < poolCountFormat - 2; i++) {
+      for (let i = 0; i < newPools.length; i++) {
         const pendingAmount = await web3Ctx.farmContract.pending(
-          i,
+          poolIds[i],
           web3Ctx.walletAddress
         );
 

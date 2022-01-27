@@ -28,7 +28,6 @@ import Select from "@mui/material/Select";
 
 const axios = require("axios");
 
-const BNBPrice = 373.21947555;
 const gDaiPrice = 1;
 
 const modalStyle = {
@@ -287,9 +286,11 @@ const Vault = () => {
 
         let debt = await tokenContract.vaultDebt(i);
         let debtFormat = ethers.utils.formatEther(debt);
+
         let vaultCollateralFormat = ethers.utils.formatEther(vaultCollateral);
         let vaultCollateralFinal =
           parseFloat(bnbPrice) * parseFloat(vaultCollateralFormat);
+
         let debtMonitor = parseFloat(gDaiPrice) * debtFormat;
         let debtRatio = (
           (parseFloat(vaultCollateralFinal) / parseFloat(debtMonitor)) *
@@ -307,7 +308,7 @@ const Vault = () => {
         }
         if (
           parseFloat(ratio).toFixed(2) > 0 &&
-          parseFloat(ratio).toFixed(2) < 150
+          parseFloat(ratio).toFixed(2) < 200
         ) {
           liqVaults.push({
             id: i,
@@ -369,7 +370,7 @@ const Vault = () => {
         }
         if (
           parseFloat(ratio).toFixed(2) > 0 &&
-          parseFloat(ratio).toFixed(2) < 150
+          parseFloat(ratio).toFixed(2) < 200
         ) {
           liqVaults.push({
             id: i,
@@ -818,6 +819,7 @@ const Vault = () => {
 
     setUserVaultsBNB(newArray);
     getBalances();
+    themeCtx.toggleBalance();
   };
 
   const depositCollateralWethVault = async (vaultId) => {
@@ -864,6 +866,7 @@ const Vault = () => {
 
     setUserVaultsWeth(newArray);
     getBalances();
+    themeCtx.toggleBalance();
   };
 
   const liquidateVault = async (id, isBNB) => {
@@ -884,6 +887,7 @@ const Vault = () => {
       }
 
       setSnackbarOpen({ open: true, error: false });
+      themeCtx.toggleBalance();
     } catch (error) {
       console.log(error);
       setSnackbarOpen({ open: true, error: true });

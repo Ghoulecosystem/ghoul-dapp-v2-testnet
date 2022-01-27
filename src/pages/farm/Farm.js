@@ -391,6 +391,7 @@ const Farm = () => {
       setPools(currentPools);
       setSnackbarOpen({ open: true, error: false });
       setIsLoadingPools(false);
+      themeCtx.toggleBalance();
     } catch (error) {
       setSnackbarOpen({ open: true, error: true });
       console.log(error);
@@ -410,6 +411,7 @@ const Farm = () => {
 
       setSnackbarOpen({ open: true, error: false });
       setIsLoadingPools(false);
+      themeCtx.toggleBalance();
     } catch (error) {
       setSnackbarOpen({ open: true, error: true });
       console.log(error);
@@ -437,8 +439,8 @@ const Farm = () => {
       currentPools[modalData.index].lpBalance = newBalance;
       setPools(currentPools);
       setSnackbarOpen({ open: true, error: false });
-
       setIsLoadingPools(false);
+      themeCtx.toggleBalance();
     } catch (error) {
       setSnackbarOpen({ open: true, error: true });
       console.log(error);

@@ -354,27 +354,6 @@ const Swap = () => {
         usdcReserve: usdcReserveFormat,
       });
 
-      // setReserves({
-      //   gDaiBalance: parseFloat(71.77).toFixed(2),
-      //   daiBalance: 28.2,
-      //   busdBalance: 10,
-      //   usdtBalance: 0,
-      //   gDaiAllowance: 9999999999,
-      //   daiAllowance: 9999999999,
-      //   daiRate: 101,
-      //   gDaiRate: 99,
-      //   gDaiReserve: 124.39,
-      //   daiReserve: 174.2,
-      //   busdRate: 101,
-      //   gdaiRateBusd: 99,
-      //   gdaiReserveBusd: 0.0,
-      //   busdReserve: 0.0,
-      //   usdtRate: 101,
-      //   gdaiRateUsdt: 99,
-      //   gdaiReserveUsdt: 0.0,
-      //   usdtReserve: 0.0,
-      // });
-
       setIsLoadingReserves(false);
     } catch (error) {
       setIsLoadingReserves(false);
@@ -525,6 +504,7 @@ const Swap = () => {
         setInputOneValue(0);
         setInputTwoValue(0);
         setIsLoadingSwap(false);
+        themeCtx.toggleBalance();
       } else {
         switch (coin) {
           case "DAI":
@@ -563,6 +543,7 @@ const Swap = () => {
         setInputOneValue(0);
         setInputTwoValue(0);
         setIsLoadingSwap(false);
+        themeCtx.toggleBalance();
       }
     } catch (error) {
       console.log(error);

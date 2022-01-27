@@ -328,8 +328,6 @@ const VaultModal = (props) => {
     }
   };
 
-  console.log(props.collateralValue);
-
   return (
     <div
       className={classes["vault-modal-container"]}

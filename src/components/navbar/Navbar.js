@@ -45,8 +45,6 @@ const Navbar = () => {
   const [ghoulXBalance, setGhoulXBalance] = useState(0);
   const tokenContract = web3Ctx.tokenContract;
   const ghoulContract = web3Ctx.ghoulContract;
-  // const ghoulXContract = web3Ctx.ghoulXContract;
-  // const daiContract = web3Ctx.daiContract;
   const walletAddress = web3Ctx.walletAddress;
 
   const location = useLocation();
@@ -90,6 +88,36 @@ const Navbar = () => {
   };
 
   useEffect(() => {}, [ghoulContract, tokenContract, walletAddress]);
+
+  const loadBalances = async () => {
+    let gdaiBalance = await tokenContract.balanceOf(walletAddress);
+    let ghoulBalance = await ghoulContract.balanceOf(walletAddress);
+    let gdaiBalanceFormat = parseFloat(
+      ethers.utils.formatEther(gdaiBalance)
+    ).toFixed(2);
+    let ghoulBalanceFormat = parseFloat(
+      ethers.utils.formatEther(ghoulBalance)
+    ).toFixed(2);
+    let ghoulXbalance = await web3Ctx.ghoulXContract.balanceOf(walletAddress);
+    let ghoulXbalanceFormat = parseFloat(
+      ethers.utils.formatEther(ghoulXbalance)
+    ).toFixed(2);
+
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    const balance = await provider.getBalance(walletAddress);
+    const balanceFormat = parseFloat(ethers.utils.formatEther(balance)).toFixed(
+      2
+    );
+    setBNBBalance(balanceFormat);
+    setgDaiBalance(gdaiBalanceFormat);
+    setGhoulBalance(ghoulBalanceFormat);
+    setGhoulXBalance(ghoulXbalanceFormat);
+  };
+
+  if (themeCtx.balanceUpdate) {
+    loadBalances();
+    themeCtx.toggleBalanceFalse();
+  }
 
   useEffect(() => {
     const loadBalances = async () => {

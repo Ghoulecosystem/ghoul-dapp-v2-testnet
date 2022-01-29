@@ -604,6 +604,11 @@ const Vault = () => {
               parseFloat(vaultDebtFormat);
 
             let vaultRatio;
+            console.log("Ratio BNB Information");
+            console.log(vaultCollateralFormat);
+            console.log(ethers.utils.formatUnits(ethPrice, "gwei") * 10);
+            console.log(vaultDebtFormat);
+            console.log(gDaiPriceFormat);
             if (parseInt(vaultDebtFormat) !== 0) {
               vaultRatio =
                 ((parseFloat(vaultCollateralFormat) *
@@ -613,7 +618,6 @@ const Vault = () => {
             } else {
               vaultRatio = 0;
             }
-
             const vaultObj = {
               id: vaultId,
               debt: vaultDebtFormat,
@@ -989,6 +993,7 @@ const Vault = () => {
           collateral={parseFloat(vault.collateral).toFixed(4)}
           debt={vault.debt}
           ratio={parseFloat(vault.ratio).toFixed(2)}
+          // ratio={400}
           availableBorrow={vault.availableBorrow}
           openModal={openModal}
           isBNB={true}
@@ -1338,7 +1343,8 @@ const Vault = () => {
               id={vaultModalData.id}
               collateral={parseFloat(vaultModalData.collateral).toFixed(4)}
               debt={vaultModalData.debt}
-              ratio={vaultModalData.ratio}
+              // ratio={vaultModalData.ratio}
+              ratio={50}
               availableBorrow={vaultModalData.availableBorrow}
               isBNB={isBNBModal}
               balances={balances}

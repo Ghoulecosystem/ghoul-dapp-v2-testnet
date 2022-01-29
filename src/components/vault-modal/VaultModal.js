@@ -65,6 +65,10 @@ const VaultModal = (props) => {
     error: false,
   });
 
+  useEffect(() => {
+    setValue(props.ratio / 400);
+  }, []);
+
   const themeCtx = useContext(ThemeContext);
 
   let bgColor;
@@ -111,11 +115,26 @@ const VaultModal = (props) => {
       ? parseFloat(props.balances.bnbBalance).toFixed(5)
       : parseFloat(props.balances.wethBalance).toFixed(5);
 
-    if (value > collatMax) {
-      value = collatMax;
+    // if (value > collatMax) {
+    //   value = collatMax;
+    // }
+
+    if (props.ratio.toFixed(2) > 400) {
+      setValue(99);
+    } else if (props.ratio.toFixed(2) > 150 && props.ratio.toFixed(2) < 400) {
+      // This provides a floor slider, e.g. if ratio is 200%, the slider should be somewhere in the middle, and can only move to the safer side from this
+      let valueInput = (value / collatMax) * 0.5 + props.ratio / 400;
+      setValue(valueInput >= 0.99 ? 0.99 : valueInput);
+    } else {
+      let valueInput = value / collatMax + props.ratio / 400;
+      setValue(valueInput >= 0.99 ? 0.99 : valueInput);
     }
 
-    setValue(value / collatMax);
+    // More you withdraw the riskier gets
+    // More you repay safer it is
+    // More you borrow the riskier it is
+
+    // setValue(value / collatMax);
     setCollateralValue(value);
   };
 
@@ -126,6 +145,14 @@ const VaultModal = (props) => {
 
     if (value > parseFloat(props.collateral)) {
       value = parseFloat(props.collateral);
+    }
+
+    if (props.ratio.toFixed(2) > 400) {
+      setValue(99);
+    } else if (props.ratio.toFixed(2) > 150 && props.ratio.toFixed(2) < 400) {
+      // This provides a floor slider, e.g. if ratio is 200%, the slider should be somewhere in the middle, and can only move to the safer side from this
+    } else {
+      // Work out new ratio based on deposit value, need to relate depositvalue to collateral to debt ratio
     }
 
     setValue(1 - value / parseFloat(props.collateral));
@@ -139,6 +166,14 @@ const VaultModal = (props) => {
 
     if (value > parseFloat(props.availableBorrow)) {
       value = parseFloat(props.availableBorrow);
+    }
+
+    if (props.ratio.toFixed(2) > 400) {
+      setValue(99);
+    } else if (props.ratio.toFixed(2) > 150 && props.ratio.toFixed(2) < 400) {
+      // This provides a floor slider, e.g. if ratio is 200%, the slider should be somewhere in the middle, and can only move to the safer side from this
+    } else {
+      // Work out new ratio based on deposit value, need to relate depositvalue to collateral to debt ratio
     }
 
     setValue(1 - value / parseFloat(props.availableBorrow));
@@ -157,6 +192,14 @@ const VaultModal = (props) => {
 
     if (value > parseFloat(props.balances.gdaiBalance)) {
       value = parseFloat(props.balances.gdaiBalance);
+    }
+
+    if (props.ratio.toFixed(2) > 400) {
+      setValue(99);
+    } else if (props.ratio.toFixed(2) > 150 && props.ratio.toFixed(2) < 400) {
+      // This provides a floor slider, e.g. if ratio is 200%, the slider should be somewhere in the middle, and can only move to the safer side from this
+    } else {
+      // Work out new ratio based on deposit value, need to relate depositvalue to collateral to debt ratio
     }
 
     setValue(value / parseFloat(props.balances.gdaiBalance));
@@ -692,7 +735,7 @@ const VaultModal = (props) => {
       <>
         <div className={classes_slider.root}>
           <CustomSlider
-            value={parseFloat(props.debt) === 0 ? 99 : value * 100}
+            value={parseFloat(props.ratio) >= 400 ? 99 : value * 100}
             aria-labelledby="continuous-slider"
           />
         </div>

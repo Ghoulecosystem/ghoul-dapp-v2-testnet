@@ -5,7 +5,7 @@ import VaultEntry from "../../components/vault-entry/VaultEntry";
 import Modal from "react-modal";
 import VaultModal from "../../components/vault-modal/VaultModal";
 import CreateVaultModal from "../../components/create-vault-modal/CreateVaultModal";
-import LiquidateVaultModal from "../../components/liqiduidate-vault-modal/LiquidateVaultModal";
+import LiquidateVaultModal from "../../components/liquidate-vault-modal/LiquidateVaultModal";
 import Web3Context from "../../store/Web3-context";
 import LoadingImg from "../../components/loading-img-component/LoadingImg";
 import allVaultArrow from "../../assets/all_vaults_arrow.svg";
@@ -533,6 +533,7 @@ const Vault = () => {
           vaultCollateralValue: (
             parseFloat(vaultCollateralFormat).toFixed(4) * ethPriceFormat
           ).toFixed(2),
+          priceSource: ethers.utils.formatUnits(ethPrice, "gwei") * 10,
         };
 
         userVaultArray.push(vaultObj);
@@ -606,7 +607,7 @@ const Vault = () => {
             let vaultRatio;
             console.log("Ratio BNB Information");
             console.log(vaultCollateralFormat);
-            console.log(ethers.utils.formatUnits(ethPrice, "gwei") * 10);
+            console.log(ethPriceFormat);
             console.log(vaultDebtFormat);
             console.log(gDaiPriceFormat);
             if (parseInt(vaultDebtFormat) !== 0) {
@@ -627,6 +628,7 @@ const Vault = () => {
               vaultCollateralValue: (
                 parseFloat(vaultCollateralFormat).toFixed(4) * bnbPrice
               ).toFixed(2),
+              priceSource: ethers.utils.formatUnits(ethPrice, "gwei") * 10,
             };
 
             userVaultArray.push(vaultObj);
@@ -1342,9 +1344,11 @@ const Vault = () => {
               closeHandler={closeModal}
               id={vaultModalData.id}
               collateral={parseFloat(vaultModalData.collateral).toFixed(4)}
+              // collateral={parseFloat(0.05)}
               debt={vaultModalData.debt}
-              // ratio={vaultModalData.ratio}
-              ratio={50}
+              // debt={9}
+              ratio={vaultModalData.ratio}
+              // ratio={150}
               availableBorrow={vaultModalData.availableBorrow}
               isBNB={isBNBModal}
               balances={balances}
@@ -1356,6 +1360,7 @@ const Vault = () => {
               allowances={allowances}
               approveWethHandler={approveWeth}
               collateralValue={vaultModalData.vaultCollateralValue}
+              priceSource={vaultModalData.priceSource}
             />
           </Modal>
           <Modal

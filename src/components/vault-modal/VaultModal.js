@@ -50,9 +50,9 @@ const VaultModal = (props) => {
   const classes_slider = useStyles();
   const [value, setValue] = useState(0);
   const [collateralValue, setCollateralValue] = useState(0);
-  const [withdrawValue, setWithdrawValue] = useState(props.collateral);
-  const [repayValue, setRepayValue] = useState(props.balances.gdaiBalance);
-  const [borrowValue, setBorrowValue] = useState(props.availableBorrow);
+  const [withdrawValue, setWithdrawValue] = useState(0);
+  const [repayValue, setRepayValue] = useState(0);
+  const [borrowValue, setBorrowValue] = useState(0);
   const [wethDepositApprove, setWethDepositApprove] = useState(false);
   const [manageState, setManageState] = useState({
     showCollateral: true,
@@ -66,7 +66,16 @@ const VaultModal = (props) => {
   });
 
   useEffect(() => {
-    setValue(props.ratio / 400);
+    if (parseInt(props.debt) === 0) {
+      setValue(99);
+      return;
+    }
+
+    if (props.ratio > 150 && props.ratio < 400) {
+      setValue(props.ratio / 400);
+    } else {
+      setValue(0.001);
+    }
   }, []);
 
   const themeCtx = useContext(ThemeContext);
@@ -87,15 +96,20 @@ const VaultModal = (props) => {
   }
 
   const resetState = () => {
-    setValue(99);
-    setCollateralValue(
-      props.isBNB
-        ? parseFloat(props.balances.bnbBalance).toFixed(5)
-        : parseFloat(props.balances.wethBalance).toFixed(5)
-    );
-    setWithdrawValue(props.collateral);
-    setRepayValue(props.balances.gdaiBalance);
-    setBorrowValue(props.availableBorrow);
+    if (parseInt(props.debt) === 0) {
+      setValue(99);
+      return;
+    }
+
+    if (props.ratio > 150 && props.ratio < 400) {
+      setValue(props.ratio / 400);
+    } else {
+      setValue(0.001);
+    }
+    setCollateralValue(0);
+    setWithdrawValue(0);
+    setRepayValue(0);
+    setBorrowValue(0);
   };
 
   useEffect(() => {
@@ -121,13 +135,15 @@ const VaultModal = (props) => {
 
     if (props.ratio.toFixed(2) > 400) {
       setValue(99);
-    } else if (props.ratio.toFixed(2) > 150 && props.ratio.toFixed(2) < 400) {
-      // This provides a floor slider, e.g. if ratio is 200%, the slider should be somewhere in the middle, and can only move to the safer side from this
-      let valueInput = (value / collatMax) * 0.5 + props.ratio / 400;
-      setValue(valueInput >= 0.99 ? 0.99 : valueInput);
     } else {
-      let valueInput = value / collatMax + props.ratio / 400;
-      setValue(valueInput >= 0.99 ? 0.99 : valueInput);
+      let vaultRatio =
+        ((parseFloat(props.collateral + Number(value)) *
+          parseFloat(props.priceSource)) /
+          (parseFloat(props.debt) * parseFloat(1))) *
+        100;
+      let vaultRatioSafeness = vaultRatio / 400;
+
+      setValue(vaultRatioSafeness);
     }
 
     // More you withdraw the riskier gets
@@ -143,19 +159,30 @@ const VaultModal = (props) => {
       value = Math.abs(value);
     }
 
-    if (value > parseFloat(props.collateral)) {
-      value = parseFloat(props.collateral);
-    }
-
+    // if (value > parseFloat(props.collateral)) {
+    //   value = parseFloat(props.collateral);
+    // }
+    let vaultRatioSafeness;
     if (props.ratio.toFixed(2) > 400) {
       setValue(99);
-    } else if (props.ratio.toFixed(2) > 150 && props.ratio.toFixed(2) < 400) {
-      // This provides a floor slider, e.g. if ratio is 200%, the slider should be somewhere in the middle, and can only move to the safer side from this
     } else {
-      // Work out new ratio based on deposit value, need to relate depositvalue to collateral to debt ratio
+      let vaultRatio =
+        ((parseFloat(props.collateral - Number(value)) *
+          parseFloat(props.priceSource)) /
+          (parseFloat(props.debt) * parseFloat(1))) *
+        100;
+      vaultRatioSafeness = vaultRatio / 400;
+
+      console.log(vaultRatio);
+      console.log(vaultRatioSafeness);
+      if (Number(vaultRatio) >= Number(props.ratio)) {
+        setValue(props.ratio / 400);
+      } else {
+        setValue(vaultRatioSafeness);
+      }
     }
 
-    setValue(1 - value / parseFloat(props.collateral));
+    // setValue(vaultRatioSafeness);
     setWithdrawValue(value);
   };
 
@@ -164,19 +191,35 @@ const VaultModal = (props) => {
       value = Math.abs(value);
     }
 
-    if (value > parseFloat(props.availableBorrow)) {
-      value = parseFloat(props.availableBorrow);
-    }
+    // if (value > parseFloat(props.availableBorrow)) {
+    //   value = parseFloat(props.availableBorrow);
+    // }
 
+    let vaultRatioSafeness;
     if (props.ratio.toFixed(2) > 400) {
       setValue(99);
-    } else if (props.ratio.toFixed(2) > 150 && props.ratio.toFixed(2) < 400) {
-      // This provides a floor slider, e.g. if ratio is 200%, the slider should be somewhere in the middle, and can only move to the safer side from this
     } else {
-      // Work out new ratio based on deposit value, need to relate depositvalue to collateral to debt ratio
+      let vaultRatio =
+        ((parseFloat(props.collateral) * parseFloat(props.priceSource)) /
+          (parseFloat(Number(props.debt) + Number(value)) * parseFloat(1))) *
+        100;
+      vaultRatioSafeness = vaultRatio / 400;
+
+      console.log(vaultRatio);
+      console.log(vaultRatioSafeness);
+      if (Number(vaultRatio) >= Number(props.ratio)) {
+        setValue(props.ratio / 400);
+      } else {
+        if (vaultRatio < 150) {
+          setValue(0);
+          setBorrowValue(value);
+          return;
+        }
+        setValue(vaultRatioSafeness);
+      }
     }
 
-    setValue(1 - value / parseFloat(props.availableBorrow));
+    // setValue(1 - value / parseFloat(props.availableBorrow));
     setBorrowValue(value);
   };
 
@@ -185,24 +228,26 @@ const VaultModal = (props) => {
       value = Math.abs(value);
     }
 
-    if (parseFloat(props.debt) === 0) {
-      setValue(100);
-      return;
-    }
-
-    if (value > parseFloat(props.balances.gdaiBalance)) {
-      value = parseFloat(props.balances.gdaiBalance);
-    }
-
+    let vaultRatioSafeness;
     if (props.ratio.toFixed(2) > 400) {
       setValue(99);
-    } else if (props.ratio.toFixed(2) > 150 && props.ratio.toFixed(2) < 400) {
-      // This provides a floor slider, e.g. if ratio is 200%, the slider should be somewhere in the middle, and can only move to the safer side from this
     } else {
-      // Work out new ratio based on deposit value, need to relate depositvalue to collateral to debt ratio
+      let vaultRatio =
+        ((parseFloat(props.collateral) * parseFloat(props.priceSource)) /
+          (parseFloat(Number(props.debt) - Number(value)) * parseFloat(1))) *
+        100;
+      vaultRatioSafeness = vaultRatio / 400;
+
+      console.log(vaultRatio);
+
+      setValue(vaultRatioSafeness);
     }
 
-    setValue(value / parseFloat(props.balances.gdaiBalance));
+    if (Number(value) > props.debt) {
+      setRepayValue(value);
+      setValue(99);
+      return;
+    }
     setRepayValue(value);
   };
 
@@ -213,16 +258,108 @@ const VaultModal = (props) => {
 
   const setMaxHandler = () => {
     if (manageState.showCollateral) {
+      if (props.ratio.toFixed(2) > 400) {
+        setValue(99);
+      } else {
+        let asset = props.isBNB
+          ? props.balances.bnbBalance
+          : props.balances.wethBalance;
+        let vaultRatio =
+          ((parseFloat(props.collateral + Number(asset)) *
+            parseFloat(props.priceSource)) /
+            (parseFloat(props.debt) * parseFloat(1))) *
+          100;
+
+        let vaultRatioSafeness = vaultRatio / 400;
+
+        setValue(vaultRatioSafeness);
+      }
+
       setCollateralValue(
         props.isBNB
           ? parseFloat(props.balances.bnbBalance).toFixed(5)
           : parseFloat(props.balances.wethBalance).toFixed(5)
       );
     } else if (manageState.showWithdraw) {
-      setWithdrawValue(props.collateral);
+      let asset = props.isBNB
+        ? props.balances.bnbBalance
+        : props.balances.wethBalance;
+      let vaultRatioSafeness;
+      if (props.ratio.toFixed(2) > 400) {
+        setValue(99);
+      } else {
+        let vaultRatio =
+          ((parseFloat(props.collateral - Number(asset)) *
+            parseFloat(props.priceSource)) /
+            (parseFloat(props.debt) * parseFloat(1))) *
+          100;
+        vaultRatioSafeness = vaultRatio / 400;
+
+        console.log(vaultRatio);
+        console.log(vaultRatioSafeness);
+        if (Number(vaultRatio) >= Number(props.ratio)) {
+          setValue(props.ratio / 400);
+        } else {
+          setValue(vaultRatioSafeness);
+        }
+      }
+
+      setWithdrawValue(
+        props.isBNB
+          ? parseFloat(props.balances.bnbBalance).toFixed(5)
+          : parseFloat(props.balances.wethBalance).toFixed(5)
+      );
     } else if (manageState.showRepay) {
+      let vaultRatioSafeness;
+      if (props.ratio.toFixed(2) > 400) {
+        setValue(99);
+      } else {
+        let vaultRatio =
+          ((parseFloat(props.collateral) * parseFloat(props.priceSource)) /
+            (parseFloat(
+              Number(props.debt) - Number(props.balances.gdaiBalance)
+            ) *
+              parseFloat(1))) *
+          100;
+        vaultRatioSafeness = vaultRatio / 400;
+
+        console.log(vaultRatio);
+
+        setValue(vaultRatioSafeness);
+      }
+
+      if (Number(value) > props.debt) {
+        setRepayValue(value);
+        setValue(99);
+        return;
+      }
+
       setRepayValue(props.balances.gdaiBalance);
     } else {
+      let vaultRatioSafeness;
+      if (props.ratio.toFixed(2) > 400) {
+        setValue(99);
+      } else {
+        let vaultRatio =
+          ((parseFloat(props.collateral) * parseFloat(props.priceSource)) /
+            (parseFloat(Number(props.debt) + Number(props.availableBorrow)) *
+              parseFloat(1))) *
+          100;
+        vaultRatioSafeness = vaultRatio / 400;
+
+        console.log(vaultRatio);
+        console.log(vaultRatioSafeness);
+        if (Number(vaultRatio) >= Number(props.ratio)) {
+          setValue(props.ratio / 400);
+        } else {
+          if (vaultRatio < 150) {
+            setValue(0);
+            setBorrowValue(value);
+            return;
+          }
+          setValue(vaultRatioSafeness);
+        }
+      }
       setBorrowValue(props.availableBorrow);
     }
   };
@@ -735,7 +872,11 @@ const VaultModal = (props) => {
       <>
         <div className={classes_slider.root}>
           <CustomSlider
-            value={parseFloat(props.ratio) >= 400 ? 99 : value * 100}
+            value={
+              parseFloat(props.ratio) >= 400 || props.debt === 0
+                ? 99
+                : value * 100
+            }
             aria-labelledby="continuous-slider"
           />
         </div>

@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import classes from "./LiqiduidateVaultModal.module.css";
+import classes from "./LiquidateVaultModal.module.css";
 import cancelIcon from "../../assets/cancel.svg";
 import SnackbarUI from "../snackbar/SnackbarUI";
 import Web3Context from "../../store/Web3-context";

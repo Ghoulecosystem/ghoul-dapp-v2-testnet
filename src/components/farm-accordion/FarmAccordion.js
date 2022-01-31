@@ -8,7 +8,7 @@ import ThemeContext from "../../store/Theme-context";
 import bnbGhoul from "../../assets/BNB - GHOUL.svg";
 import bnbGhoulX from "../../assets/BNB- GHOULX.svg";
 import ghoulDai from "../../assets/GHOUL- XDAI.svg";
-import ghoulLogoFinal from "../../assets/Ghoul logo.svg";
+import ghoulLogoFinal from "../../assets/ghoul_logo.svg";
 import ghoulXlogo from "../../assets/GhoulX-trans-big 1.svg";
 import ghoulXDarkMode from "../../assets/GhoulXDARKMODE.png";
 

@@ -194,29 +194,6 @@ const Vault = () => {
   const { innerWidth: width, innerHeight: height } = window;
   let anchorLocation = "translateX(-0px) translateY(-0px)";
 
-  // if (height > 920) {
-  //   anchorLocation = "translateX(-20px) translateY(-10px)";
-  // } else if (height > 805) {
-  //   anchorLocation = "translateX(-100px) translateY(-20px)";
-  // } else {
-  //   anchorLocation = "translateX(-310px) translateY(-70px)";
-  // }
-
-  // if (width >= 1505 && width <= 1999) {
-  //   anchorLocation = "translateX(-230px) translateY(-80px)";
-  // }
-
-  // if (width < 1504) {
-  //   anchorLocation = "translateX(-500px) translateY(-300px)";
-  // }
-
-  // if (width < 450) {
-  //   anchorLocation = "translateX(-0px) translateY(-0px)";
-  // }
-
-  // if (width > 1300 && height < 920) {
-  //   anchorLocation = "translateX(-100px) translateY(-30px)";
-  // }
   const themeCtx = useContext(ThemeContext);
   let bgColor;
   let bgColor2;
@@ -302,7 +279,7 @@ const Vault = () => {
             100 -
           parseFloat(debtFormat);
         let ratio = 0;
-        if (parseInt(debtMonitor) !== 0) {
+        if (parseFloat(debtMonitor) !== 0) {
           ratio =
             (parseFloat(vaultCollateralFinal) / parseFloat(debtMonitor)) * 100;
         }
@@ -364,7 +341,7 @@ const Vault = () => {
             100 -
           parseFloat(debtFormat);
         let ratio = 0;
-        if (parseInt(debtMonitor) !== 0) {
+        if (parseFloat(debtMonitor) !== 0) {
           ratio =
             (parseFloat(vaultCollateralFinal) / parseFloat(debtMonitor)) * 100;
         }
@@ -515,7 +492,7 @@ const Vault = () => {
           parseFloat(vaultDebtFormat);
 
         let vaultRatio;
-        if (parseInt(vaultDebtFormat) !== 0) {
+        if (parseFloat(vaultDebtFormat) !== 0) {
           vaultRatio =
             ((parseFloat(vaultCollateralFormat) * parseFloat(ethPriceFormat)) /
               (parseFloat(vaultDebtFormat) * parseFloat(gDaiPriceFormat))) *
@@ -605,12 +582,7 @@ const Vault = () => {
               parseFloat(vaultDebtFormat);
 
             let vaultRatio;
-            console.log("Ratio BNB Information");
-            console.log(vaultCollateralFormat);
-            console.log(ethPriceFormat);
-            console.log(vaultDebtFormat);
-            console.log(gDaiPriceFormat);
-            if (parseInt(vaultDebtFormat) !== 0) {
+            if (parseFloat(vaultDebtFormat) !== 0) {
               vaultRatio =
                 ((parseFloat(vaultCollateralFormat) *
                   parseFloat(ethPriceFormat)) /
@@ -713,7 +685,7 @@ const Vault = () => {
       parseFloat(vaultDebtFormat);
 
     let vaultRatio;
-    if (parseInt(vaultDebtFormat) !== 0) {
+    if (parseFloat(vaultDebtFormat) !== 0) {
       vaultRatio =
         ((parseFloat(vaultCollateralFormat) * parseFloat(ethPriceFormat)) /
           (parseFloat(vaultDebtFormat) * parseFloat(gDaiPriceFormat))) *
@@ -757,7 +729,7 @@ const Vault = () => {
       parseFloat(vaultDebtFormat);
 
     let vaultRatio;
-    if (parseInt(vaultDebtFormat) !== 0) {
+    if (parseFloat(vaultDebtFormat) !== 0) {
       vaultRatio =
         ((parseFloat(vaultCollateralFormat) * parseFloat(ethPriceFormat)) /
           (parseFloat(vaultDebtFormat) * parseFloat(gDaiPriceFormat))) *
@@ -804,7 +776,7 @@ const Vault = () => {
       parseFloat(vaultDebtFormat);
 
     let vaultRatio;
-    if (parseInt(vaultDebtFormat) !== 0) {
+    if (parseFloat(vaultDebtFormat) !== 0) {
       vaultRatio =
         ((parseFloat(vaultCollateralFormat) * parseFloat(ethPriceFormat)) /
           (parseFloat(vaultDebtFormat) * parseFloat(gDaiPriceFormat))) *
@@ -851,7 +823,7 @@ const Vault = () => {
       parseFloat(vaultDebtFormat);
 
     let vaultRatio;
-    if (parseInt(vaultDebtFormat) !== 0) {
+    if (parseFloat(vaultDebtFormat) !== 0) {
       vaultRatio =
         ((parseFloat(vaultCollateralFormat) * parseFloat(ethPriceFormat)) /
           (parseFloat(vaultDebtFormat) * parseFloat(gDaiPriceFormat))) *

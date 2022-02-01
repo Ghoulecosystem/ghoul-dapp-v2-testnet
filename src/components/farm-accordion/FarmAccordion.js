@@ -8,6 +8,8 @@ import ThemeContext from "../../store/Theme-context";
 import bnbGhoul from "../../assets/BNB - GHOUL.svg";
 import bnbGhoulX from "../../assets/BNB- GHOULX.svg";
 import ghoulDai from "../../assets/GHOUL- XDAI.svg";
+//import bnbgDAI from "../../assets/BNB-GDAI.svg";
+//import gDAIDai from "../../assets/GDAI-DAI.svg";
 import ghoulLogoFinal from "../../assets/ghoul_logo.svg";
 import ghoulXlogo from "../../assets/GhoulX-trans-big 1.svg";
 import ghoulXDarkMode from "../../assets/GhoulXDARKMODE.png";
@@ -50,26 +52,38 @@ export default function Accordion(props) {
       img = ghoulLogoFinal;
       asset = "GHOUL";
       anchorLink =
-        "https://pancakeswap.finance/swap?outputCurrency=0x171ce6141e7a5980222bc6b757ee2f1f95b3264e";
+        "https://exchange.ghoul.finance/swap?outputCurrency=0x171ce6141e7a5980222bc6b757ee2f1f95b3264e";
       break;
     case "GHOULX/DAI":
       img = ghoulDai;
       asset = "GHOULX/DAI";
       anchorLink =
-        "https://pancakeswap.finance/add/0x1AF3F329e8BE154074D8769D1FFa4eE058B1DBc3/0xCFC5cf2a73E97401C218b7Ce1c594524bd8Ba4BF";
+        "https://exchange.ghoul.finance/add/0x1AF3F329e8BE154074D8769D1FFa4eE058B1DBc3/0xCFC5cf2a73E97401C218b7Ce1c594524bd8Ba4BF";
       break;
     case "BNB/GHOULX":
       img = bnbGhoulX;
       asset = "BNB/GHOULX";
       anchorLink =
-        "https://pancakeswap.finance/add/BNB/0xCFC5cf2a73E97401C218b7Ce1c594524bd8Ba4BF";
+        "https://exchange.ghoul.finance/add/BNB/0xCFC5cf2a73E97401C218b7Ce1c594524bd8Ba4BF";
       break;
     case "BNB/GHOUL":
       img = bnbGhoul;
       asset = "BNB/GHOUL";
       anchorLink =
-        "https://pancakeswap.finance/add/BNB/0x171ce6141e7a5980222bc6b757ee2f1f95b3264e";
+        "https://exchange.ghoul.finance/add/BNB/0x171ce6141e7a5980222bc6b757ee2f1f95b3264e";
       break;
+    // case "BNB/GDAI":
+    //   img = bnbgDAI;
+    //   asset = "BNB/GDAI";
+    //   anchorLink =
+    //     "https://exchange.ghoul.finance/add/BNB/0xF92b9A2B34efe45a8280629a7DFa404aeE18849f";
+    //   break;
+    // case "GDAI/DAI":
+    //   img = gDAIDai;
+    //   asset = "GDAI/DAI";
+    //   anchorLink =
+    //     "https://exchange.ghoul.finance/add/0xF92b9A2B34efe45a8280629a7DFa404aeE18849f/0x1AF3F329e8BE154074D8769D1FFa4eE058B1DBc3";
+    //   break;
     default:
       break;
   }

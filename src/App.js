@@ -51,7 +51,7 @@ function App() {
           <Navbar />
           <Switch>
             <Route path="/" exact>
-              <Redirect to="/swap" />
+              <Redirect to="/vaults" />
             </Route>
             <Route path="/vaults">
               <Vault />

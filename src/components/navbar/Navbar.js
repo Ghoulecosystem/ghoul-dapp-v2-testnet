@@ -289,7 +289,7 @@ const Navbar = () => {
 
         <a
           target="_blank"
-          href="https://exchange.ghoul.finance/"
+          href="https://exchange.ghoul.finance/swap?outputCurrency=0xcfc5cf2a73e97401c218b7ce1c594524bd8ba4bf"
           style={{ textDecoration: "none" }}
         >
           <div className={classes["feature-elem"]}>

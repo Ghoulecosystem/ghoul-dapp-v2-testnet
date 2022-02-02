@@ -109,7 +109,7 @@ const Farm = () => {
 
   const periodicIntervalUpdates = async () => {
     if (updateRewards && pools.length > 0) {
-      const poolIds = [0, 3, 4, 5];
+      const poolIds = [0, 1, 2, 3, 4, 5];
       let newPools = [...pools];
 
       for (let i = 0; i < newPools.length; i++) {

@@ -3057,7 +3057,7 @@ const daiAddress = "0x1af3f329e8be154074d8769d1ffa4ee058b1dbc3";
 const swapAddress = "0x748Af5C37dB1796c814bd3e2742A37Dc34Db5Abe";
 const ghoulAddress = "0x171cE6141E7a5980222bc6B757ee2F1f95b3264e";
 const tokenAddress = "0xF92b9A2B34efe45a8280629a7DFa404aeE18849f";
-const farmAddress = "0x29E28ac262c2ecAb788857eD0f51872ae213Acd7";
+const farmAddress = "0xAB7D69Da402569f2DDf0d6CFEE96c1DB0bf1C00d";
 const ghoulxAddress = "0xcfc5cf2a73e97401c218b7ce1c594524bd8ba4bf";
 
 const wethVaultAddress = "0xc522c7a2c66a2f1281cc3ff36c20ef142d9246e8";

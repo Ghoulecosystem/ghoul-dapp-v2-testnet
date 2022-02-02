@@ -8,8 +8,8 @@ import ThemeContext from "../../store/Theme-context";
 import bnbGhoul from "../../assets/BNB - GHOUL.svg";
 import bnbGhoulX from "../../assets/BNB- GHOULX.svg";
 import ghoulDai from "../../assets/GHOUL- XDAI.svg";
-//import bnbgDAI from "../../assets/BNB-GDAI.svg";
-//import gDAIDai from "../../assets/GDAI-DAI.svg";
+import bnbgDAI from "../../assets/BNB-GDAI.svg";
+import gDAIDAI from "../../assets/GDAI-DAI.svg";
 import ghoulLogoFinal from "../../assets/ghoul_logo.svg";
 import ghoulXlogo from "../../assets/GhoulX-trans-big 1.svg";
 import ghoulXDarkMode from "../../assets/GhoulXDARKMODE.png";
@@ -72,18 +72,18 @@ export default function Accordion(props) {
       anchorLink =
         "https://exchange.ghoul.finance/add/BNB/0x171ce6141e7a5980222bc6b757ee2f1f95b3264e";
       break;
-    // case "BNB/GDAI":
-    //   img = bnbgDAI;
-    //   asset = "BNB/GDAI";
-    //   anchorLink =
-    //     "https://exchange.ghoul.finance/add/BNB/0xF92b9A2B34efe45a8280629a7DFa404aeE18849f";
-    //   break;
-    // case "GDAI/DAI":
-    //   img = gDAIDai;
-    //   asset = "GDAI/DAI";
-    //   anchorLink =
-    //     "https://exchange.ghoul.finance/add/0xF92b9A2B34efe45a8280629a7DFa404aeE18849f/0x1AF3F329e8BE154074D8769D1FFa4eE058B1DBc3";
-    //   break;
+    case "BNB/gDAI":
+      img = bnbgDAI;
+      asset = "BNB/gDAI";
+      anchorLink =
+        "https://exchange.ghoul.finance/add/BNB/0xF92b9A2B34efe45a8280629a7DFa404aeE18849f";
+      break;
+    case "gDAI/DAI":
+      img = gDAIDAI;
+      asset = "DAI/gDAI";
+      anchorLink =
+        "https://exchange.ghoul.finance/add/0xF92b9A2B34efe45a8280629a7DFa404aeE18849f/0x1AF3F329e8BE154074D8769D1FFa4eE058B1DBc3";
+      break;
     default:
       break;
   }

@@ -67,6 +67,10 @@
   cursor: pointer;
 }
 
+#connected:hover{
+  border: 1px solid red;
+}
+
 #hamburger-icon {
   display: none;
 }

@@ -153,7 +153,7 @@ const Navbar = () => {
       }}
     >
       <div className={classes["logo-container"]}>
-        <img src={logo} alt="" width={46} height={46} />
+        <a href="https://ghoul.finance/"><img src={logo} alt="" width={46} height={46} /></a>
       </div>
       <div className={classes["navbar-header"]}>
         <div className={classes["row-nav"]}>

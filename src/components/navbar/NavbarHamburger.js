@@ -175,7 +175,7 @@ const NavbarHamburger = (props) => {
         onClick={onCloseHamburger}
       />
       <div className={classes["logo-container"]}>
-        <img src={logo} alt="" width={30} height={30} />
+        <a href="https://ghoul.finance/"><img src={logo} alt="" width={30} height={30} /></a>
       </div>
       <div className={classes["navbar-header"]}>
         <div className={classes["row-nav"]}>

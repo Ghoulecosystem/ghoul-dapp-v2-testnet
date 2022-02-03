@@ -30,6 +30,10 @@
   margin-bottom: 1.4rem;
 }
 
+.logo-container a {
+  justify-content: center;
+}
+
 .navbar-header {
   display: flex;
   flex-direction: column;

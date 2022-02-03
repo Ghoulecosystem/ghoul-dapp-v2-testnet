@@ -172,6 +172,7 @@ a {
 div.ios-switch {
   position: absolute;
   left: 75%;
+  display: none;
 }
 
 .feature-elem {

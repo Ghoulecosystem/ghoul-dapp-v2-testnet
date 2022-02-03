@@ -34,6 +34,10 @@
   justify-content: center;
 }
 
+.logo-container a img {
+  padding-left: 0px;
+}
+
 .navbar-header {
   display: flex;
   flex-direction: column;

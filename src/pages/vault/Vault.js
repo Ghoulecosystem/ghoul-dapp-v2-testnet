@@ -1079,7 +1079,7 @@ const Vault = () => {
             style={{ color: !themeCtx.darkMode ? txtColor : undefined }}
           >
             {vaultDisplayType}
-            <div className={classes["menu-container"]}>
+            
               <Button
                 id="fade-button"
                 aria-controls={open ? "fade-menu" : undefined}
@@ -1125,7 +1125,7 @@ const Vault = () => {
                   wETH
                 </MenuItem>
               </Menu>
-            </div>
+            
           </div>
           {!vaultManager && (
             <div

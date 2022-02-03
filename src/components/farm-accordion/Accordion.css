@@ -100,7 +100,7 @@
 .accordion-bottom-text {
   font-style: normal;
   font-weight: 500;
-  font-size: 12px;
+  font-size: 14px;
   line-height: 22px;
   color: white;
   float: left;
@@ -150,6 +150,12 @@
   gap: 0.5rem;
   padding-left: 1rem;
 }
+
+.apy-text{
+  color: #74ec65;
+  font-size: 17px!important;
+}
+
 
 .harvest {
   display: flex;

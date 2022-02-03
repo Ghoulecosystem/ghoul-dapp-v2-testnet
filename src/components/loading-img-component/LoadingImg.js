@@ -1,11 +1,11 @@
 import React from "react";
 import classes from "./LoadingImg.module.css";
-import ghoulLogo from "../../assets/ghoul_logo_final.svg";
+import gdaiLogo from "../../assets/gdai_logo_final.svg";
 
 const LoadingImg = (props) => {
   return (
     <img
-      src={ghoulLogo}
+      src={gdaiLogo}
       className={classes["loading-img"]}
       height={props.height}
       width={props.width}

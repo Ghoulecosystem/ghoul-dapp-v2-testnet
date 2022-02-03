@@ -203,7 +203,7 @@ div.ios-switch {
   font-size: 18px;
   line-height: 22px;
   /* identical to box height, or 122% */
-
+  margin-left: 4%;
   display: flex;
   align-items: center;
 

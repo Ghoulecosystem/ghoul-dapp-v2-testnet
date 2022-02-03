@@ -4,7 +4,7 @@
   flex-direction: column;
   align-items: center;
   width: 40.68rem;
-  height: 45.5rem;
+  height: 46.5rem;
   background: #090a10;
   border: 1px solid rgba(116, 236, 101, 0.5);
   box-sizing: border-box;
@@ -184,7 +184,7 @@
   font-weight: 500;
   font-size: 12px;
   margin-left: -0.6rem;
-  margin-right: -1rem;
+  margin-right: -0.1rem;
   line-height: 22px;
   /* identical to box height, or 183% */
 
@@ -248,7 +248,7 @@
   .vault-modal-container {
     position: absolute;
     width: 300px;
-    height: 600px;
+    height: 616px;
     font: 0.5rem;
   }
 

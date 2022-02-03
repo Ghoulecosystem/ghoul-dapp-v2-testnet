@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef, useContext } from "react";
 import "./Accordion.css";
 import Chevron from "../../assets/chevron.svg";
 import chevronDark from "../../assets/arrow-darkmode.png";
-import ghoulLogo from "../../assets/ghoul_logo_final.svg";
+import gdaiLogo from "../../assets/gdai_logo_final.svg";
 import daiLogo from "../../assets/dai_logo.svg";
 import ThemeContext from "../../store/Theme-context";
 import bnbGhoul from "../../assets/BNB - GHOUL.svg";
@@ -175,7 +175,7 @@ export default function Accordion(props) {
               className="accordion-bottom-text"
               style={{ color: !themeCtx.darkMode ? txtColor : undefined }}
             >
-              {props.apy}%
+              <span className="apy-text">{props.apy}%</span>
             </div>
           </div>
           <div id="deposit-fee">
@@ -183,7 +183,7 @@ export default function Accordion(props) {
               className="accordion-top-text"
               style={{ color: !themeCtx.darkMode ? txtColor : undefined }}
             >
-              STAKED ({props.asset})
+              STAKED
             </div>
             <div
               className="accordion-bottom-text"

@@ -889,7 +889,7 @@ const VaultModal = (props) => {
                     className={classes["riskier-safer"]}
                     style={{ color: !themeCtx.darkMode ? txtColor : undefined }}
                   >
-                    RISKIER
+                    RISKIER 150%
                   </span>
                 </span>
               </span>
@@ -899,7 +899,7 @@ const VaultModal = (props) => {
                     className={classes["riskier-safer"]}
                     style={{ color: !themeCtx.darkMode ? txtColor : undefined }}
                   >
-                    SAFER
+                    SAFER 400%
                   </span>
                 </span>
               </span>

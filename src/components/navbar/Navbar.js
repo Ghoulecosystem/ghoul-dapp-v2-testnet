@@ -2,7 +2,7 @@ import React, { useState, useContext, useEffect } from "react";
 import { ethers } from "ethers";
 import { useLocation } from "react-router-dom";
 import classes from "./Navbar.module.css";
-import logo from "../../assets/ghoul_logo_final.svg";
+import logo from "../../assets/gdai_logo_final.svg";
 import bnbLogo from "../../assets/bnb_logo.svg";
 import vault from "../../assets/vault-non-active.png";
 import vaultActive from "../../assets/vaults-active.png";
@@ -19,8 +19,6 @@ import farmLogoActive from "../../assets/farm-active.png";
 import exchangeLogo from "../../assets/exchange.png";
 import bondLogo from "../../assets/bonds.png";
 import prifiLogo from "../../assets/prifi.png";
-import ghoulXLogo from "../../assets/GhoulX logo.png";
-import ghoulTokenLogo from "../../assets/ghoul_logo_final.png";
 import twitterLogo from "../../assets/twitterlogo.png";
 import vaultLogoLm from "../../assets/vault-lm.png";
 import swapLogoLm from "../../assets/swap-lm.png";
@@ -30,9 +28,9 @@ import bondsLogoLm from "../../assets/bonds-lm.png";
 import prifiLogoLm from "../../assets/prifi-lm.png";
 import governanceLogoLm from "../../assets/governance-lm.svg";
 import Switch from "@mui/material/Switch";
-import ghoulXDarkMode from "../../assets/GhoulXDARKMODE.png";
-import ghoulDarkMode from "../../assets/GHOULDARKMODE.png";
-import gDaiDarkMode from "../../assets/gDAIDARKMODE.png";
+import ghoulXDarkMode from "../../assets/0xcfc5cf2a73e97401c218b7ce1c594524bd8ba4bf.png";
+import ghoulDarkMode from "../../assets/0x171cE6141E7a5980222bc6B757ee2F1f95b3264e.png";
+import gDaiDarkMode from "../../assets/0xF92b9A2B34efe45a8280629a7DFa404aeE18849f.png";
 
 const label = { inputProps: { "aria-label": "Switch demo" } };
 
@@ -61,9 +59,10 @@ const Navbar = () => {
   let bondsIm = bondLogo;
   let prifiIm = prifiLogo;
   let governanceIm = governance;
-  let ghoulxIm = ghoulXLogo;
-  let ghoulIm = logo;
-  let gdaiIm = ghoulTokenLogo;
+  let ghoulxIm = ghoulXDarkMode;
+  let ghoulIm = ghoulDarkMode;
+  let gdaiIm = gDaiDarkMode;
+
   if (!themeCtx.darkMode) {
     bgColor =
       "linear-gradient(170.43deg, #FFFFFF 0%, rgba(234, 234, 234, 0) 99.52%)";
@@ -78,9 +77,6 @@ const Navbar = () => {
     bondsIm = bondsLogoLm;
     prifiIm = prifiLogoLm;
     governanceIm = governanceLogoLm;
-    ghoulxIm = ghoulXDarkMode;
-    ghoulIm = ghoulDarkMode;
-    gdaiIm = gDaiDarkMode;
   }
 
   const darkModeHandler = () => {
@@ -168,7 +164,7 @@ const Navbar = () => {
             }}
           >
             <span>
-              <img src={ghoulIm} alt="" />
+              <img src={gdaiIm} alt="" />
             </span>
             <h3
               style={{
@@ -185,7 +181,7 @@ const Navbar = () => {
             }}
           >
             <span>
-              <img src={gdaiIm} alt="gl" width="24.72" height="16.41" />
+              <img src={ghoulIm} alt="gl" width="24.72" height="16.41" />
             </span>
             <h3
               style={{

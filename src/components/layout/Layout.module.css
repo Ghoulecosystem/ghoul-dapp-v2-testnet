@@ -1,13 +1,12 @@
 .main {
   width: 1440px;
-  height: 934px;
+  height: 1000px;
   z-index: 0;
   background: #090a10;
   position: relative;
   left: 50%;
   transform: translateX(-50%);
-  overflow: auto;
-  overflow-x: hidden;
+  overflow: hidden;
 }
 
 .main::-webkit-scrollbar {

@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useContext, useCallback } from "react";
 import classes from "./Swap.module.css";
 import Header from "../../components/header/Header";
-import ghoulLogo from "../../assets/ghoul_logo_final.svg";
+import gdaiLogo from "../../assets/gdai_logo_final.svg";
 import daiLogo from "../../assets/dai_logo.svg";
 import busdLogo from "../../assets/Currency226.png";
 import usdtLogo from "../../assets/Currency=Tether.png";
@@ -1176,7 +1176,7 @@ const Swap = () => {
                   }}
                 >
                   <img
-                    src={togDai ? renderIcons() : ghoulLogo}
+                    src={togDai ? renderIcons() : gdaiLogo}
                     alt=""
                     id={classes["swap-menu-icon"]}
                     width={34}
@@ -1256,7 +1256,7 @@ const Swap = () => {
                 </span>
               </div>
               <div className={classes["swap-input"]}>
-                {/* <img src={togDai ? ghoulLogo : renderIcons()} alt="" /> */}
+                {/* <img src={togDai ? gdaiLogo : renderIcons()} alt="" /> */}
                 <Button
                   id="fade-button"
                   aria-controls={open ? "fade-menu" : undefined}
@@ -1270,7 +1270,7 @@ const Swap = () => {
                   }}
                 >
                   <img
-                    src={togDai ? ghoulLogo : renderIcons()}
+                    src={togDai ? gdaiLogo : renderIcons()}
                     alt=""
                     id={classes["swap-menu-icon"]}
                     width={34}

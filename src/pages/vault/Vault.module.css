@@ -5,7 +5,7 @@
   width: 72.3625%;
   background: #090a10;
   color: white;
-  overflow-y: scroll;
+  /*overflow-y: scroll;*/
   overflow-x: hidden;
 }
 
@@ -118,8 +118,9 @@
 }
 
 #all-vaults-text {
-  display: flex;
-  gap: 1rem;
+/*  display: flex;
+  gap: 1rem;*/
+  margin-top: 10px;
 }
 
 .menu-container {

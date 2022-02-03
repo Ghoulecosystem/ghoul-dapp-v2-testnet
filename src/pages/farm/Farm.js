@@ -100,7 +100,7 @@ const Farm = () => {
   }
 
   useEffect(() => {
-    let timer1 = setTimeout(() => setUpdateRewards(updateRewards + 1), 5000);
+    let timer1 = setTimeout(() => setUpdateRewards(updateRewards + 1), 7000);
     return () => {
       clearTimeout(timer1);
       setUpdateRewards(false);
@@ -461,7 +461,7 @@ const Farm = () => {
       <Accordion
         asset={pool.lpSymbol}
         apy={parseFloat(pool.apy).toFixed(2)}
-        tvl={parseFloat(pool.poolValue).toFixed(4)}
+        tvl={parseFloat(pool.poolValue).toFixed(2)}
         earned={pool.pendingAmount}
         staked={pool.depositedAmount}
         lpBalance={pool.lpBalance}
@@ -489,7 +489,7 @@ const Farm = () => {
         <Accordion
           asset={pool.lpSymbol}
           apy={parseFloat(pool.apy).toFixed(2)}
-          tvl={parseFloat(pool.poolValue).toFixed(4)}
+          tvl={parseFloat(pool.poolValue).toFixed(2)}
           earned={pool.pendingAmount}
           staked={pool.depositedAmount}
           lpBalance={pool.lpBalance}
@@ -583,7 +583,7 @@ const Farm = () => {
           className={classes["farm-line"]}
           style={{ background: !themeCtx.darkMode ? bgColor2 : undefined }}
         ></div>
-        <h1 id={classes["all-farms"]}> All Farms Require a 0.5% deposit</h1>
+        <h1 id={classes["all-farms"]}> All Farms require a 0.5% deposit fee</h1>
         <div className={classes["accordion-container"]}>
           {pools.length > 0 && !isLoadingPools ? (
             !allFarms ? (

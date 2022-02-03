@@ -206,9 +206,9 @@ a > img {
 }
 
 div.dark-mode {
-  position: absolute;
-  top: 96%;
-  left: 7%;
+/*  position: absolute;
+  top: 96%;*/
+  margin-left: 3%;
 }
 
 div.ios-switch {

@@ -94,7 +94,7 @@ const StakeLpModal = (props) => {
             className={classes["col-two"]}
             style={{ color: !themeCtx.darkMode ? txtColor : undefined }}
           >
-            Availble {props.isWithdraw ? "LP" : props.asset}:{" "}
+            Available {props.isWithdraw ? "LP" : props.asset}:{" "}
             <span>{balance}</span>
           </div>
         </div>

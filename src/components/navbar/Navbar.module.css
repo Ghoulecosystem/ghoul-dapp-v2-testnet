@@ -217,11 +217,13 @@ div.dark-mode {
 /*  position: absolute;
   top: 96%;*/
   margin-left: 3%;
+  display: none;
 }
 
 div.ios-switch {
   position: absolute;
   left: 75%;
+  display: none;
 }
 
 @media screen and (max-width: 688px) {

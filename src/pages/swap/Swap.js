@@ -332,10 +332,10 @@ const Swap = () => {
 
       setReserves({
         gDaiBalance: parseFloat(gDaiBalanceFormat).toFixed(2),
-        daiBalance: daiBalanceFormat,
-        busdBalance: busdBalanceFormat,
-        usdtBalance: usdtBalanceformat,
-        usdcBalance: usdcBalanceFormat,
+        daiBalance: parseFloat(daiBalanceFormat).toFixed(2),
+        busdBalance: parseFloat(busdBalanceFormat).toFixed(2),
+        usdtBalance: parseFloat(usdtBalanceformat).toFixed(2),
+        usdcBalance: parseFloat(usdcBalanceFormat).toFixed(2),
         gDaiAllowance: gDaiAllowanceFormat,
         daiAllowance: daiAllowanceFormat,
         daiRate: daiRateFormat,
@@ -563,7 +563,7 @@ const Swap = () => {
           recieveValue = (
             (parseFloat(value) * parseFloat(reserves.gDaiRate)) /
             100
-          ).toFixed(2);
+          ).toFixed(4);
 
           if (recieveValue > parseFloat(reserves.daiReserve)) {
             setExceedingBalance(true);
@@ -581,7 +581,7 @@ const Swap = () => {
           recieveValue = (
             (parseFloat(value) * parseFloat(reserves.gdaiRateBusd)) /
             100
-          ).toFixed(2);
+          ).toFixed(4);
 
           if (recieveValue > parseFloat(reserves.busdReserve)) {
             setExceedingBalance(true);
@@ -599,7 +599,7 @@ const Swap = () => {
           recieveValue = (
             (parseFloat(value) * parseFloat(reserves.gdaiRateUsdc)) /
             100
-          ).toFixed(2);
+          ).toFixed(4);
 
           if (recieveValue > parseFloat(reserves.usdcReserve)) {
             setExceedingBalance(true);
@@ -617,7 +617,7 @@ const Swap = () => {
           recieveValue = (
             (parseFloat(value) * parseFloat(reserves.gdaiRateUsdt)) /
             100
-          ).toFixed(2);
+          ).toFixed(4);
 
           if (recieveValue > parseFloat(reserves.usdtReserve)) {
             setExceedingBalance(true);
@@ -645,7 +645,7 @@ const Swap = () => {
           recieveValue = (
             (parseFloat(value) * parseFloat(reserves.daiRate)) /
             100
-          ).toFixed(2);
+          ).toFixed(4);
 
           recieveValue = recieveValue - recieveValue * 0.001;
 
@@ -666,7 +666,7 @@ const Swap = () => {
           recieveValue = (
             (parseFloat(value) * parseFloat(reserves.busdRate)) /
             100
-          ).toFixed(2);
+          ).toFixed(4);
 
           recieveValue = recieveValue - recieveValue * 0.01;
 
@@ -687,7 +687,7 @@ const Swap = () => {
           recieveValue = (
             (parseFloat(value) * parseFloat(reserves.usdcRate)) /
             100
-          ).toFixed(2);
+          ).toFixed(4);
 
           recieveValue = recieveValue - recieveValue * 0.01;
 
@@ -708,7 +708,7 @@ const Swap = () => {
           recieveValue = (
             (parseFloat(value) * parseFloat(reserves.usdtRate)) /
             100
-          ).toFixed(2);
+          ).toFixed(4);
 
           recieveValue = recieveValue - recieveValue * 0.01;
 
@@ -764,7 +764,7 @@ const Swap = () => {
           recieveValue = (
             (parseFloat(value) * parseFloat(reserves.daiRate)) /
             100
-          ).toFixed(2);
+          ).toFixed(4);
           recieveValue = recieveValue - (recieveValue - value);
           recieveValue = recieveValue - recieveValue * 0.01;
 
@@ -784,7 +784,7 @@ const Swap = () => {
           recieveValue = (
             (parseFloat(value) * parseFloat(reserves.busdRate)) /
             100
-          ).toFixed(2);
+          ).toFixed(4);
           recieveValue = recieveValue - (recieveValue - value);
           recieveValue = recieveValue - recieveValue * 0.01;
 
@@ -804,7 +804,7 @@ const Swap = () => {
           recieveValue = (
             (parseFloat(value) * parseFloat(reserves.usdcRate)) /
             100
-          ).toFixed(2);
+          ).toFixed(4);
           recieveValue = recieveValue - (recieveValue - value);
           recieveValue = recieveValue - recieveValue * 0.01;
 
@@ -824,7 +824,7 @@ const Swap = () => {
           recieveValue = (
             (parseFloat(value) * parseFloat(reserves.usdtRate)) /
             100
-          ).toFixed(2);
+          ).toFixed(4);
           recieveValue = recieveValue - (recieveValue - value);
           recieveValue = recieveValue - recieveValue * 0.01;
 
@@ -850,7 +850,7 @@ const Swap = () => {
           recieveValue = (
             (parseFloat(value) * parseFloat(reserves.gDaiRate)) /
             100
-          ).toFixed(2);
+          ).toFixed(4);
 
           if (recieveValue > parseFloat(reserves.daiReserve)) {
             setExceedingBalance(true);
@@ -868,7 +868,7 @@ const Swap = () => {
           recieveValue = (
             (parseFloat(value) * parseFloat(reserves.gdaiRateBusd)) /
             100
-          ).toFixed(2);
+          ).toFixed(4);
 
           if (recieveValue > parseFloat(reserves.busdReserve)) {
             setExceedingBalance(true);
@@ -886,7 +886,7 @@ const Swap = () => {
           recieveValue = (
             (parseFloat(value) * parseFloat(reserves.gDaiRateUsdc)) /
             100
-          ).toFixed(2);
+          ).toFixed(4);
 
           if (recieveValue > parseFloat(reserves.usdcReserve)) {
             setExceedingBalance(true);
@@ -904,7 +904,7 @@ const Swap = () => {
           recieveValue = (
             (parseFloat(value) * parseFloat(reserves.gdaiRateUsdt)) /
             100
-          ).toFixed(2);
+          ).toFixed(4);
 
           if (recieveValue > parseFloat(reserves.usdtReserve)) {
             setExceedingBalance(true);
@@ -1251,7 +1251,7 @@ const Swap = () => {
                   className={classes["col-two"]}
                   style={{ color: !themeCtx.darkMode ? txtColor : undefined }}
                 >
-                  Availble {togDai ? "gDAI: " : `${coin}: `}
+                  Available {togDai ? "gDAI: " : `${coin}: `}
                   <span id={classes.balance}>{renderReserves()}</span>
                 </span>
               </div>
@@ -1331,7 +1331,7 @@ const Swap = () => {
               <div id={classes["swap-btn-div"]}>{renderButtons()}</div>
               <div id={classes["footer-text"]}>
                 <p style={{ color: !themeCtx.darkMode ? txtColor : undefined }}>
-                  Static fee of 1%
+                  Static fee of ~1%. No Slippage.
                 </p>
               </div>
             </>

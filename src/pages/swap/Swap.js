@@ -1307,9 +1307,9 @@ const Swap = () => {
                   <MenuItem data-my-value={"BUSD"} onClick={handleCloseTwo}>
                     BUSD
                   </MenuItem>
-                  {/* <MenuItem data-my-value={"USDC"} onClick={handleClose}>
-              USDC
-            </MenuItem> */}
+                  <MenuItem data-my-value={"USDC"} onClick={handleCloseTwo}>
+                    USDC
+                  </MenuItem>
                   <MenuItem data-my-value={"USDT"} onClick={handleCloseTwo}>
                     USDT
                   </MenuItem>

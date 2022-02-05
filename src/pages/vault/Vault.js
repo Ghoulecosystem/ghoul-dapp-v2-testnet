@@ -1142,7 +1142,7 @@ const Vault = () => {
               id={classes["liquidation-text"]}
               style={{ color: !themeCtx.darkMode ? txtColor : undefined }}
             >
-              Showing vaults close to liquidation
+              Showing all vaults across protocol that are close to liquidation
             </div>
           )}
           <div

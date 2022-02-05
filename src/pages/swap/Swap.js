@@ -669,7 +669,7 @@ const Swap = () => {
             100
           ).toFixed(4);
 
-          recieveValue = recieveValue - recieveValue * 0.001;
+          recieveValue = recieveValue - recieveValue * 0.01;
 
           if (recieveValue > parseFloat(reserves.gDaiReserve)) {
             setExceedingBalance(true);

@@ -114,7 +114,7 @@
   justify-content: space-between;
   padding-left: 2.37rem;
   padding-right: 1.87rem;
-  padding-top: 2.18rem;
+  padding-top: 3.18rem;
 }
 
 #all-vaults-text {
@@ -223,7 +223,7 @@
   padding-bottom: 1rem;
   font-weight: 500;
   font-size: 1rem;
-  line-height: 22px;
+  line-height: 14px;
   left: 3.5%;
   top: 20%;
   /* or 122% */

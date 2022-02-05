@@ -1066,13 +1066,23 @@ const Vault = () => {
           >
             Vault Monitor
           </div>
+
         </div>
         <div
           className={classes["vault-line"]}
           style={{
             background: !themeCtx.darkMode ? bgColor2 : undefined,
           }}
-        ></div>
+        >
+          {vaultManager && (
+            <div
+              id={classes["liquidation-text"]}
+              style={{ color: !themeCtx.darkMode ? txtColor : undefined }}
+            >
+              All Vaults have a 0.5% Closing Fee
+            </div> 
+          )}
+        </div>
         <div className={classes["all-vaults"]}>
           <div
             id={classes["all-vaults-text"]}

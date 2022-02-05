@@ -285,7 +285,7 @@ const Vault = () => {
         }
         if (
           parseFloat(ratio).toFixed(2) > 0 &&
-          parseFloat(ratio).toFixed(2) < 200
+          parseFloat(ratio).toFixed(2) < 160
         ) {
           liqVaults.push({
             id: i,
@@ -347,7 +347,7 @@ const Vault = () => {
         }
         if (
           parseFloat(ratio).toFixed(2) > 0 &&
-          parseFloat(ratio).toFixed(2) < 200
+          parseFloat(ratio).toFixed(2) < 160
         ) {
           liqVaults.push({
             id: i,

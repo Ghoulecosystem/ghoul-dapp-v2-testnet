@@ -260,19 +260,23 @@ const Swap = () => {
         setgDaiBusdApproved(true);
       }
 
-      if (parseInt(busdAllowanceFormat !== 0)) {
+      if (parseInt(busdAllowanceFormat) !== 0) {
         setBusdApproved(true);
       }
 
-      if (usdcAllowanceFormat !== 0) {
+      if (parseInt(gDaiAllowanceUsdcFormat) !== 0) {
         setUsdcApproved(true);
       }
 
-      if (parseInt(gDaiAllowanceUsdtFormat)) {
+      if (parseInt(usdcAllowanceFormat) !== 0) {
+        setUsdcApproved(true);
+      }
+
+      if (parseInt(gDaiAllowanceUsdtFormat) !== 0) {
         setgDaiUsdtApproved(true);
       }
 
-      if (usdtAllowanceFormat !== 0) {
+      if (parseInt(usdtAllowanceFormat) !== 0) {
         setUsdtApproved(true);
       }
 
@@ -342,18 +346,21 @@ const Swap = () => {
         gDaiReserve: gdaiReserveFormat,
         daiReserve: daiReserveFormat,
 
+        gDaiAllowanceBusd: gDaiAllowanceBusdFormat,
         busdAllowance: busdAllowanceFormat,
         busdRate: busdRateFormat,
         gdaiRateBusd: gDaiRateBusdFormat,
         gdaiReserveBusd: gdaiReserveFormatBusd,
         busdReserve: busdReserveFormat,
 
+        gDaiAllowanceUsdt: gDaiAllowanceUsdtFormat,
         usdtAllowance: usdtAllowanceFormat,
         usdtRate: usdtRateFormat,
         gdaiRateUsdt: gDaiRateUsdtFormat,
         gdaiReserveUsdt: gdaiReserveFormatUsdt,
         usdtReserve: usdtReserveFormat,
 
+        gDaiAllowanceUsdc: gDaiAllowanceUsdcFormat,
         usdcAllowance: usdcAllowanceFormat,
         usdcRate: usdcRateFormat,
         gdaiRateUsdc: gDaiRateUsdcFormat,
@@ -372,6 +379,8 @@ const Swap = () => {
     web3Ctx.daiContract,
     web3Ctx.swapContract,
     web3Ctx.tokenContract,
+    web3Ctx.usdcSwapContract,
+    web3Ctx.usdcTokenContract,
     web3Ctx.usdtSwapContract,
     web3Ctx.usdtTokenContract,
     web3Ctx.walletAddress,
@@ -384,9 +393,15 @@ const Swap = () => {
     };
   }, [
     loadReserves,
+    web3Ctx.busdSwapContract,
+    web3Ctx.busdTokenContract,
     web3Ctx.daiContract,
     web3Ctx.swapContract,
     web3Ctx.tokenContract,
+    web3Ctx.usdcSwapContract,
+    web3Ctx.usdcTokenContract,
+    web3Ctx.usdtSwapContract,
+    web3Ctx.usdtTokenContract,
     web3Ctx.walletAddress,
   ]);
 

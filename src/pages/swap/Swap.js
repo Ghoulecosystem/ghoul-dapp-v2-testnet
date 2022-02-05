@@ -350,6 +350,8 @@ const Swap = () => {
         gdaiRateUsdt: gDaiRateUsdtFormat,
         gdaiReserveUsdt: gdaiReserveFormatUsdt,
         usdtReserve: usdtReserveFormat,
+        usdcRate: usdcRateFormat,
+        gdaiRateUsdc: gDaiRateUsdcFormat,
         gdaiReserveUsdc: gdaiReserveFormatUsdc,
         usdcReserve: usdcReserveFormat,
       });

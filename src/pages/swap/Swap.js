@@ -319,7 +319,6 @@ const Swap = () => {
       const usdtReserves = await web3Ctx.usdtSwapContract.getReserves();
       const usdtRate = await web3Ctx.usdtSwapContract.usdtRate();
       const usdtRateFormat = parseInt(usdtRate._hex, 16);
-
       const gDaiRateUsdt = await web3Ctx.usdtSwapContract.ghostdaiRate();
       const gDaiRateUsdtFormat = parseInt(gDaiRateUsdt._hex, 16);
 
@@ -342,14 +341,20 @@ const Swap = () => {
         gDaiRate: gDaiRateFormat,
         gDaiReserve: gdaiReserveFormat,
         daiReserve: daiReserveFormat,
+
+        busdAllowance: busdAllowanceFormat,
         busdRate: busdRateFormat,
         gdaiRateBusd: gDaiRateBusdFormat,
         gdaiReserveBusd: gdaiReserveFormatBusd,
         busdReserve: busdReserveFormat,
+
+        usdtAllowance: usdtAllowanceFormat,
         usdtRate: usdtRateFormat,
         gdaiRateUsdt: gDaiRateUsdtFormat,
         gdaiReserveUsdt: gdaiReserveFormatUsdt,
         usdtReserve: usdtReserveFormat,
+
+        usdcAllowance: usdcAllowanceFormat,
         usdcRate: usdcRateFormat,
         gdaiRateUsdc: gDaiRateUsdcFormat,
         gdaiReserveUsdc: gdaiReserveFormatUsdc,
@@ -759,7 +764,7 @@ const Swap = () => {
     let recieveValue;
 
     if (togDai) {
-      // LOGIC HERE TO HANDLE 3 OTHER COINS
+      // LOGIC HERE TO HANDLE 4 OTHER COINS
 
       switch (coin) {
         case "DAI":
@@ -1139,7 +1144,7 @@ const Swap = () => {
                 {" "}
                 {togDai
                   ? "Mint gDAI with Stablecoins"
-                  : "Mint Stablecoins with gDAI"}
+                  : "Swap to Stablecoins with gDAI"}
               </h1>
               <div className={classes["swap-line"]}></div>
               <div

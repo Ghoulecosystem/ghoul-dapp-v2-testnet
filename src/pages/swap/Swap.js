@@ -426,7 +426,7 @@ const Swap = () => {
             break;
           case "USDC":
             tx = await web3Ctx.usdcTokenContract.approve(
-              usdtSwapAddress,
+              usdcSwapAddress,
               ethers.utils.parseEther("1000000000000000")
             );
 

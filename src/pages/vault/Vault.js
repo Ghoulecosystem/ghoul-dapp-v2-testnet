@@ -410,6 +410,13 @@ const Vault = () => {
       wethVaultAddress
     );
 
+    const gdaiAllowanceWethVault = await tokenContract.allowance(
+      walletAddress,
+      wethVaultAddress
+    );
+
+    const gdaiAllowanceBnbVault = await tokenContract.allowance(walletAddress);
+
     const allowanceBNBFormat = ethers.utils.formatEther(allowanceBNB);
     const allowanceWethFormat = ethers.utils.formatEther(allowanceWeth);
     const depositAllowanceFormat = ethers.utils.formatEther(depositAllowance);
@@ -1066,7 +1073,6 @@ const Vault = () => {
           >
             Vault Monitor
           </div>
-
         </div>
         <div
           className={classes["vault-line"]}
@@ -1080,7 +1086,7 @@ const Vault = () => {
               style={{ color: !themeCtx.darkMode ? txtColor : undefined }}
             >
               All Vaults have a 0.5% Closing Fee
-            </div> 
+            </div>
           )}
         </div>
         <div className={classes["all-vaults"]}>
@@ -1089,53 +1095,52 @@ const Vault = () => {
             style={{ color: !themeCtx.darkMode ? txtColor : undefined }}
           >
             {vaultDisplayType}
-            
-              <Button
-                id="fade-button"
-                aria-controls={open ? "fade-menu" : undefined}
-                aria-haspopup="true"
-                aria-expanded={open ? "true" : undefined}
-                onClick={handleClick}
-                style={{
-                  color: "#74ec65",
-                }}
-              >
-                <img
-                  src={imgSrc}
-                  alt="arrow"
-                  width={15}
-                  height={20}
-                  id={classes["all-vaults-arrow"]}
-                />
-              </Button>
-              <Menu
-                id="fade-menu"
-                MenuListProps={{
-                  "aria-labelledby": "fade-button",
-                }}
-                anchorEl={anchorEl}
-                open={open}
-                onClose={handleClose}
-                TransitionComponent={Fade}
-                PaperProps={{
-                  style: {
-                    transform: anchorLocation,
-                    backgroundColor: "#090a10ba",
-                    color: "white",
-                  },
-                }}
-              >
-                <MenuItem data-my-value={"All Vaults"} onClick={handleClose}>
-                  All Vaults
-                </MenuItem>
-                <MenuItem data-my-value={"BNB"} onClick={handleClose}>
-                  BNB
-                </MenuItem>
-                <MenuItem data-my-value={"wETH"} onClick={handleClose}>
-                  wETH
-                </MenuItem>
-              </Menu>
-            
+
+            <Button
+              id="fade-button"
+              aria-controls={open ? "fade-menu" : undefined}
+              aria-haspopup="true"
+              aria-expanded={open ? "true" : undefined}
+              onClick={handleClick}
+              style={{
+                color: "#74ec65",
+              }}
+            >
+              <img
+                src={imgSrc}
+                alt="arrow"
+                width={15}
+                height={20}
+                id={classes["all-vaults-arrow"]}
+              />
+            </Button>
+            <Menu
+              id="fade-menu"
+              MenuListProps={{
+                "aria-labelledby": "fade-button",
+              }}
+              anchorEl={anchorEl}
+              open={open}
+              onClose={handleClose}
+              TransitionComponent={Fade}
+              PaperProps={{
+                style: {
+                  transform: anchorLocation,
+                  backgroundColor: "#090a10ba",
+                  color: "white",
+                },
+              }}
+            >
+              <MenuItem data-my-value={"All Vaults"} onClick={handleClose}>
+                All Vaults
+              </MenuItem>
+              <MenuItem data-my-value={"BNB"} onClick={handleClose}>
+                BNB
+              </MenuItem>
+              <MenuItem data-my-value={"wETH"} onClick={handleClose}>
+                wETH
+              </MenuItem>
+            </Menu>
           </div>
           {!vaultManager && (
             <div

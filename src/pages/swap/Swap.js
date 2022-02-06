@@ -13,6 +13,9 @@ import {
   busdSwapAddress,
   usdcSwapAddress,
   usdtSwapAddress,
+  busdTokenAddress,
+  usdtTokenAddress,
+  usdcTokenAddress,
 } from "../../utils/contract_abis_mainnet";
 import Web3Context from "../../store/Web3-context";
 import LoadingImg from "../../components/loading-img-component/LoadingImg";
@@ -463,14 +466,51 @@ const Swap = () => {
             break;
         }
       } else {
-        const tx = await web3Ctx.tokenContract.approve(
-          swapAddress,
-          ethers.utils.parseEther("1000000000000000")
-        );
+        let tx;
+        switch (coin) {
+          case "DAI":
+            tx = await web3Ctx.tokenContract.approve(
+              swapAddress,
+              ethers.utils.parseEther("1000000000000000")
+            );
 
-        await tx.wait();
-        setgDaiApproved(true);
-        setSnackbarOpen({ open: true, error: false });
+            await tx.wait();
+            setSnackbarOpen({ open: true, error: false });
+            setgDaiApproved(true);
+            break;
+          case "BUSD":
+            tx = await web3Ctx.tokenContract.approve(
+              busdSwapAddress,
+              ethers.utils.parseEther("1000000000000000")
+            );
+
+            await tx.wait();
+            setSnackbarOpen({ open: true, error: false });
+            setgDaiBusdApproved(true);
+            break;
+          case "USDT":
+            tx = await web3Ctx.tokenContract.approve(
+              usdtSwapAddress,
+              ethers.utils.parseEther("1000000000000000")
+            );
+
+            await tx.wait();
+            setSnackbarOpen({ open: true, error: false });
+            setgDaiUsdtApproved(true);
+            break;
+          case "USDC":
+            tx = await web3Ctx.tokenContract.approve(
+              usdcSwapAddress,
+              ethers.utils.parseEther("1000000000000000")
+            );
+
+            await tx.wait();
+            setSnackbarOpen({ open: true, error: false });
+            setgDaiUsdcApproved(true);
+            break;
+          default:
+            break;
+        }
       }
     } catch (e) {
       setSnackbarOpen({ open: true, error: true });
@@ -1112,28 +1152,113 @@ const Swap = () => {
           break;
       }
     } else {
-      if (!gDaiApproved) {
-        return (
-          <button id={classes["approve-btn"]} onClick={approveHandler}>
-            Approve gDAI
-          </button>
-        );
-      }
+      switch (coin) {
+        case "DAI":
+          if (!gDaiApproved) {
+            return (
+              <button id={classes["approve-btn"]} onClick={approveHandler}>
+                Approve gDAI
+              </button>
+            );
+          }
 
-      if (exceedingBalance) {
-        return (
-          <button id={classes["approve-btn"]}>
-            Deposit Exceeds Available Reserves or User Balance
-          </button>
-        );
-      }
+          if (exceedingBalance) {
+            return (
+              <button id={classes["approve-btn"]}>
+                Deposit Exceeds Available Reserves or User Balance
+              </button>
+            );
+          }
 
-      if (gDaiApproved && !exceedingBalance) {
-        return (
-          <button id={classes["swap-btn"]} onClick={swapHandler}>
-            Swap
-          </button>
-        );
+          if (gDaiApproved && !exceedingBalance) {
+            return (
+              <button id={classes["swap-btn"]} onClick={swapHandler}>
+                Swap
+              </button>
+            );
+          }
+
+          break;
+        case "BUSD":
+          if (gDaiBusdApproved && !exceedingBalance) {
+            return (
+              <button id={classes["swap-btn"]} onClick={swapHandler}>
+                Swap
+              </button>
+            );
+          }
+
+          if (exceedingBalance) {
+            return (
+              <button id={classes["approve-btn"]}>
+                Deposit Exceeds Available Reserves or User Balance
+              </button>
+            );
+          }
+
+          if (!gDaiBusdApproved) {
+            return (
+              <button id={classes["approve-btn"]} onClick={approveHandler}>
+                Approve gDAI
+              </button>
+            );
+          }
+
+          break;
+        case "USDT":
+          if (gDaiUsdtApproved && !exceedingBalance) {
+            return (
+              <button id={classes["swap-btn"]} onClick={swapHandler}>
+                Swap
+              </button>
+            );
+          }
+
+          if (exceedingBalance) {
+            return (
+              <button id={classes["approve-btn"]}>
+                Deposit Exceeds Available Reserves or User Balance
+              </button>
+            );
+          }
+
+          if (!gDaiUsdtApproved) {
+            return (
+              <button id={classes["approve-btn"]} onClick={approveHandler}>
+                Approve gDAI
+              </button>
+            );
+          }
+
+          break;
+        case "USDC":
+          if (gDaiUsdcApproved && !exceedingBalance) {
+            return (
+              <button id={classes["swap-btn"]} onClick={swapHandler}>
+                Swap
+              </button>
+            );
+          }
+
+          if (exceedingBalance) {
+            return (
+              <button id={classes["approve-btn"]}>
+                Deposit Exceeds Available Reserves or User Balance
+              </button>
+            );
+          }
+
+          if (!gDaiUsdcApproved) {
+            return (
+              <button id={classes["approve-btn"]} onClick={approveHandler}>
+                Approve gDAI
+              </button>
+            );
+          }
+
+          break;
+        default:
+          break;
       }
     }
   };

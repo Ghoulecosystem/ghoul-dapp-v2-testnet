@@ -356,18 +356,15 @@ const Farm = () => {
         farmAddress,
         parseEther("1000000000000000")
       );
-      setIsLoadingPools(true);
 
       await tx.wait();
       let currentPools = [...pools];
       currentPools[index].lpApproved = true;
       setPools(currentPools);
       setSnackbarOpen({ open: true, error: false });
-      setIsLoadingPools(false);
     } catch (error) {
       setSnackbarOpen({ open: true, error: true });
       console.log(error);
-      setIsLoadingPools(false);
     }
   };
 
@@ -377,7 +374,6 @@ const Farm = () => {
         id,
         ethers.utils.parseEther(amount.toString())
       );
-      setIsLoadingPools(true);
       await tx.wait();
       const currAmmount = pools[modalData.index].depositedAmount;
       const newAmount = Number(currAmmount) + Number(amount);
@@ -389,19 +385,16 @@ const Farm = () => {
       currentPools[modalData.index].lpBalance = newBalance;
       setPools(currentPools);
       setSnackbarOpen({ open: true, error: false });
-      setIsLoadingPools(false);
       themeCtx.toggleBalance();
     } catch (error) {
       setSnackbarOpen({ open: true, error: true });
       console.log(error);
-      setIsLoadingPools(false);
     }
   };
 
   const harvest = async (id, index) => {
     try {
       const tx = await web3Ctx.farmContract.withdraw(id, 0);
-      setIsLoadingPools(true);
 
       await tx.wait();
       let currentPools = [...pools];
@@ -409,12 +402,11 @@ const Farm = () => {
       setPools(currentPools);
 
       setSnackbarOpen({ open: true, error: false });
-      setIsLoadingPools(false);
+
       themeCtx.toggleBalance();
     } catch (error) {
       setSnackbarOpen({ open: true, error: true });
       console.log(error);
-      setIsLoadingPools(false);
     }
   };
 
@@ -425,7 +417,6 @@ const Farm = () => {
         id,
         ethers.utils.parseEther(amount.toString())
       );
-      setIsLoadingPools(true);
 
       await tx.wait();
       const currAmmount = pools[modalData.index].depositedAmount;
@@ -438,12 +429,10 @@ const Farm = () => {
       currentPools[modalData.index].lpBalance = newBalance;
       setPools(currentPools);
       setSnackbarOpen({ open: true, error: false });
-      setIsLoadingPools(false);
       themeCtx.toggleBalance();
     } catch (error) {
       setSnackbarOpen({ open: true, error: true });
       console.log(error);
-      setIsLoadingPools(false);
     }
   };
 

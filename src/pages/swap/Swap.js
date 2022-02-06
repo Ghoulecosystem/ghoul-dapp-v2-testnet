@@ -427,6 +427,7 @@ const Swap = () => {
 
             await tx.wait();
             setSnackbarOpen({ open: true, error: false });
+            setDaiApproved(true);
             break;
           case "BUSD":
             tx = await web3Ctx.busdTokenContract.approve(
@@ -436,6 +437,7 @@ const Swap = () => {
 
             await tx.wait();
             setSnackbarOpen({ open: true, error: false });
+            setBusdApproved(true);
             break;
           case "USDT":
             tx = await web3Ctx.usdtTokenContract.approve(
@@ -445,6 +447,7 @@ const Swap = () => {
 
             await tx.wait();
             setSnackbarOpen({ open: true, error: false });
+            setUsdtApproved(true);
             break;
           case "USDC":
             tx = await web3Ctx.usdcTokenContract.approve(
@@ -454,6 +457,7 @@ const Swap = () => {
 
             await tx.wait();
             setSnackbarOpen({ open: true, error: false });
+            setUsdcApproved(true);
             break;
           default:
             break;
@@ -465,6 +469,7 @@ const Swap = () => {
         );
 
         await tx.wait();
+        setgDaiApproved(true);
         setSnackbarOpen({ open: true, error: false });
       }
     } catch (e) {

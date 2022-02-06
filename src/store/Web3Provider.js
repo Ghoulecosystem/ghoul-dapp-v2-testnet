@@ -273,7 +273,7 @@ const Web3Provider = (props) => {
       // Get list of accounts of the connected wallet
       const accounts = await web3.eth.getAccounts();
 
-      const providerEthers = new ethers.providers.Web3Provider(ethereum); // Allows for interaction with ethereum nodes - read/write
+      const providerEthers = new ethers.providers.Web3Provider(provider); // Allows for interaction with ethereum nodes - read/write
       const signer = providerEthers.getSigner(); // Abstraction of the Ethereum Account which can be used to sign messages and transactions and send signed transactions
 
       // Subscribe to accounts change

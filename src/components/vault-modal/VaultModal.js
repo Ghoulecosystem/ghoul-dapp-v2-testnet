@@ -873,7 +873,7 @@ const VaultModal = (props) => {
         <div className={classes_slider.root}>
           <CustomSlider
             value={
-              parseFloat(props.ratio) >= 400 || props.debt === 0
+              parseFloat(props.ratio) >= 400 || parseFloat(props.debt) === 0
                 ? 99
                 : value * 100
             }

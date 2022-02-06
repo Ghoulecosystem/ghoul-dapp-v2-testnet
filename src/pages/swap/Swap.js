@@ -756,6 +756,7 @@ const Swap = () => {
           break;
       }
       setInputOneValue(value);
+
       setInputTwoValue(parseFloat(recieveValue).toFixed(5));
     }
   };
@@ -911,10 +912,9 @@ const Swap = () => {
           break;
         case "USDC":
           recieveValue = (
-            (parseFloat(value) * parseFloat(reserves.gDaiRateUsdc)) /
+            (parseFloat(value) * parseFloat(reserves.gdaiRateUsdc)) /
             100
           ).toFixed(4);
-
           if (recieveValue > parseFloat(reserves.usdcReserve)) {
             setExceedingBalance(true);
           } else {

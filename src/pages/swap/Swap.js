@@ -134,7 +134,7 @@ const Swap = () => {
 
     setInputOneValue(0);
     setInputTwoValue(0);
-
+    setExceedingBalance(false);
     setCoin(myValue);
     setAnchorEl(null);
   };
@@ -153,7 +153,7 @@ const Swap = () => {
 
     setInputOneValue(0);
     setInputTwoValue(0);
-
+    setExceedingBalance(false);
     setCoin(myValue);
     setAnchorElTwo(null);
   };
@@ -825,8 +825,6 @@ const Swap = () => {
     let recieveValue;
 
     if (togDai) {
-      // LOGIC HERE TO HANDLE 4 OTHER COINS
-
       switch (coin) {
         case "DAI":
           recieveValue = (
@@ -961,7 +959,7 @@ const Swap = () => {
             setExceedingBalance(false);
           }
 
-          if (value > reserves.usdcBalance) {
+          if (value > reserves.gDaiBalance) {
             setExceedingBalance(true);
           } else {
             setExceedingBalance(false);
@@ -979,7 +977,7 @@ const Swap = () => {
             setExceedingBalance(false);
           }
 
-          if (value > reserves.usdtBalance) {
+          if (value > reserves.gDaiBalance) {
             setExceedingBalance(true);
           } else {
             setExceedingBalance(false);

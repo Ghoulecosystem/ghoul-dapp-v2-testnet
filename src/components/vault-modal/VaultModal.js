@@ -754,8 +754,9 @@ const VaultModal = (props) => {
                 <span id={classes["balance-colour"]}>
                   {" "}
                   {props.isBNB
-                    ? parseFloat(props.balances.bnbBalance).toFixed(5)
-                    : parseFloat(props.balances.wethBalance).toFixed(5)}
+                    ? parseFloat(props.balances.bnbBalance).toFixed(4)
+                    : parseFloat(props.balances.wethBalance).toFixed(4)}
+                  {props.isBNB ? " BNB" : " wETH"}
                 </span>
               </span>
             )}
@@ -771,7 +772,7 @@ const VaultModal = (props) => {
               <span id={classes.balance}>
                 Balance:{" "}
                 <span id={classes["balance-colour"]}>
-                  {props.balances.gdaiBalance} gDAI
+                  {parseFloat(props.balances.gdaiBalance).toFixed(4)} gDAI
                 </span>
               </span>
             )}
@@ -779,7 +780,7 @@ const VaultModal = (props) => {
               <span id={classes.balance}>
                 Available:{" "}
                 <span id={classes["balance-colour"]}>
-                  {props.availableBorrow} gDAI
+                  {parseFloat(props.availableBorrow).toFixed(4)} gDAI
                 </span>
               </span>
             )}
@@ -793,8 +794,8 @@ const VaultModal = (props) => {
               type="number"
               max={
                 props.isBNB
-                  ? parseFloat(props.balances.bnbBalance).toFixed(5)
-                  : parseFloat(props.balances.wethBalance).toFixed(5)
+                  ? parseFloat(props.balances.bnbBalance).toFixed(4)
+                  : parseFloat(props.balances.wethBalance).toFixed(4)
               }
               value={collateralValue}
               onChange={(e) => {

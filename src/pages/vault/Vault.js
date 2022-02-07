@@ -178,6 +178,7 @@ const Vault = () => {
   const [balances, setBalances] = useState({
     bnbBalance: 0,
     wethBalance: 0,
+    gdaiBalance: 0,
   });
   const [allowances, setAllowances] = useState({});
   const [vaultManager, setVaultManager] = useState(true);
@@ -410,12 +411,12 @@ const Vault = () => {
       wethVaultAddress
     );
 
-    const gdaiAllowanceWethVault = await tokenContract.allowance(
-      walletAddress,
-      wethVaultAddress
-    );
+    // const gdaiAllowanceWethVault = await tokenContract.allowance(
+    //   walletAddress,
+    //   wethVaultAddress
+    // );
 
-    const gdaiAllowanceBnbVault = await tokenContract.allowance(walletAddress);
+    // const gdaiAllowanceBnbVault = await tokenContract.allowance(walletAddress);
 
     const allowanceBNBFormat = ethers.utils.formatEther(allowanceBNB);
     const allowanceWethFormat = ethers.utils.formatEther(allowanceWeth);

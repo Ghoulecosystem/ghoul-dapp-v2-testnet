@@ -953,17 +953,15 @@ const Swap = () => {
             (parseFloat(value) * parseFloat(reserves.gdaiRateUsdc)) /
             100
           ).toFixed(4);
-          if (recieveValue > parseFloat(reserves.usdcReserve)) {
+          if (
+            recieveValue > parseFloat(reserves.usdcReserve) ||
+            value > reserves.gDaiBalance
+          ) {
             setExceedingBalance(true);
           } else {
             setExceedingBalance(false);
           }
 
-          if (value > reserves.gDaiBalance) {
-            setExceedingBalance(true);
-          } else {
-            setExceedingBalance(false);
-          }
           break;
         case "USDT":
           recieveValue = (
@@ -971,13 +969,10 @@ const Swap = () => {
             100
           ).toFixed(4);
 
-          if (recieveValue > parseFloat(reserves.usdtReserve)) {
-            setExceedingBalance(true);
-          } else {
-            setExceedingBalance(false);
-          }
-
-          if (value > reserves.gDaiBalance) {
+          if (
+            recieveValue > parseFloat(reserves.usdtReserve) ||
+            value > reserves.gDaiBalance
+          ) {
             setExceedingBalance(true);
           } else {
             setExceedingBalance(false);

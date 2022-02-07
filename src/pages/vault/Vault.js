@@ -1085,7 +1085,7 @@ const Vault = () => {
               id={classes["liquidation-text"]}
               style={{ color: !themeCtx.darkMode ? txtColor : undefined }}
             >
-              All Vaults have a 0.5% Closing Fee
+              All Vaults have a 0.5% Repayment Fee
             </div>
           )}
         </div>

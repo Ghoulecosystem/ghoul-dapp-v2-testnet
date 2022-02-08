@@ -620,19 +620,19 @@ const Swap = () => {
   };
 
   const maxHandlerOne = () => {
-    let recieveValue;
+    let receiveValue;
     if (!togDai) {
       let value = reserves.gDaiBalance;
       setInputOneValue(reserves.gDaiBalance);
 
       switch (coin) {
         case "DAI":
-          recieveValue = (
+          receiveValue = (
             (parseFloat(value) * parseFloat(reserves.gDaiRate)) /
             100
           ).toFixed(4);
 
-          if (recieveValue > parseFloat(reserves.daiReserve)) {
+          if (receiveValue > parseFloat(reserves.daiReserve)) {
             setExceedingBalance(true);
           } else {
             setExceedingBalance(false);
@@ -645,12 +645,12 @@ const Swap = () => {
           }
           break;
         case "BUSD":
-          recieveValue = (
+          receiveValue = (
             (parseFloat(value) * parseFloat(reserves.gdaiRateBusd)) /
             100
           ).toFixed(4);
 
-          if (recieveValue > parseFloat(reserves.busdReserve)) {
+          if (receiveValue > parseFloat(reserves.busdReserve)) {
             setExceedingBalance(true);
           } else {
             setExceedingBalance(false);
@@ -663,12 +663,12 @@ const Swap = () => {
           }
           break;
         case "USDC":
-          recieveValue = (
+          receiveValue = (
             (parseFloat(value) * parseFloat(reserves.gdaiRateUsdc)) /
             100
           ).toFixed(4);
 
-          if (recieveValue > parseFloat(reserves.usdcReserve)) {
+          if (receiveValue > parseFloat(reserves.usdcReserve)) {
             setExceedingBalance(true);
           } else {
             setExceedingBalance(false);
@@ -681,12 +681,12 @@ const Swap = () => {
           }
           break;
         case "USDT":
-          recieveValue = (
+          receiveValue = (
             (parseFloat(value) * parseFloat(reserves.gdaiRateUsdt)) /
             100
           ).toFixed(4);
 
-          if (recieveValue > parseFloat(reserves.usdtReserve)) {
+          if (receiveValue > parseFloat(reserves.usdtReserve)) {
             setExceedingBalance(true);
           } else {
             setExceedingBalance(false);
@@ -703,20 +703,20 @@ const Swap = () => {
           break;
       }
 
-      setInputTwoValue(parseFloat(recieveValue).toFixed(5));
+      setInputTwoValue(parseFloat(receiveValue).toFixed(5));
     } else {
       let value;
       switch (coin) {
         case "DAI":
           value = reserves.daiBalance;
-          recieveValue = (
+          receiveValue = (
             (parseFloat(value) * parseFloat(reserves.daiRate)) /
             100
           ).toFixed(4);
 
-          recieveValue = recieveValue - recieveValue * 0.01;
+          receiveValue = receiveValue - receiveValue * 0.01;
 
-          if (recieveValue > parseFloat(reserves.gDaiReserve)) {
+          if (receiveValue > parseFloat(reserves.gDaiReserve)) {
             setExceedingBalance(true);
           } else {
             setExceedingBalance(false);
@@ -730,14 +730,14 @@ const Swap = () => {
           break;
         case "BUSD":
           value = reserves.busdBalance;
-          recieveValue = (
+          receiveValue = (
             (parseFloat(value) * parseFloat(reserves.busdRate)) /
             100
           ).toFixed(4);
 
-          recieveValue = recieveValue - recieveValue * 0.01;
+          receiveValue = receiveValue - receiveValue * 0.01;
 
-          if (recieveValue > parseFloat(reserves.gdaiReserveBusd)) {
+          if (receiveValue > parseFloat(reserves.gdaiReserveBusd)) {
             setExceedingBalance(true);
           } else {
             setExceedingBalance(false);
@@ -751,14 +751,14 @@ const Swap = () => {
           break;
         case "USDC":
           value = reserves.usdcBalance;
-          recieveValue = (
+          receiveValue = (
             (parseFloat(value) * parseFloat(reserves.usdcRate)) /
             100
           ).toFixed(4);
 
-          recieveValue = recieveValue - recieveValue * 0.01;
+          receiveValue = receiveValue - receiveValue * 0.01;
 
-          if (recieveValue > parseFloat(reserves.gdaiReserveUsdc)) {
+          if (receiveValue > parseFloat(reserves.gdaiReserveUsdc)) {
             setExceedingBalance(true);
           } else {
             setExceedingBalance(false);
@@ -772,14 +772,14 @@ const Swap = () => {
           break;
         case "USDT":
           value = reserves.usdtBalance;
-          recieveValue = (
+          receiveValue = (
             (parseFloat(value) * parseFloat(reserves.usdtRate)) /
             100
           ).toFixed(4);
 
-          recieveValue = recieveValue - recieveValue * 0.01;
+          receiveValue = receiveValue - receiveValue * 0.01;
 
-          if (recieveValue > parseFloat(reserves.gdaiReserveUsdt)) {
+          if (receiveValue > parseFloat(reserves.gdaiReserveUsdt)) {
             setExceedingBalance(true);
           } else {
             setExceedingBalance(false);
@@ -797,7 +797,7 @@ const Swap = () => {
       }
       setInputOneValue(value);
 
-      setInputTwoValue(parseFloat(recieveValue).toFixed(5));
+      setInputTwoValue(parseFloat(receiveValue).toFixed(5));
     }
   };
 
@@ -822,19 +822,19 @@ const Swap = () => {
     //   value = reserves.gDaiBalance;
     // }
 
-    let recieveValue;
+    let receiveValue;
 
     if (togDai) {
       switch (coin) {
         case "DAI":
-          recieveValue = (
+          receiveValue = (
             (parseFloat(value) * parseFloat(reserves.daiRate)) /
             100
           ).toFixed(4);
-          recieveValue = recieveValue - (recieveValue - value);
-          recieveValue = recieveValue - recieveValue * 0.01;
+          receiveValue = receiveValue - (receiveValue - value);
+          receiveValue = receiveValue - receiveValue * 0.01;
 
-          if (recieveValue > parseFloat(reserves.gDaiReserve)) {
+          if (receiveValue > parseFloat(reserves.gDaiReserve)) {
             setExceedingBalance(true);
           } else {
             setExceedingBalance(false);
@@ -847,14 +847,14 @@ const Swap = () => {
           }
           break;
         case "BUSD":
-          recieveValue = (
+          receiveValue = (
             (parseFloat(value) * parseFloat(reserves.busdRate)) /
             100
           ).toFixed(4);
-          recieveValue = recieveValue - (recieveValue - value);
-          recieveValue = recieveValue - recieveValue * 0.01;
+          receiveValue = receiveValue - (receiveValue - value);
+          receiveValue = receiveValue - receiveValue * 0.01;
 
-          if (recieveValue > parseFloat(reserves.gdaiReserveBusd)) {
+          if (receiveValue > parseFloat(reserves.gdaiReserveBusd)) {
             setExceedingBalance(true);
           } else {
             setExceedingBalance(false);
@@ -867,14 +867,14 @@ const Swap = () => {
           }
           break;
         case "USDC":
-          recieveValue = (
+          receiveValue = (
             (parseFloat(value) * parseFloat(reserves.usdcRate)) /
             100
           ).toFixed(4);
-          recieveValue = recieveValue - (recieveValue - value);
-          recieveValue = recieveValue - recieveValue * 0.01;
+          receiveValue = receiveValue - (receiveValue - value);
+          receiveValue = receiveValue - receiveValue * 0.01;
 
-          if (recieveValue > parseFloat(reserves.gdaiReserveUsdc)) {
+          if (receiveValue > parseFloat(reserves.gdaiReserveUsdc)) {
             setExceedingBalance(true);
           } else {
             setExceedingBalance(false);
@@ -887,14 +887,14 @@ const Swap = () => {
           }
           break;
         case "USDT":
-          recieveValue = (
+          receiveValue = (
             (parseFloat(value) * parseFloat(reserves.usdtRate)) /
             100
           ).toFixed(4);
-          recieveValue = recieveValue - (recieveValue - value);
-          recieveValue = recieveValue - recieveValue * 0.01;
+          receiveValue = receiveValue - (receiveValue - value);
+          receiveValue = receiveValue - receiveValue * 0.01;
 
-          if (recieveValue > parseFloat(reserves.gdaiReserveUsdt)) {
+          if (receiveValue > parseFloat(reserves.gdaiReserveUsdt)) {
             setExceedingBalance(true);
           } else {
             setExceedingBalance(false);
@@ -913,12 +913,12 @@ const Swap = () => {
     } else {
       switch (coin) {
         case "DAI":
-          recieveValue = (
+          receiveValue = (
             (parseFloat(value) * parseFloat(reserves.gDaiRate)) /
             100
           ).toFixed(4);
 
-          if (recieveValue > parseFloat(reserves.daiReserve)) {
+          if (receiveValue > parseFloat(reserves.daiReserve)) {
             setExceedingBalance(true);
           } else {
             setExceedingBalance(false);
@@ -931,12 +931,12 @@ const Swap = () => {
           }
           break;
         case "BUSD":
-          recieveValue = (
+          receiveValue = (
             (parseFloat(value) * parseFloat(reserves.gdaiRateBusd)) /
             100
           ).toFixed(4);
 
-          if (recieveValue > parseFloat(reserves.busdReserve)) {
+          if (receiveValue > parseFloat(reserves.busdReserve)) {
             setExceedingBalance(true);
           } else {
             setExceedingBalance(false);
@@ -949,12 +949,12 @@ const Swap = () => {
           }
           break;
         case "USDC":
-          recieveValue = (
+          receiveValue = (
             (parseFloat(value) * parseFloat(reserves.gdaiRateUsdc)) /
             100
           ).toFixed(4);
           if (
-            recieveValue > parseFloat(reserves.usdcReserve) ||
+            receiveValue > parseFloat(reserves.usdcReserve) ||
             value > reserves.gDaiBalance
           ) {
             setExceedingBalance(true);
@@ -964,13 +964,13 @@ const Swap = () => {
 
           break;
         case "USDT":
-          recieveValue = (
+          receiveValue = (
             (parseFloat(value) * parseFloat(reserves.gdaiRateUsdt)) /
             100
           ).toFixed(4);
 
           if (
-            recieveValue > parseFloat(reserves.usdtReserve) ||
+            receiveValue > parseFloat(reserves.usdtReserve) ||
             value > reserves.gDaiBalance
           ) {
             setExceedingBalance(true);
@@ -985,7 +985,7 @@ const Swap = () => {
     }
 
     setInputOneValue(value);
-    setInputTwoValue(recieveValue);
+    setInputTwoValue(receiveValue);
   };
 
   const inputTwoHandler = () => {};
@@ -1390,7 +1390,7 @@ const Swap = () => {
                   className={classes["col-one"]}
                   style={{ color: !themeCtx.darkMode ? txtColor : undefined }}
                 >
-                  Recieve <span id={classes.dai}>{togDai ? "gDAI" : coin}</span>
+                  Receive <span id={classes.dai}>{togDai ? "gDAI" : coin}</span>
                 </span>
                 <span
                   className={classes["col-two"]}

@@ -52,37 +52,37 @@ export default function Accordion(props) {
       img = ghoulLogoFinal;
       asset = "GHOUL";
       anchorLink =
-        "https://exchange.ghoul.finance/swap?outputCurrency=0x171ce6141e7a5980222bc6b757ee2f1f95b3264e";
+        "https://pancakeswap.finance/swap?outputCurrency=0x171ce6141e7a5980222bc6b757ee2f1f95b3264e";
       break;
     case "GHOULX/DAI":
       img = ghoulDai;
       asset = "GHOULX/DAI";
       anchorLink =
-        "https://exchange.ghoul.finance/add/0x1AF3F329e8BE154074D8769D1FFa4eE058B1DBc3/0xCFC5cf2a73E97401C218b7Ce1c594524bd8Ba4BF";
+        "https://pancakeswap.finance/add/0x1AF3F329e8BE154074D8769D1FFa4eE058B1DBc3/0xCFC5cf2a73E97401C218b7Ce1c594524bd8Ba4BF";
       break;
     case "BNB/GHOULX":
       img = bnbGhoulX;
       asset = "BNB/GHOULX";
       anchorLink =
-        "https://exchange.ghoul.finance/add/BNB/0xCFC5cf2a73E97401C218b7Ce1c594524bd8Ba4BF";
+        "https://pancakeswap.finance/add/BNB/0xCFC5cf2a73E97401C218b7Ce1c594524bd8Ba4BF";
       break;
     case "BNB/GHOUL":
       img = bnbGhoul;
       asset = "BNB/GHOUL";
       anchorLink =
-        "https://exchange.ghoul.finance/add/BNB/0x171ce6141e7a5980222bc6b757ee2f1f95b3264e";
+        "https://pancakeswap.finance/add/BNB/0x171ce6141e7a5980222bc6b757ee2f1f95b3264e";
       break;
     case "BNB/gDAI":
       img = bnbgDAI;
       asset = "BNB/gDAI";
       anchorLink =
-        "https://exchange.ghoul.finance/add/BNB/0xF92b9A2B34efe45a8280629a7DFa404aeE18849f";
+        "https://pancakeswap.finance/add/BNB/0xF92b9A2B34efe45a8280629a7DFa404aeE18849f";
       break;
     case "gDAI/DAI":
       img = gDAIDAI;
       asset = "DAI/gDAI";
       anchorLink =
-        "https://exchange.ghoul.finance/add/0xF92b9A2B34efe45a8280629a7DFa404aeE18849f/0x1AF3F329e8BE154074D8769D1FFa4eE058B1DBc3";
+        "https://pancakeswap.finance/add/0xF92b9A2B34efe45a8280629a7DFa404aeE18849f/0x1AF3F329e8BE154074D8769D1FFa4eE058B1DBc3";
       break;
     default:
       break;

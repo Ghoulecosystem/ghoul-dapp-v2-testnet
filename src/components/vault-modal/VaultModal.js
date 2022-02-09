@@ -137,11 +137,12 @@ const VaultModal = (props) => {
       setValue(99);
     } else {
       let vaultRatio =
-        ((parseFloat(props.collateral + Number(value)) *
+        ((parseFloat(Number(props.collateral) + Number(value)) *
           parseFloat(props.priceSource)) /
           (parseFloat(props.debt) * parseFloat(1))) *
         100;
       let vaultRatioSafeness = vaultRatio / 400;
+      console.log(value);
 
       setValue(vaultRatioSafeness);
     }
@@ -210,11 +211,19 @@ const VaultModal = (props) => {
       if (Number(vaultRatio) >= Number(props.ratio)) {
         setValue(props.ratio / 400);
       } else {
-        if (vaultRatio < 150) {
+        if (vaultRatio < 155) {
           setValue(0);
           setBorrowValue(value);
           return;
         }
+
+        if (vaultRatio > 150) {
+          console.log("Here");
+          setValue(props.ratio / 3000);
+          setBorrowValue(value);
+          return;
+        }
+
         setValue(vaultRatioSafeness);
       }
     }
@@ -340,6 +349,7 @@ const VaultModal = (props) => {
       if (props.ratio.toFixed(2) > 400) {
         setValue(99);
       } else {
+        console.log("Hi");
         let vaultRatio =
           ((parseFloat(props.collateral) * parseFloat(props.priceSource)) /
             (parseFloat(Number(props.debt) + Number(props.availableBorrow)) *
@@ -352,9 +362,15 @@ const VaultModal = (props) => {
         if (Number(vaultRatio) >= Number(props.ratio)) {
           setValue(props.ratio / 400);
         } else {
-          if (vaultRatio < 150) {
+          if (vaultRatio < 155) {
             setValue(0);
-            setBorrowValue(value);
+            setBorrowValue(props.availableBorrow);
+            return;
+          }
+
+          if (vaultRatio > 150) {
+            setValue(props.ratio / 3000);
+            setBorrowValue(props.availableBorrow);
             return;
           }
           setValue(vaultRatioSafeness);

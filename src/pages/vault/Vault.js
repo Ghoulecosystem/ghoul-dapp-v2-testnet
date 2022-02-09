@@ -599,6 +599,7 @@ const Vault = () => {
             } else {
               vaultRatio = 0;
             }
+
             const vaultObj = {
               id: vaultId,
               debt: vaultDebtFormat,

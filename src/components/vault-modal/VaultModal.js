@@ -218,7 +218,6 @@ const VaultModal = (props) => {
         }
 
         if (vaultRatio > 150) {
-          console.log("Here");
           setValue(props.ratio / 3000);
           setBorrowValue(value);
           return;
@@ -238,11 +237,12 @@ const VaultModal = (props) => {
     }
 
     let vaultRatioSafeness;
-    if (props.ratio.toFixed(2) > 400) {
+    if (Number(props.ratio).toFixed(2) > 400) {
       setValue(99);
     } else {
       let vaultRatio =
-        ((parseFloat(props.collateral) * parseFloat(props.priceSource)) /
+        ((parseFloat(Number(props.collateral)) *
+          parseFloat(props.priceSource)) /
           (parseFloat(Number(props.debt) - Number(value)) * parseFloat(1))) *
         100;
       vaultRatioSafeness = vaultRatio / 400;
@@ -323,6 +323,11 @@ const VaultModal = (props) => {
       if (props.ratio.toFixed(2) > 400) {
         setValue(99);
       } else {
+        if (Number(props.balances.gdaiBalance) >= Number(props.debt)) {
+          setValue(99);
+          setRepayValue(props.balances.gdaiBalance);
+          return;
+        }
         let vaultRatio =
           ((parseFloat(props.collateral) * parseFloat(props.priceSource)) /
             (parseFloat(
@@ -331,8 +336,6 @@ const VaultModal = (props) => {
               parseFloat(1))) *
           100;
         vaultRatioSafeness = vaultRatio / 400;
-
-        console.log(vaultRatio);
 
         setValue(vaultRatioSafeness);
       }
@@ -956,7 +959,7 @@ const VaultModal = (props) => {
           {props.isBNB
             ? "Withdraw BNB"
             : wethDepositApprove
-            ? "withdraw wETH"
+            ? "Withdraw wETH"
             : "Approve wETH"}
         </div>
       )}

@@ -286,7 +286,7 @@ const Vault = () => {
         }
         if (
           parseFloat(ratio).toFixed(2) > 0 &&
-          parseFloat(ratio).toFixed(2) < 180
+          parseFloat(ratio).toFixed(2) < 200
         ) {
           liqVaults.push({
             id: i,
@@ -348,7 +348,7 @@ const Vault = () => {
         }
         if (
           parseFloat(ratio).toFixed(2) > 0 &&
-          parseFloat(ratio).toFixed(2) < 180
+          parseFloat(ratio).toFixed(2) < 200
         ) {
           liqVaults.push({
             id: i,
@@ -1084,7 +1084,7 @@ const Vault = () => {
         >
           {vaultManager && (
             <div
-              id={classes["liquidation-text"]}
+              id={classes["vaultmanager-text"]}
               style={{ color: !themeCtx.darkMode ? txtColor : undefined }}
             >
               All Vaults have a 0.5% Repayment Fee

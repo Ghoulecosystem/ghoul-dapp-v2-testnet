@@ -217,6 +217,24 @@
   gap: 1.56rem;
 }
 
+#vaultmanager-text {
+  display: none;
+  position: absolute;
+  font-style: normal;
+  padding-bottom: 1rem;
+  font-weight: 500;
+  font-size: 1rem;
+  line-height: 14px;
+  left: 3.5%;
+  top: 20%;
+  /* or 122% */
+
+  /* Lightmode/Colour - White */
+
+  color: rgba(255, 255, 255, 0.3);
+
+  /* Inside Auto Layout */
+}
 #liquidation-text {
   position: absolute;
   font-style: normal;

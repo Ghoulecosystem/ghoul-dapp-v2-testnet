@@ -132,7 +132,6 @@ const VaultModal = (props) => {
     // if (value > collatMax) {
     //   value = collatMax;
     // }
-
     if (props.ratio.toFixed(2) > 400) {
       setValue(99);
     } else {
@@ -143,6 +142,7 @@ const VaultModal = (props) => {
         100;
       let vaultRatioSafeness = vaultRatio / 400;
       console.log(value);
+      console.log(vaultRatio);
 
       setValue(vaultRatioSafeness);
     }
@@ -211,7 +211,7 @@ const VaultModal = (props) => {
       if (Number(vaultRatio) >= Number(props.ratio)) {
         setValue(props.ratio / 400);
       } else {
-        if (vaultRatio < 155) {
+        if (vaultRatio < 150) {
           setValue(0);
           setBorrowValue(value);
           return;
@@ -252,7 +252,7 @@ const VaultModal = (props) => {
       setValue(vaultRatioSafeness);
     }
 
-    if (Number(value) > props.debt) {
+    if (Number(value) > Number(props.debt)) {
       setRepayValue(value);
       setValue(99);
       return;

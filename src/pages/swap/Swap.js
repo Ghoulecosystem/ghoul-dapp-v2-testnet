@@ -807,8 +807,6 @@ const Swap = () => {
             (parseFloat(value) * parseFloat(reserves.daiRate)) /
             100
           ).toFixed(4);
-          receiveValue = receiveValue - (receiveValue - value);
-          receiveValue = receiveValue - receiveValue * 0.01;
 
           if (receiveValue > parseFloat(reserves.gDaiReserve) ||
               value > parseFloat(reserves.daiBalance)
@@ -824,8 +822,6 @@ const Swap = () => {
             (parseFloat(value) * parseFloat(reserves.busdRate)) /
             100
           ).toFixed(4);
-          receiveValue = receiveValue - (receiveValue - value);
-          receiveValue = receiveValue - receiveValue * 0.01;
 
           if (receiveValue > parseFloat(reserves.gdaiReserveBusd) ||
               value > parseFloat(reserves.busdBalance)
@@ -841,8 +837,6 @@ const Swap = () => {
             (parseFloat(value) * parseFloat(reserves.usdcRate)) /
             100
           ).toFixed(4);
-          receiveValue = receiveValue - (receiveValue - value);
-          receiveValue = receiveValue - receiveValue * 0.01;
 
           if (receiveValue > parseFloat(reserves.gdaiReserveUsdc) ||
               value > parseFloat(reserves.usdcBalance)
@@ -858,8 +852,8 @@ const Swap = () => {
             (parseFloat(value) * parseFloat(reserves.usdtRate)) /
             100
           ).toFixed(4);
-          receiveValue = receiveValue - (receiveValue - value);
-          receiveValue = receiveValue - receiveValue * 0.01;
+          // receiveValue = receiveValue - (receiveValue - value);
+          // receiveValue = receiveValue - receiveValue * 0.01;
 
           if (receiveValue > parseFloat(reserves.gdaiReserveUsdt) ||
               value > parseFloat(reserves.usdtBalance)

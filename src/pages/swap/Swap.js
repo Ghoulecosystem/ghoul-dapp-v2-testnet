@@ -1326,7 +1326,7 @@ const Swap = () => {
                 <input
                   id={classes["input-one"]}
                   type="number"
-                  defaultValue={0}
+
                   max={togDai ? reserves.daiBalance : reserves.gDaiBalance}
                   value={inputOneValue}
                   onChange={(e) => {
@@ -1420,7 +1420,7 @@ const Swap = () => {
                 <input
                   id={classes["input-one"]}
                   type="number"
-                  defaultValue={0}
+
                   max={togDai ? reserves.gDaiBalance : reserves.daiBalance}
                   value={inputTwoValue}
                   onChange={(e) => {

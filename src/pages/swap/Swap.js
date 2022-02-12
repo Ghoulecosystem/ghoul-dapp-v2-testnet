@@ -425,7 +425,7 @@ const Swap = () => {
           case "DAI":
             tx = await web3Ctx.daiContract.approve(
               swapAddress,
-              ethers.utils.parseEther("1000000000000000")
+              ethers.utils.parseEther("10000000000000000000000")
             );
 
             await tx.wait();
@@ -435,7 +435,7 @@ const Swap = () => {
           case "BUSD":
             tx = await web3Ctx.busdTokenContract.approve(
               busdSwapAddress,
-              ethers.utils.parseEther("1000000000000000")
+              ethers.utils.parseEther("10000000000000000000000")
             );
 
             await tx.wait();
@@ -445,7 +445,7 @@ const Swap = () => {
           case "USDT":
             tx = await web3Ctx.usdtTokenContract.approve(
               usdtSwapAddress,
-              ethers.utils.parseEther("1000000000000000")
+              ethers.utils.parseEther("10000000000000000000000")
             );
 
             await tx.wait();
@@ -455,7 +455,7 @@ const Swap = () => {
           case "USDC":
             tx = await web3Ctx.usdcTokenContract.approve(
               usdcSwapAddress,
-              ethers.utils.parseEther("1000000000000000")
+              ethers.utils.parseEther("10000000000000000000000")
             );
 
             await tx.wait();
@@ -471,7 +471,7 @@ const Swap = () => {
           case "DAI":
             tx = await web3Ctx.tokenContract.approve(
               swapAddress,
-              ethers.utils.parseEther("1000000000000000")
+              ethers.utils.parseEther("10000000000000000000000")
             );
 
             await tx.wait();
@@ -481,7 +481,7 @@ const Swap = () => {
           case "BUSD":
             tx = await web3Ctx.tokenContract.approve(
               busdSwapAddress,
-              ethers.utils.parseEther("1000000000000000")
+              ethers.utils.parseEther("10000000000000000000000")
             );
 
             await tx.wait();
@@ -491,7 +491,7 @@ const Swap = () => {
           case "USDT":
             tx = await web3Ctx.tokenContract.approve(
               usdtSwapAddress,
-              ethers.utils.parseEther("1000000000000000")
+              ethers.utils.parseEther("10000000000000000000000")
             );
 
             await tx.wait();
@@ -501,7 +501,7 @@ const Swap = () => {
           case "USDC":
             tx = await web3Ctx.tokenContract.approve(
               usdcSwapAddress,
-              ethers.utils.parseEther("1000000000000000")
+              ethers.utils.parseEther("10000000000000000000000")
             );
 
             await tx.wait();
@@ -918,17 +918,14 @@ const Swap = () => {
             100
           ).toFixed(4);
 
-          if (receiveValue > parseFloat(reserves.daiReserve)) {
+          if (receiveValue > parseFloat(reserves.daiReserve) ||
+              value > parseFloat(reserves.gDaiBalance)
+            ) {
             setExceedingBalance(true);
           } else {
             setExceedingBalance(false);
           }
 
-          if (value > reserves.gDaiBalance) {
-            setExceedingBalance(true);
-          } else {
-            setExceedingBalance(false);
-          }
           break;
         case "BUSD":
           receiveValue = (
@@ -936,17 +933,14 @@ const Swap = () => {
             100
           ).toFixed(4);
 
-          if (receiveValue > parseFloat(reserves.busdReserve)) {
+          if (receiveValue > parseFloat(reserves.busdReserve) ||
+              value > parseFloat(reserves.gDaiBalance)
+            ) {
             setExceedingBalance(true);
           } else {
             setExceedingBalance(false);
           }
 
-          if (value > reserves.gDaiBalance) {
-            setExceedingBalance(true);
-          } else {
-            setExceedingBalance(false);
-          }
           break;
         case "USDC":
           receiveValue = (
@@ -955,7 +949,7 @@ const Swap = () => {
           ).toFixed(4);
           if (
             receiveValue > parseFloat(reserves.usdcReserve) ||
-            value > reserves.gDaiBalance
+            value > parseFloat(reserves.gDaiBalance)
           ) {
             setExceedingBalance(true);
           } else {
@@ -971,7 +965,7 @@ const Swap = () => {
 
           if (
             receiveValue > parseFloat(reserves.usdtReserve) ||
-            value > reserves.gDaiBalance
+            value > parseFloat(reserves.gDaiBalance)
           ) {
             setExceedingBalance(true);
           } else {

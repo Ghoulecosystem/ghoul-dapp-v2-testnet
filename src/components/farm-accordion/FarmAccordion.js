@@ -54,6 +54,12 @@ export default function Accordion(props) {
       anchorLink =
         "https://pancakeswap.finance/swap?outputCurrency=0x171ce6141e7a5980222bc6b757ee2f1f95b3264e";
       break;
+    case "gDAI":
+      img = gdaiLogo;
+      asset = "gDAI";
+      anchorLink =
+        "https://ghoul.finance/#/swap";
+      break;
     case "GHOULX/DAI":
       img = ghoulDai;
       asset = "GHOULX/DAI";

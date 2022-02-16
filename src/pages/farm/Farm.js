@@ -109,7 +109,7 @@ const Farm = () => {
 
   const periodicIntervalUpdates = async () => {
     if (updateRewards && pools.length > 0) {
-      const poolIds = [0, 1, 2, 3, 4, 5];
+      const poolIds = [0, 6, 1, 2, 3, 4, 5];
       let newPools = [...pools];
 
       for (let i = 0; i < newPools.length; i++) {
@@ -354,7 +354,7 @@ const Farm = () => {
       const lpContrtact = new ethers.Contract(lpToken, lpAbi, web3Ctx.signer);
       const tx = await lpContrtact.approve(
         farmAddress,
-        parseEther("1000000000000000")
+        parseEther("100000000000000000000000")
       );
 
       await tx.wait();

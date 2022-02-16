@@ -214,7 +214,7 @@ const NavbarHamburger = (props) => {
                     color: !themeCtx.darkMode ? txtColor : undefined,
                   }}
                 >
-                  BSC Network
+                  BNB Chain
                 </span>
               </>
             )}

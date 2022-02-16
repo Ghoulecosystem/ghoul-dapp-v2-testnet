@@ -663,7 +663,7 @@ const Vault = () => {
       closeModal();
       const tx = await web3Ctx.wethContract.approve(
         wethVaultAddress,
-        ethers.utils.parseEther("100000000000")
+        ethers.utils.parseEther("10000000000000000000")
       );
 
       await tx.wait();

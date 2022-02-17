@@ -450,7 +450,7 @@ const Farm = () => {
       <Accordion
         asset={pool.lpSymbol}
         apy={parseFloat(pool.apy).toFixed(2)}
-        tvl={parseFloat(pool.poolValue).toFixed(2)}
+        tvl={parseFloat(pool.poolValue).toFixed(0)}
         earned={pool.pendingAmount}
         staked={pool.depositedAmount}
         lpBalance={pool.lpBalance}

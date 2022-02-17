@@ -1219,9 +1219,7 @@ const Swap = () => {
           id={classes["vault-line"]}
           style={{ background: !themeCtx.darkMode ? bgColor2 : undefined }}
         ></div>
-        {isLoadingReserves ? (
-          <LoadingImg />
-        ) : (
+
           <div
             className={classes["swap-box"]}
             style={{ background: !themeCtx.darkMode ? bgColorBox : undefined }}
@@ -1256,7 +1254,7 @@ const Swap = () => {
                 >
                   {togDai ? coin : "gDAI"}
                   {" Balance: "}
-                  <span id={classes.balance}>{renderBalances()}</span>
+                  {isLoadingReserves ? (<span id={classes.balance}>...</span>):(<span id={classes.balance}>{renderBalances()}</span>)}
                 </span>
               </div>
               <div className={classes["swap-input"]}>
@@ -1335,7 +1333,7 @@ const Swap = () => {
                 </span>
               </div>
               <div className={classes["swap-arrow"]}>
-                <img src={imgSrc} alt="" onClick={flipHandler} />
+                {isLoadingReserves ? (<LoadingImg />):(<img src={imgSrc} alt="" onClick={flipHandler} />)}
               </div>
               <div className={classes["swap-box-header"]}>
                 <span
@@ -1349,7 +1347,7 @@ const Swap = () => {
                   style={{ color: !themeCtx.darkMode ? txtColor : undefined }}
                 >
                   Available {togDai ? "gDAI: " : `${coin}: `}
-                  <span id={classes.balance}>{renderReserves()}</span>
+                  {isLoadingReserves ? (<span id={classes.balance}>...</span>):(<span id={classes.balance}>{renderReserves()}</span>)}
                 </span>
               </div>
               <div className={classes["swap-input"]}>
@@ -1425,7 +1423,11 @@ const Swap = () => {
                   }}
                 />
               </div>
-              <div id={classes["swap-btn-div"]}>{renderButtons()}</div>
+              {isLoadingReserves ? (
+                <div id={classes["swap-btn-div"]}><button id={classes["swap-btn"]}>Loading...</button></div>
+                ):(
+                  <div id={classes["swap-btn-div"]}>{renderButtons()}</div>
+                )}
               <div id={classes["footer-text"]}>
                 <p style={{ color: !themeCtx.darkMode ? txtColor : undefined }}>
                   Static fee of ~1%. No Slippage.
@@ -1433,7 +1435,7 @@ const Swap = () => {
               </div>
             </>
           </div>
-        )}
+        
       </div>
       <div className={classes["snackbar-swap-container"]}>
         <>

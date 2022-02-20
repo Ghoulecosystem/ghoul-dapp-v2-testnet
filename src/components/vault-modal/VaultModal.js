@@ -595,13 +595,27 @@ const VaultModal = (props) => {
             className={classes["col-one"]}
             style={{ color: !themeCtx.darkMode ? txtColor : undefined }}
           >
-            Collateral to Debt Ratio
+            Current Collat/Debt Ratio
           </span>
           <span
             className={classes["col-two"]}
             style={{ color: !themeCtx.darkMode ? txtColor : undefined }}
           >
             {props.ratio.toFixed(2)} &#37;
+          </span>
+        </div>
+        <div className={classes["vault-modal-content-item"]}>
+          <span
+            className={classes["col-one"]}
+            style={{ color: !themeCtx.darkMode ? txtColor : undefined }}
+          >
+            Minimum Collat/Debt Ratio
+          </span>
+          <span
+            className={classes["col-two"]}
+            style={{ color: !themeCtx.darkMode ? txtColor : undefined }}
+          >
+            150 &#37;
           </span>
         </div>
         <div className={classes["vault-modal-content-item"]}>

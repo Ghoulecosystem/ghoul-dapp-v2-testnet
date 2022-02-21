@@ -119,7 +119,7 @@
 
 #collat-value {
   position: absolute;
-  top: 25%;
+  top: 23%;
   left: 84%;
   font-style: normal;
   font-weight: 500;
@@ -132,7 +132,7 @@
 
 #debt-value {
   position: absolute;
-  top: 35%;
+  top: 32%;
   left: 84%;
   font-style: normal;
   font-weight: 500;
@@ -161,13 +161,13 @@
 
   #collat-value {
     position: absolute;
-    top: 24%;
+    top: 22%;
     left: 67%;
   }
 
   #debt-value {
     position: absolute;
-    top: 34%;
+    top: 32%;
     left: 64%;
   }
 
@@ -194,13 +194,13 @@
 @media screen and (max-width: 414px) {
   #collat-value {
     position: absolute;
-    top: 21%;
+    top: 19%;
     left: 64%;
   }
 
   #debt-value {
     position: absolute;
-    top: 31%;
+    top: 29%;
     left: 64%;
   }
 }

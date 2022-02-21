@@ -4,14 +4,14 @@
   flex-direction: column;
   align-items: center;
   width: 651px;
-  height: 480px;
+  height: 520px;
   background: #090a10;
   border: 1px solid rgba(116, 236, 101, 0.5);
   box-sizing: border-box;
   box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
   color: #ffffff;
-  margin-top: 10rem;
+  margin-top: 6rem;
   margin-left: 0rem;
 }
 
@@ -146,7 +146,7 @@
 @media screen and (max-width: 688px) {
   .vault-modal-container {
     width: 300px;
-    height: 490px;
+    height: 540px;
     font: 0.5rem;
     margin-top: 0rem;
     margin-left: 0rem;

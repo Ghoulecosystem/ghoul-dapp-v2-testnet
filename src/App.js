@@ -36,7 +36,7 @@ function App() {
               <h1 style={{ color: !themeCtx.darkMode ? txtColor : undefined }}>
                 Wrong Network.
               </h1>
-              <h1>Please switch to BNB Smart Chain</h1>
+              <h1>Please switch to BNB Chain</h1>
             </>
           )}
           {!web3Ctx.walletAddress && <h1>Connect Your Wallet</h1>}

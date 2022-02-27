@@ -118,7 +118,7 @@ const Header = (props) => {
                 <div
                   style={{ color: !themeCtx.darkMode ? txtColor : undefined }}
                 >
-                  BNB Smart Chain
+                  BNB Chain
                 </div>
               </div>
             )}

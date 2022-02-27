@@ -246,8 +246,8 @@ const Web3Provider = (props) => {
         walletconnect: {
           package: WalletConnectProvider,
           options: {
-            // Mikko's test key - don't copy as your mileage may vary
-            infuraId: "d2ae878adfc8418fb4f4d73eefa31332",
+            // Ghoul.Finance's test key - don't copy as your mileage may vary
+            infuraId: "cd5899ba2f344096a1d36db5e85f46da",
           },
         },
       };
@@ -320,7 +320,7 @@ const Web3Provider = (props) => {
         method: "eth_requestAccounts",
       });
 
-      if (window.ethereum.networkVersion !== 97) {
+      if (window.ethereum.networkVersion !== 56) {
         // changeNetwork("bsc");
         console.log("Invalid Chain");
         setIsValidChain(false);

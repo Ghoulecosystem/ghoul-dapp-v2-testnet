@@ -313,11 +313,8 @@ const VaultModal = (props) => {
         }
       }
 
-      setWithdrawValue(
-        props.isBNB
-          ? parseFloat(props.balances.bnbBalance).toFixed(5)
-          : parseFloat(props.balances.wethBalance).toFixed(5)
-      );
+      setWithdrawValue(parseFloat(props.collateral).toFixed(5));
+
     } else if (manageState.showRepay) {
       let vaultRatioSafeness;
       if (props.ratio.toFixed(2) > 400) {

@@ -164,7 +164,7 @@ const LiquidateVaultModal = (props) => {
             className={classes["msg-one"]}
             style={{ color: !themeCtx.darkMode ? txtColor : undefined }}
           >
-            Clicking "Liquidate Vault" will create 2 transactions for confirmation:<br/>1- Liquidate and 2- Get Paid
+            After Approval, Clicking "Liquidate Vault" creates 2 transactions:<br/>1- Liquidate and 2- Get Paid
           </span>
         </div>
       {renderButtons()}

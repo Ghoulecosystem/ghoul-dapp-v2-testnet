@@ -648,7 +648,7 @@ const Swap = () => {
           ).toFixed(4);
 
           if (receiveValue > parseFloat(reserves.busdReserve) ||
-              value > parseFloat(reserves.busdBalance)
+              value > parseFloat(reserves.gDaiBalance)
             ) {
             setExceedingBalance(true);
           } else {
@@ -661,10 +661,10 @@ const Swap = () => {
             (parseFloat(value) * parseFloat(reserves.gdaiRateUsdc)) /
             100
           ).toFixed(4);
-
-          if (receiveValue > parseFloat(reserves.usdcReserve) ||
-              value > parseFloat(reserves.usdcBalance)
-            ) {
+          if (
+            receiveValue > parseFloat(reserves.usdcReserve) ||
+            value > parseFloat(reserves.gDaiBalance)
+          ) {
             setExceedingBalance(true);
           } else {
             setExceedingBalance(false);
@@ -677,9 +677,10 @@ const Swap = () => {
             100
           ).toFixed(4);
 
-          if (receiveValue > parseFloat(reserves.usdtReserve) ||
-              value > parseFloat(reserves.usdtBalance)
-            ) {
+          if (
+            receiveValue > parseFloat(reserves.usdtReserve) ||
+            value > parseFloat(reserves.gDaiBalance)
+          ) {
             setExceedingBalance(true);
           } else {
             setExceedingBalance(false);
@@ -691,7 +692,9 @@ const Swap = () => {
           break;
       }
 
-      setInputTwoValue(parseFloat(receiveValue).toFixed(5));
+      setInputTwoValue(receiveValue);
+      // console.log(value);
+      // console.log(receiveValue);
     } else {
       let value;
       switch (coin) {
@@ -772,8 +775,7 @@ const Swap = () => {
           break;
       }
       setInputOneValue(value);
-
-      setInputTwoValue(parseFloat(receiveValue).toFixed(5));
+      setInputTwoValue(receiveValue);
     }
   };
 
@@ -1125,13 +1127,7 @@ const Swap = () => {
 
           break;
         case "BUSD":
-          if (gDaiBusdApproved && !exceedingBalance) {
-            return (
-              <button id={classes["swap-btn"]} onClick={swapHandler}>
-                Swap
-              </button>
-            );
-          }
+
 
           if (exceedingBalance) {
             return (
@@ -1149,15 +1145,16 @@ const Swap = () => {
             );
           }
 
-          break;
-        case "USDT":
-          if (gDaiUsdtApproved && !exceedingBalance) {
+          if (gDaiBusdApproved && !exceedingBalance) {
             return (
               <button id={classes["swap-btn"]} onClick={swapHandler}>
                 Swap
               </button>
             );
           }
+
+          break;
+        case "USDT":
 
           if (exceedingBalance) {
             return (
@@ -1175,15 +1172,16 @@ const Swap = () => {
             );
           }
 
-          break;
-        case "USDC":
-          if (gDaiUsdcApproved && !exceedingBalance) {
+          if (gDaiUsdtApproved && !exceedingBalance) {
             return (
               <button id={classes["swap-btn"]} onClick={swapHandler}>
                 Swap
               </button>
             );
           }
+
+          break;
+        case "USDC":
 
           if (exceedingBalance) {
             return (
@@ -1197,6 +1195,14 @@ const Swap = () => {
             return (
               <button id={classes["approve-btn"]} onClick={approveHandler}>
                 Approve gDAI
+              </button>
+            );
+          }
+
+          if (gDaiUsdcApproved && !exceedingBalance) {
+            return (
+              <button id={classes["swap-btn"]} onClick={swapHandler}>
+                Swap
               </button>
             );
           }
@@ -1319,7 +1325,6 @@ const Swap = () => {
                   id={classes["input-one"]}
                   type="number"
 
-                  max={togDai ? reserves.daiBalance : reserves.gDaiBalance}
                   value={inputOneValue}
                   onChange={(e) => {
                     inputOneHandler(e.target.value);
@@ -1413,7 +1418,6 @@ const Swap = () => {
                   id={classes["input-one"]}
                   type="number"
 
-                  max={togDai ? reserves.gDaiBalance : reserves.daiBalance}
                   value={inputTwoValue}
                   onChange={(e) => {
                     inputTwoHandler(e.target.value);

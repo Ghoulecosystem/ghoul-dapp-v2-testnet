@@ -395,6 +395,23 @@ const Navbar = () => {
           </a>
         </div>
 
+        <div className={classes["feature-elem"]}>
+          <a
+            href="https://www.redbubble.com/people/poltergeistlabs/shop"
+            target="_blank"
+            style={{ textDecoration: "none", color: "#5B5D64" }}
+          >
+            <img
+              className={classes["feature-community-img"]}
+              src={docsSupprt}
+              alt=""
+              width="20"
+              height="20"
+            />
+            Merch Store
+          </a>
+        </div>
+
         <div className={classes["feature-elem-2"]}>
           <div className={classes["dark-mode"]}>Dark Mode</div>
           <div className={classes["ios-switch"]}>
